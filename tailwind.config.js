@@ -10,6 +10,7 @@ module.exports = {
         PoppinsSemiBold: ["Poppins-SemiBold", "sans-serif"],
         PoppinsLight: ["Poppins-Light", "sans-serif"],
         PoppinsExtraLight: ["Poppins-ExtraLight", "sans-serif"],
+        PoppinsExtraBold: ["Poppins-ExtraBold", "sans-serif"],
       },
       colors: {
         Main: "#100425",

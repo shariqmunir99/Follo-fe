@@ -1,11 +1,22 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import CustomButton from "../../components/CustomButton";
+import { Redirect, router } from "expo-router";
+import arrow from '../../assets/icons/to.png'
 
 const Onboarding = () => {
+  const onClick = () => {
+    router.push('/sign-in')
+  }
   return (
     <SafeAreaView className="min-h-screen relative justify-center bg-Main">
-      <Text className="text-center text-Text text-4xl ">Upr Dekh</Text>
+      <CustomButton 
+        title= "Get Started"
+        containerStyles="w-[65%] mx-auto rounded-full"
+        handlePress={onClick}
+      />
+      {/* <Text className="text-center text-Text text-4xl ">Upr Dekh</Text> */}
       <Text className="absolute top-10 text-Vivid text-xs ">
         Uss kone mein dekh
       </Text>
