@@ -12,11 +12,12 @@ const SignUp = () => {
   return (
     <SafeAreaView className="bg-Main h-full">
       <ScrollView>
-        <View className="w-full justify-center h-[90%]">
-          <Text className="font-PoppinsBold text-Vivid text-6xl font-extrabold text-center pt-[80px]">Follo</Text>
-          <View className ="px-8">
-            <Text className="text-Text font-bold text-3xl
-              mt-6">Sign up</Text>
+        <View className="w-full justify-center ">
+          <View className = "h-[20%]">
+            <Text className="font-Rakkas text-Vivid text-8xl text-center pt-[50px]">Follo</Text>
+          </View>
+          <View className ="px-8 h-[80%] -mt-2">
+            <Text className="text-Text font-PoppinsSemiBold text-3xl">Sign up</Text>
             <InputField 
               title="Username"
               value=""

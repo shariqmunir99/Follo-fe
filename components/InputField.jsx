@@ -9,7 +9,7 @@ const InputField = ({title, value, placeHolder, handleChangeText, containerStyle
       <View className=" border-2 w-full h-16 px-4 bg-MainLight
       rounded-3xl focus:border-secondary items-center flex-row">
         <TextInput
-            className="flex-1 text-white font-psemibold text-base "
+            className="flex-1 text-white font-PoppinsRegular text-base "
             value={value}
             placeHolder={placeHolder}
             placeholderTextColor ="#7b7b8b"

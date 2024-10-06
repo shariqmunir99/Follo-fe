@@ -14,11 +14,12 @@ const FindAccount = () => {
   return (
       <SafeAreaView className="bg-Main h-full">
         <ScrollView>
-          <View className="w-full justify-center h-[80%]">
-            <Text className="font-PoppinsBold text-Vivid text-6xl font-extrabold text-center pt-[130px]">Follo</Text>
+          <View className="w-full justify-center">
+            <View className = "">
+              <Text className="font-Rakkas text-Vivid text-8xl text-center pt-[50px]">Follo</Text>
+            </View>
             <View className ="px-8">
-              <Text className="text-Text font-PoppinsExtraLight text-3xl
-                mt-10">Find your account</Text>
+              <Text className="text-Text font-PoppinsSemiBold text-3xl">Find your account</Text>
               <InputField 
                 title="Username or Email"
                 value=""
@@ -30,6 +31,7 @@ const FindAccount = () => {
                 containerStyles={"mt-7 w-[60%] mx-auto rounded-3xl"}
               />
             </View>
+
           </View>
         </ScrollView>
       </SafeAreaView>

@@ -11,7 +11,7 @@ const CustomButton = ({title, handlePress, containerStyles, textStyles, isLoadin
       className ={`bg-MainLight 
       min-h-[65px] justify-center items-center flex-row ${containerStyles} ${isLoading ? 'opacity-50' : ''}`}>
         <Text 
-        className={`text-Text text-lg ${textStyles}`}
+        className={`text-Text text-lg font-PoppinsRegular ${textStyles}`}
         >{title}</Text>
         {/* {image && (
           <Image 
