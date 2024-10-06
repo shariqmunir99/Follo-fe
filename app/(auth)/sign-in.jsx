@@ -1,16 +1,20 @@
 import { View, Text, ScrollView } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import InputField from "../../components/InputField";
 import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
 
 
-
 const SignIn = () => {
-  const clickForget = () =>(
-    router.push("/find-account")
-  )
+  const [form, setForm] = useState({
+    email : '',
+    password : ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const submit = async () => {
+
+  }
   return (
     <SafeAreaView className="bg-Main h-full">
       <ScrollView>
@@ -21,18 +25,25 @@ const SignIn = () => {
           <View className ="px-8 h-[80%] pt-8">
             <Text className="text-Text font-PoppinsSemiBold text-3xl">Log in</Text>
               <InputField 
-                title="Username or Email"
-                value=""
+                title="Email"
+                value={form.email}
+                placeHolder="moiz@follo.com"
+                handleChangeText={(e) => setForm({...form, email: e})}
                 containerStyles={"mt-7"}
+                keyboardType="email-address"
               />
               <InputField 
                 title="Password"
-                value=""
+                value={form.password}
+                placeHolder="********"
+                handleChangeText={(e) => setForm({...form, password: e})}
                 containerStyles={"mt-7"}
               />
               <CustomButton 
                 title="Log in"
                 containerStyles={"mt-7 w-[40%] mx-auto rounded-3xl"}
+                handlePress={submit}
+                isLoading={isSubmitting}
               />
               <Link  href="/find-account" className="text-Text text-base mx-auto mt-8">Forget Password</Link>
               <View className="mt-5 mx-auto flex-row">

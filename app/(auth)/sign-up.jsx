@@ -1,14 +1,26 @@
-import { View, Text, ScrollView } from "react-native";
-import React from "react";
+import { View, Text, ScrollView, Alert } from "react-native";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import InputField from "../../components/InputField";
 import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
 
+
 const SignUp = () => {
+  let [form, setForm] = useState({
+    username:'',
+    email : '',
+    password : '',
+    cpassword : ''
+  });
+
   const onClick = () => {
-    router.push('/sign-in')
-  }
+    if (form.password !== form.cpassword) {
+      Alert.alert("Error", "Passwords do not match");
+    } else {
+      router.push('/sign-in');
+    }
+  };
   return (
     <SafeAreaView className="bg-Main h-full">
       <ScrollView>
@@ -20,23 +32,33 @@ const SignUp = () => {
             <Text className="text-Text font-PoppinsSemiBold text-3xl">Sign up</Text>
             <InputField 
               title="Username"
-              value=""
-              containerStyles={"mt-6"}
+              placeHolder="Moiz Asif"
+              value={form.username}
+              handleChangeText={(e) => setForm({...form, username: e})}
+              containerStyles={"mt-5"}
             />
             <InputField 
-              title="Email"
-              value=""
-              containerStyles={"mt-3"}
+                title="Email"
+                value={form.email}
+                placeHolder="moiz@follo.com"
+                handleChangeText={(e) => setForm({...form, email: e})}
+                containerStyles={"mt-3"}
+                keyboardType="email-address"
             />
             <InputField 
               title="Password"
-              value=""
-              containerStyles={"mt-3"}
+              placeholder="********"
+              value={form.password}
+              handleChangeText = {(e) => setForm({...form, password: e})}
+              containerStyles="mt-3"
             />
             <InputField 
               title="Confirm Password"
-              value=""
+              placeHolder="********"
+              value={form.cpassword}
+              handleChangeText = {(e) => setForm({...form, cpassword: e})}
               containerStyles={"mt-3"}
+              confirmPasswordProp = {form.password}
             />
             <CustomButton 
               title="Sign up"
