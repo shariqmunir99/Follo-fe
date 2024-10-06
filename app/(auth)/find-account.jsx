@@ -1,5 +1,5 @@
-import { View, Text, ScrollView } from "react-native";
-import React from "react";
+import { View, Text, ScrollView, Alert } from "react-native";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import InputField from "../../components/InputField";
 import CustomButton from "../../components/CustomButton";
@@ -7,6 +7,10 @@ import { Link, router } from "expo-router";
 
 
 const FindAccount = () => {
+  let [form, setForm] = useState({
+    email : ''
+  });
+
   const clickReset =() => {
     router.push('/reset-password')
   }
@@ -21,9 +25,12 @@ const FindAccount = () => {
             <View className ="px-8">
               <Text className="text-Text font-PoppinsSemiBold text-3xl">Find your account</Text>
               <InputField 
-                title="Username or Email"
-                value=""
+                title="Email"
+                value={form.email}
+                placeHolder="moiz@follo.com"
+                handleChangeText={(e) => setForm({...form, email: e})}
                 containerStyles={"mt-7"}
+                keyboardType="email-address"
               />
               <CustomButton 
                 title="Send Reset Link"
