@@ -1,13 +1,22 @@
-import { View, Text, ScrollView } from "react-native";
-import React from "react";
+import { View, Text, ScrollView, Alert } from "react-native";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import InputField from "../../components/InputField";
 import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
 
 const ResetPassword = () => {
+    let [form, setForm] = useState({
+        npassword:'',
+        cpassword : ''
+    });
+
     const clickReset = () =>{
-        router.push("/sign-in")
+        if (form.npassword !== form.cpassword) {
+            Alert.alert("Error", "Passwords do not match");
+        } else {
+            router.push('/sign-in');
+        }
     }
 
     return (
@@ -20,14 +29,18 @@ const ResetPassword = () => {
                 <View className ="px-8">
                   <Text className="text-Text font-PoppinsSemiBold text-3xl">Reset Password</Text>
                     <InputField 
-                    title="New Password"
-                    value=""
-                    containerStyles={"mt-7"}
+                        title="New Password"
+                        placeholder="********"
+                        value={form.npassword}
+                        handleChangeText = {(e) => setForm({...form, npassword: e})}
+                        containerStyles={"mt-7"}
                     />
                     <InputField 
-                    title="Confirm Password"
-                    value=""
-                    containerStyles={"mt-7"}
+                        title="Confirm Password"
+                        placeholder="********"
+                        value={form.cpassword}
+                        handleChangeText = {(e) => setForm({...form, cpassword: e})}
+                        containerStyles={"mt-7"}
                     />
                     <CustomButton 
                     title="Reset"
