@@ -18,11 +18,11 @@ const SignIn = () => {
   return (
     <SafeAreaView className="bg-Main h-full">
       <ScrollView>
-        <View className="w-full justify-center h-[80%]">
-          <View className = "h-[20%]">
+        <View className="w-full justify-center">
+          <View className = "">
             <Text className="font-Rakkas text-Vivid text-8xl text-center pt-[50px]">Follo</Text>
           </View>
-          <View className ="px-8 h-[80%] pt-8">
+          <View className ="px-8">
             <Text className="text-Text font-PoppinsSemiBold text-3xl">Log in</Text>
               <InputField 
                 title="Email"

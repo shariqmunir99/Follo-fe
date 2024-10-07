@@ -7,7 +7,7 @@ import { Link, router } from "expo-router";
 
 
 const FindAccount = () => {
-  let [form, setForm] = useState({
+  const [form, setForm] = useState({
     email : ''
   });
 
@@ -38,7 +38,6 @@ const FindAccount = () => {
                 containerStyles={"mt-7 w-[60%] mx-auto rounded-3xl"}
               />
             </View>
-
           </View>
         </ScrollView>
       </SafeAreaView>

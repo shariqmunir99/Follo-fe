@@ -6,7 +6,7 @@ import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
 
 const ResetPassword = () => {
-    let [form, setForm] = useState({
+    const [form, setForm] = useState({
         npassword:'',
         cpassword : ''
     });

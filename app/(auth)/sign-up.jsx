@@ -7,7 +7,7 @@ import { Link, router } from "expo-router";
 
 
 const SignUp = () => {
-  let [form, setForm] = useState({
+  const [form, setForm] = useState({
     username:'',
     email : '',
     password : '',
@@ -25,24 +25,24 @@ const SignUp = () => {
     <SafeAreaView className="bg-Main h-full">
       <ScrollView>
         <View className="w-full justify-center ">
-          <View className = "h-[20%]">
+          <View className = "">
             <Text className="font-Rakkas text-Vivid text-8xl text-center pt-[50px]">Follo</Text>
           </View>
-          <View className ="px-8 h-[80%] -mt-2">
+          <View className ="px-8">
             <Text className="text-Text font-PoppinsSemiBold text-3xl">Sign up</Text>
             <InputField 
               title="Username"
               placeHolder="Moiz Asif"
               value={form.username}
               handleChangeText={(e) => setForm({...form, username: e})}
-              containerStyles={"mt-5"}
+              containerStyles={"mt-7"}
             />
             <InputField 
                 title="Email"
                 value={form.email}
                 placeHolder="moiz@follo.com"
                 handleChangeText={(e) => setForm({...form, email: e})}
-                containerStyles={"mt-3"}
+                containerStyles={"mt-7"}
                 keyboardType="email-address"
             />
             <InputField 
@@ -50,20 +50,20 @@ const SignUp = () => {
               placeholder="********"
               value={form.password}
               handleChangeText = {(e) => setForm({...form, password: e})}
-              containerStyles="mt-3"
+              containerStyles="mt-7"
             />
             <InputField 
               title="Confirm Password"
               placeHolder="********"
               value={form.cpassword}
               handleChangeText = {(e) => setForm({...form, cpassword: e})}
-              containerStyles={"mt-3"}
+              containerStyles={"mt-7"}
               confirmPasswordProp = {form.password}
             />
             <CustomButton 
               title="Sign up"
               handlePress={onClick}
-              containerStyles={"mt-4 w-[40%] mx-auto rounded-3xl"}
+              containerStyles={"mt-7 mb-10 w-[40%] mx-auto rounded-3xl"}
             />
           </View>
         </View>
