@@ -4,12 +4,15 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import InputField from "../../components/InputField";
 import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
+import CheckBox from "react-native-check-box";
 
 
 const SignUp = () => {
+  const [organizerCheck, setOrganizerCheck] = useState(false)
   const [form, setForm] = useState({
     username:'',
     email : '',
+    accountfrom: '',
     password : '',
     cpassword : ''
   });
@@ -46,6 +49,13 @@ const SignUp = () => {
                 keyboardType="email-address"
             />
             <InputField 
+              title="Account From"
+              placeHolder="Lahore/Pakistan"
+              value={form.accountfrom}
+              handleChangeText = {(e) => setForm({...form, accountfrom: e})}
+              containerStyles={"mt-7"}
+            />
+            <InputField 
               title="Password"
               placeholder="********"
               value={form.password}
@@ -60,6 +70,16 @@ const SignUp = () => {
               containerStyles={"mt-7"}
               confirmPasswordProp = {form.password}
             />
+            <View className = "flex-row mt-5 items-center">
+              <Text className="text-Text font-PoppinsRegular pr-2">Sign up as Organizer</Text>
+              <CheckBox 
+                isChecked={organizerCheck} 
+                onClick={() => setOrganizerCheck(!organizerCheck)}
+                checkedCheckBoxColor="#FAFF00"
+                uncheckedCheckBoxColor="#ffffff"
+                
+              />
+            </View>
             <CustomButton 
               title="Sign up"
               handlePress={onClick}
