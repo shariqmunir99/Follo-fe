@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const homepage = () => {
+const discover = () => {
   return (
     <View>
-      <Text>homepage</Text>
+      <Text>discover</Text>
     </View>
   )
 }
 
-export default homepage
+export default discover
 
 const styles = StyleSheet.create({})

@@ -22,3 +22,7 @@ module.exports = {
   },
   plugins: [],
 };
+
+// Exporting colors and fonts
+module.exports.colors = module.exports.theme.extend.colors;
+module.exports.fonts = module.exports.theme.extend.fontFamily;

@@ -63,7 +63,7 @@ const SignUp = () => {
             <CustomButton 
               title="Sign up"
               handlePress={onClick}
-              containerStyles={"mt-7 mb-10 w-[40%] mx-auto rounded-3xl"}
+              containerStyles={"mt-7 mb-10 w-[40%]  min-h-[65px] mx-auto rounded-3xl"}
             />
           </View>
         </View>

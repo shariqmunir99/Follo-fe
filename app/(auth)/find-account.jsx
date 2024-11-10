@@ -35,7 +35,7 @@ const FindAccount = () => {
               <CustomButton 
                 title="Send Reset Link"
                 handlePress={clickReset}
-                containerStyles={"mt-7 w-[60%] mx-auto rounded-3xl"}
+                containerStyles={"mt-7 w-[60%] min-h-[65px] mx-auto rounded-3xl"}
               />
             </View>
           </View>

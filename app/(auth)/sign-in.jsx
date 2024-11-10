@@ -13,7 +13,7 @@ const SignIn = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const submit = async () => {
-
+    router.push('/homepage');
   }
   return (
     <SafeAreaView className="bg-Main h-full">
@@ -41,7 +41,7 @@ const SignIn = () => {
               />
               <CustomButton 
                 title="Log in"
-                containerStyles={"mt-7 w-[40%] mx-auto rounded-3xl"}
+                containerStyles={"mt-7 w-[40%]  min-h-[65px] mx-auto rounded-3xl"}
                 handlePress={submit}
                 isLoading={isSubmitting}
               />

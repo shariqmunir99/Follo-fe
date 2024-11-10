@@ -13,7 +13,7 @@ const Onboarding = () => {
     <SafeAreaView className="min-h-screen relative justify-center bg-Main">
       <CustomButton 
         title= "Get Started"
-        containerStyles="w-[65%] mx-auto rounded-full"
+        containerStyles="w-[65%] min-h-[65px] mx-auto rounded-full"
         handlePress={onClick}
       />
     </SafeAreaView>

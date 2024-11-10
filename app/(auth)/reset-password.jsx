@@ -45,7 +45,7 @@ const ResetPassword = () => {
                     <CustomButton 
                     title="Reset"
                     handlePress={clickReset}
-                    containerStyles={"mt-7 w-[40%] mx-auto rounded-3xl"}
+                    containerStyles={"mt-7 w-[40%] min-h-[65px] mx-auto rounded-3xl"}
                     />
                 </View>
             </View>
