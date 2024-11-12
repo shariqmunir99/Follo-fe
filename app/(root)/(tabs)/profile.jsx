@@ -18,7 +18,7 @@ const profile = () => {
         }
     }, [dp]);
     const edit = async () => {
-        router.push('/homepage');
+        router.push('/editprofile');
     }
 
   return (

@@ -7,6 +7,7 @@ import discover from '../../../assets/icons/search.png';
 import interest from '../../../assets/icons/star.png';
 import favorite from '../../../assets/icons/heart.png';
 import { colors, fonts } from '../../../tailwind.config.js';
+import editprofile from './editprofile.jsx';
 
 const TabIcon = ({icon, color, name, focused}) => {
     return (
@@ -115,6 +116,29 @@ const TabsLayout = () => {
                 tabBarIcon: ({color, focused}) => (
                     <TabIcon 
                         icon = {profile}
+                        color = {color}
+                        name ="Me"
+                        focused = {focused}
+                    />
+                )
+            }}
+        />
+      <Tabs.Screen 
+            name="editprofile"
+            options ={{
+                title : "Edit Profile",
+                headerShown : true,
+                headerStyle: {
+                    backgroundColor: colors.Main,
+                },
+                headerTitleAlign: 'center',
+                headerTitleStyle: {
+                    color: colors.Vivid,
+                    fontFamily: fonts.PoppinsSemiBold ,
+                },
+                tabBarIcon: ({color, focused}) => (
+                    <TabIcon 
+                        icon = {editprofile}
                         color = {color}
                         name ="Me"
                         focused = {focused}
