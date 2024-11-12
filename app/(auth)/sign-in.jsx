@@ -13,7 +13,7 @@ const SignIn = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const submit = async () => {
-    router.push('/homepage');
+    router.push('/dashboard');
   }
   return (
     <SafeAreaView className="bg-Main h-full">

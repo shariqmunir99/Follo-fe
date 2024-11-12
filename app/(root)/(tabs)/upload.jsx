@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const discover = () => {
+const upload = () => {
   return (
     <View>
-      <Text>discover</Text>
+      <Text>upload</Text>
     </View>
   )
 }
 
-export default discover
+export default upload
 
 const styles = StyleSheet.create({})
