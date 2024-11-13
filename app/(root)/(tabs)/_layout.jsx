@@ -1,10 +1,10 @@
 import { View, Text, Image } from 'react-native'
 import React from 'react'
 import { Tabs, Redirect } from "expo-router";
-import profile from '../../../assets/icons/profile.png';
-import myevents from '../../../assets/icons/myevents.png';
-import upload from '../../../assets/icons/upload.png';
-import dashboard from '../../../assets/icons/dashboard.png';
+import profileIcon from '../../../assets/icons/profile.png';
+import myeventsIcon from '../../../assets/icons/myevents.png';
+import uploadIcon from '../../../assets/icons/upload.png';
+import dashboardIcon from '../../../assets/icons/dashboard.png';
 import { colors, fonts } from '../../../tailwind.config.js';
 
 const TabIcon = ({ icon, color, name, focused }) => {
@@ -53,7 +53,7 @@ const TabsLayout = () => {
                         },
                         tabBarIcon: ({ color, focused }) => (
                             <TabIcon
-                                icon={dashboard}
+                                icon={dashboardIcon}
                                 color={color}
                                 name="Dashboard"
                                 focused={focused}
@@ -68,7 +68,7 @@ const TabsLayout = () => {
                         headerShown: false,
                         tabBarIcon: ({ color, focused }) => (
                             <TabIcon
-                                icon={upload}
+                                icon={uploadIcon}
                                 color={color}
                                 name="Upload"
                                 focused={focused}
@@ -80,10 +80,18 @@ const TabsLayout = () => {
                     name="myevents"
                     options={{
                         title: "My Events",
-                        headerShown: false,
+                        headerShown: true,
+                        headerStyle: {
+                            backgroundColor: colors.Main,
+                        },
+                        headerTitleAlign: 'center',
+                        headerTitleStyle: {
+                            color: colors.Text,
+                            fontFamily: fonts.PoppinsRegular,
+                        },
                         tabBarIcon: ({ color, focused }) => (
                             <TabIcon
-                                icon={myevents}
+                                icon={myeventsIcon}
                                 color={color}
                                 name="MyEvents"
                                 focused={focused}
@@ -106,7 +114,7 @@ const TabsLayout = () => {
                         },
                         tabBarIcon: ({ color, focused }) => (
                             <TabIcon
-                                icon={profile}
+                                icon={profileIcon}
                                 color={color}
                                 name="Me"
                                 focused={focused}

@@ -17,32 +17,30 @@ const dashboard = () => {
       interested: 230,
       date: "Nov 15, 2024",
       type: "Music Concert",
-      icon: testpic,
+      pic: testpic,
     },
     {
       favorites: 85,
       interested: 150,
       date: "Nov 20, 2024",
       type: "Art Exhibition",
-      icon: testpic,
+      pic: testpic,
     },
     {
       favorites: 300,
       interested: 450,
       date: "Dec 1, 2024",
       type: "Tech Conference",
-      icon: testpic,
+      pic: testpic,
     },
     {
       favorites: 200,
       interested: 320,
       date: "Dec 10, 2024",
       type: "Food Festival",
-      icon: testpic,
+      pic: testpic,
     },
   ];
-
-
   return (
     <SafeAreaView className=" bg-Main h-full">
       <ScrollView className="mx-3">
@@ -72,10 +70,10 @@ const dashboard = () => {
               <EventCard
                 key={index}
                 favorites={event.favorites}
-                interested={event.interested}
+                interests={event.interested}
                 date={event.date}
                 type={event.type}
-                icon={event.icon}
+                eventPic={event.pic}
                 containerStyles="mt-2"
               />
             ))}

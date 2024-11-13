@@ -3,12 +3,12 @@ import React from 'react'
 import heartIcon from '../assets/icons/filledheart.png';
 import starIcon from '../assets/icons/filledstar.png';
 
-const EventCard = ({ favorites, interested, type, date, containerStyles, icon }) => {
+const EventCard = ({ key, favorites, interests, type, date, containerStyles, eventPic }) => {
   return (
     <View className={`flex-row bg-MainLight px-4 py-2 rounded-2xl ${containerStyles}`}>
       <View className="w-[50%]">
         <Image
-          source={icon}
+          source={eventPic}
           className="w-[145px] h-[145px] rounded-md"
           resizeMode='contain'
         />
@@ -37,7 +37,7 @@ const EventCard = ({ favorites, interested, type, date, containerStyles, icon })
             />
           </View>
           <View className="ml-2.5">
-            <Text className="text-Text text-2xl font-PoppinsBold">{interested}</Text>
+            <Text className="text-Text text-2xl font-PoppinsBold">{interests}</Text>
           </View>
         </View>
         <Text className="mt-1 text-Text text-xl font-PoppinsSemiBold">{date}</Text>
