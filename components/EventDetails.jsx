@@ -1,10 +1,30 @@
-import { SafeAreaView, StyleSheet, Text, View, Image, Dimensions } from 'react-native'
-import React from 'react'
-import heartIcon from '../assets/icons/filledheart.png';
-import starIcon from '../assets/icons/filledstar.png';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Dimensions,
+} from "react-native";
+import React from "react";
+import { icons, images } from "../constants";
 
-const EventDetails = ({ key, dp, username, date, description, location, type, eventPic, picStyles, favorites, interests, showDeleteOption, containerStyles }) => {
-  const screenHeight = Dimensions.get('window').height;
+const EventDetails = ({
+  key,
+  dp,
+  username,
+  date,
+  description,
+  location,
+  type,
+  eventPic,
+  picStyles,
+  favorites,
+  interests,
+  showDeleteOption,
+  containerStyles,
+}) => {
+  const screenHeight = Dimensions.get("window").height;
   return (
     <SafeAreaView className={`bg-Main w-full ${containerStyles}`}>
       <View className="flex-col border-b-[1px] border-MainLight">
@@ -13,7 +33,7 @@ const EventDetails = ({ key, dp, username, date, description, location, type, ev
             <View>
               <Image
                 source={dp}
-                resizeMode='contain'
+                resizeMode="contain"
                 className="w-12 h-12 rounded-full"
               />
             </View>
@@ -26,7 +46,6 @@ const EventDetails = ({ key, dp, username, date, description, location, type, ev
               </View>
             </View>
           </View>
-
         </View>
         <View className="py-2">
           <Text className="text-Text opacity-90">{description}</Text>
@@ -53,9 +72,9 @@ const EventDetails = ({ key, dp, username, date, description, location, type, ev
             </View>
             <View className="pb-1 pl-2">
               <Image
-                source={starIcon}
+                source={icons.filledstar}
                 className="w-3 h-3 "
-                resizeMode='contain'
+                resizeMode="contain"
                 style={{ tintColor: "#faff00" }}
               />
             </View>
@@ -66,9 +85,9 @@ const EventDetails = ({ key, dp, username, date, description, location, type, ev
             </View>
             <View className="pb-1 pl-2">
               <Image
-                source={heartIcon}
+                source={icons.filledheart}
                 className="w-3 h-3 "
-                resizeMode='contain'
+                resizeMode="contain"
                 style={{ tintColor: "#faff00" }}
               />
             </View>
@@ -76,7 +95,7 @@ const EventDetails = ({ key, dp, username, date, description, location, type, ev
         </View>
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default EventDetails
+export default EventDetails;

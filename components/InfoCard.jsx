@@ -3,8 +3,8 @@ import React from 'react'
 
 const InfoCard = ({ heading, data, containerStyles, icon }) => {
     return (
-        <View className={`flex-col bg-MainLight px-4 py-2 rounded-2xl ${containerStyles}`}>
-            <View className="flex-row items-center">
+        <View className={`flex-col   bg-MainLight px-4 py-2 rounded-2xl ${containerStyles} `}>
+            <View className="flex-row  items-center">
                 <View>
                     <Image
                         source={icon}
@@ -17,8 +17,8 @@ const InfoCard = ({ heading, data, containerStyles, icon }) => {
                     <Text className="text-Text font-PoppinsBold text-3xl pl-3 pt-1.5">{heading}</Text>
                 </View>
             </View>
-            <View className="flex-row justify-end items-center pt-10">
-                <Text className="text-Vivid font-PoppinsBold text-5xl">+{data}</Text>
+            <View className="flex-row  justify-end items-center pt-10">
+                <Text className="text-Vivid  font-PoppinsBold pt-3 text-5xl">+{data}</Text>
             </View>
         </View>
     )

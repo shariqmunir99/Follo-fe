@@ -1,12 +1,11 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
-import testpic from '../../../assets/pngs/event.jpg';
-import EventDetails from '../../../components/EventDetails';
-import DP from '../../../assets/pngs/dp.jpeg';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import EventDetails from "../../../components/EventDetails";
+import { icons, images } from "../../../constants";
 
 const myevents = () => {
-  const [dp, setDp] = useState(DP);
-  const [username, setUsername] = useState("john_wick")
+  const [dp, setDp] = useState(images.johnwickdp);
+  const [username, setUsername] = useState("john_wick");
   const events = [
     {
       id: 1,
@@ -15,8 +14,9 @@ const myevents = () => {
       date: "25/12/24",
       location: "Lahore, Pakistan",
       type: "Music Concert",
-      description: "A thrilling live music concert featuring top local bands and artists.",
-      pic: testpic,
+      description:
+        "A thrilling live music concert featuring top local bands and artists.",
+      pic: images.event,
     },
     {
       id: 2,
@@ -25,8 +25,9 @@ const myevents = () => {
       date: "15/12/24",
       location: "Karachi, Pakistan",
       type: "Food Festival",
-      description: "Enjoy delicious cuisines from around the world at the annual food festival.",
-      pic: testpic,
+      description:
+        "Enjoy delicious cuisines from around the world at the annual food festival.",
+      pic: images.event,
     },
     {
       id: 3,
@@ -35,8 +36,9 @@ const myevents = () => {
       date: "14/12/24",
       location: "Islamabad, Pakistan",
       type: "Tech Conference",
-      description: "A gathering of tech enthusiasts to discuss the latest innovations in technology.",
-      pic: testpic,
+      description:
+        "A gathering of tech enthusiasts to discuss the latest innovations in technology.",
+      pic: images.event,
     },
     {
       id: 4,
@@ -45,8 +47,9 @@ const myevents = () => {
       date: "30/11/24",
       location: "Faisalabad, Pakistan",
       type: "Art Exhibition",
-      description: "Explore the latest artwork from talented local and international artists.",
-      pic: testpic,
+      description:
+        "Explore the latest artwork from talented local and international artists.",
+      pic: images.event,
     },
     {
       id: 5,
@@ -55,13 +58,14 @@ const myevents = () => {
       date: "20/06/23",
       location: "Multan, Pakistan",
       type: "Sports Event",
-      description: "Watch an exciting cricket match between top national teams.",
-      pic: testpic,
+      description:
+        "Watch an exciting cricket match between top national teams.",
+      pic: images.event,
     },
-  ]
+  ];
   return (
     <SafeAreaView className="h-full bg-Main">
-      <ScrollView className="mx-3 mb-10">
+      <ScrollView className="mx-3">
         {events.map((event, index) => (
           <EventDetails
             key={index}
@@ -77,14 +81,13 @@ const myevents = () => {
             username={username}
             location={event.location}
             picStyles={"h-[20%]"}
-
           />
         ))}
       </ScrollView>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default myevents
+export default myevents;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
