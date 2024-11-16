@@ -1,4 +1,11 @@
-import { StyleSheet,Text,View,ScrollView,Image,TouchableOpacity,} from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import InputField from "../../../components/InputField";
@@ -21,15 +28,13 @@ const EditProfile = () => {
   const [dp, setDp] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  
   const fetchProfileData = async () => {
-    
     const userData = {
-      username: "Faseeh Ahmed",
-      accountFrom: "LinkedIn",
+      username: "Faseeh_Ahmed",
+      accountFrom: "Lahore/Pakistan",
       oldPassword: "********",
       newPasssword: "",
-      profilePicture: defaultDp, 
+      profilePicture: defaultDp,
     };
 
     setForm({
@@ -69,7 +74,7 @@ const EditProfile = () => {
   const submit = async () => {
     // Submit the form data
     console.log("Updated Profile Data:", form);
-    router.push("/profile");
+    router.back();
   };
 
   return (
@@ -98,38 +103,37 @@ const EditProfile = () => {
           </View>
 
           <Spacer height={20} />
-          <View className="w-full justify-center">
+          <View className="w-full justify-center mt-10">
             <View className="px-8">
               <InputField
                 title="Username"
                 value={form.username}
                 placeHolder="Enter your username"
                 handleChangeText={(e) => setForm({ ...form, username: e })}
-                containerStyles={"mt-7"}
+                containerStyles={"mt-5"}
               />
               <InputField
                 title="Account from"
                 value={form.accountFrom}
                 placeHolder="Account from"
                 handleChangeText={(e) => setForm({ ...form, accountFrom: e })}
-                containerStyles={"mt-7"}
+                containerStyles={"mt-5"}
               />
               <InputField
                 title="Old Password"
                 value={form.oldPassword}
                 placeHolder="Enter old password"
                 handleChangeText={(e) => setForm({ ...form, oldPassword: e })}
-                containerStyles={"mt-7"}
+                containerStyles={"mt-5"}
               />
               <InputField
                 title="New Password"
                 value={form.newPasssword}
                 placeHolder="Enter new password"
                 handleChangeText={(e) => setForm({ ...form, newPasssword: e })}
-                containerStyles={"mt-7"}
+                containerStyles={"mt-5"}
               />
               <Spacer height={20} />
-
               <CustomButton
                 title="Update"
                 containerStyles={
