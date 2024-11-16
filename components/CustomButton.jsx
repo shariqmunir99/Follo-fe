@@ -12,7 +12,12 @@ const CustomButton = ({
   icon,
   iconOnly,
   iconStyles,
+  empty,
 }) => {
+  if (empty === "yes") {
+    return null; // Do not render anything if empty is 'yes'
+  }
+
   return (
     <TouchableOpacity
       onPress={handlePress}

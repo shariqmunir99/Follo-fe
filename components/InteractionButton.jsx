@@ -14,7 +14,7 @@ const buttonWidth = width * 0.1;
 const buttonHeight = height * 0.05;
 
 const InteractionButton = ({
-  role,
+  user,
   iconFor,
   value,
   onPress,
@@ -22,14 +22,11 @@ const InteractionButton = ({
   eventId,
 }) => {
   const [isPressed, setIsPressed] = useState(false);
-  // const handlePress = () => {
-  //   if (role === "organizer") {
-  //     onPress();
-  //   } else if (role === "user") {
-  //     //onPress();
-  //     setIsPressed(!isPressed);
-  //   }
-  // };
+  const [role, setRole] = useState("user");
+  const userPressed = () => {
+    setIsPressed(!isPressed);
+    //update in database
+  };
   const getIcon = () => {
     if (role === "organizer") {
       if (iconFor === "favorite") {
@@ -38,9 +35,9 @@ const InteractionButton = ({
         return icons.filledstar;
       }
     } else if (role === "user") {
-      if (iconFor === "favorite") {
+      if (iconFor === "interest") {
         return isPressed ? icons.filledstar : icons.star;
-      } else if (iconFor === "interest") {
+      } else if (iconFor === "favorite") {
         return isPressed ? icons.filledheart : icons.heart;
       }
     }
@@ -48,7 +45,15 @@ const InteractionButton = ({
   };
   const iconSize = iconFor === "favorite" ? 13 : 12;
   return (
-    <TouchableOpacity onPress={() => onPress(eventId)}>
+    <TouchableOpacity
+      onPress={() => {
+        if (role === "user") {
+          userPressed();
+        } else {
+          onPress(eventId);
+        }
+      }}
+    >
       <View className="bg-MainLight  h-[35px] flex-row rounded-md items-center p-2 box-border">
         {!isPressed && (
           <View className=" my-auto">
@@ -58,7 +63,7 @@ const InteractionButton = ({
         <View className={`${!isPressed ? "pl-1" : ""}`}>
           <Image
             source={getIcon()}
-            className={``}
+            className={`${isPressed ? "px-3" : ""}`}
             resizeMode="contain"
             style={{ width: iconSize, height: iconSize, tintColor: "#faff00" }}
           />

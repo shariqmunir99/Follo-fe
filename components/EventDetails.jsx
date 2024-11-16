@@ -6,15 +6,18 @@ import {
   Image,
   Dimensions,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { icons, images } from "../constants";
 import InteractionButton from "./InteractionButton";
 import CustomButton from "./CustomButton";
 import { router } from "expo-router";
 import { useState } from "react";
+import { TouchableOpacity } from "react-native";
 
 const EventDetails = ({ user, event, button, containerStyles }) => {
   const screenHeight = Dimensions.get("window").height;
+  const [isFollowed, setIsFollowed] = useState(false);
+
   const organizerPressedInterest = (eventId) => {
     router.push({
       pathname: "/analytics",
@@ -33,8 +36,15 @@ const EventDetails = ({ user, event, button, containerStyles }) => {
       },
     });
   };
+  const handleFollowButtonPress = () => {
+    if (isFollowed) {
+      //remove this organizer from the folLowing list
+    } else {
+      //add this org in the following list
+    }
+    setIsFollowed(true);
+  };
 
-  const [isFollowed, setIsFollowed] = useState(false);
   return (
     <SafeAreaView className={`bg-Main w-full ${containerStyles}`}>
       <View className="flex-col border-b-[1px] border-MainLight pb-2 px-3">
@@ -69,6 +79,18 @@ const EventDetails = ({ user, event, button, containerStyles }) => {
               />
             </View>
           )}
+          {button === "follow" && !isFollowed && (
+            <TouchableOpacity
+              onPress={handleFollowButtonPress}
+              className="bg-Vivid p-2 rounded-lg"
+            >
+              <Image
+                source={icons.plus}
+                className={`w-4 h-4`}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          )}
         </View>
         <View className="py-2">
           <Text className="text-Text opacity-90">{event.description}</Text>
@@ -90,14 +112,14 @@ const EventDetails = ({ user, event, button, containerStyles }) => {
         </View>
         <View className="py-2 flex-row justify-between items-baseline">
           <InteractionButton
-            role={"organizer"}
+            user={user}
             iconFor={"favorite"}
             onPress={organizerPressedFavorite}
             value={event.favorites}
             eventId={event.id}
           />
           <InteractionButton
-            role={"organizer"}
+            user={user}
             iconFor={"interest"}
             onPress={organizerPressedInterest}
             value={event.interests}

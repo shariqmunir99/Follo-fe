@@ -65,7 +65,7 @@ const myevents = () => {
   ];
   return (
     <SafeAreaView className="h-full bg-Main">
-      <ScrollView className=" mt-7">
+      <ScrollView className=" mt-2">
         {events.map((event, index) => (
           <EventDetails
             user={{

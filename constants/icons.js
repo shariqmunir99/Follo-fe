@@ -19,6 +19,8 @@ import profile from "../assets/icons/profile.png";
 import star from "../assets/icons/star.png";
 import upload from "../assets/icons/upload.png";
 import welcome from "../assets/icons/welcome.png";
+import plus from "../assets/icons/plus.png";
+
 
 export default {
   calender,
@@ -42,6 +44,7 @@ export default {
   star,
   upload,
   welcome,
+  plus,
 };
 
 
