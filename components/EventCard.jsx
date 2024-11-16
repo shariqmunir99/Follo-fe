@@ -2,24 +2,35 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import { icons, images } from "../constants";
 import { TouchableOpacity } from "react-native";
+import { router } from "expo-router";
 
-const EventCard = ({
-  key,
-  favorites,
-  interests,
-  type,
-  date,
-  containerStyles,
-  eventPic,
-  onClick,
-}) => {
+const EventCard = ({ event, user, containerStyles }) => {
+  const handlePress = (event) => {
+    router.push({
+      pathname: "/event-detail",
+      params: {
+        id: event.id,
+        location: event.location,
+        type: event.type,
+        pic: event.pic,
+        favorites: event.favorites,
+        interests: event.interests,
+        description: event.description,
+        date: event.date,
+        dp: user.dp,
+        username: user.username,
+        role: user.role,
+      },
+    });
+  };
   return (
     <TouchableOpacity
       className={`flex-row bg-MainLight px-4 py-2 rounded-2xl ${containerStyles}`}
+      onPress={() => handlePress(event)}
     >
       <View className="w-[50%]">
         <Image
-          source={eventPic}
+          source={event.pic}
           className="w-[145px] h-[145px] rounded-md"
           resizeMode="contain"
         />
@@ -36,7 +47,7 @@ const EventCard = ({
           </View>
           <View className="ml-2.5">
             <Text className="text-Text text-2xl font-PoppinsBold">
-              {favorites}
+              {event.favorites}
             </Text>
           </View>
         </View>
@@ -51,15 +62,15 @@ const EventCard = ({
           </View>
           <View className="ml-2.5">
             <Text className="text-Text text-2xl font-PoppinsBold">
-              {interests}
+              {event.interests}
             </Text>
           </View>
         </View>
         <Text className="mt-1 text-Text text-xl font-PoppinsSemiBold">
-          {date}
+          {event.date}
         </Text>
         <Text className="mt-1 text-Text text-xl font-PoppinsSemiBold">
-          {type}
+          {event.type}
         </Text>
       </View>
     </TouchableOpacity>

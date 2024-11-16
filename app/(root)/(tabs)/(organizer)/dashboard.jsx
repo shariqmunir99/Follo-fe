@@ -1,48 +1,64 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
-import InfoCard from "../../../components/InfoCard"; // Importing the test image
-import EventCard from "../../../components/EventCard";
-import { icons, images } from "../../../constants";
+import InfoCard from "../../../../components/InfoCard"; // Importing the test image
+import EventCard from "../../../../components/EventCard";
+import { icons, images } from "../../../../constants";
+import { router } from "expo-router";
 
 const dashboard = () => {
   const [followers, setFollowers] = useState("2.1K");
   const [interactions, setInteractions] = useState("11.3k");
+  const dp = images.johnwickdp;
+  const username = "john_wick";
+  const role = "organizer";
 
-  // List of events (hardcoded)
   const events = [
     {
-      favorites: 120,
-      interested: 230,
+      id: 1,
       date: "Nov 15, 2024",
+      description: "Join us for an amazing night of music and entertainment.",
+      location: "Central Park, New York",
       type: "Music Concert",
-      pic: images.event,
+      favorites: 120,
+      interests: 230,
+      pic: images.eventPic,
     },
     {
-      favorites: 85,
-      interested: 150,
+      id: 2,
       date: "Nov 20, 2024",
+      description: "Explore beautiful artworks from renowned artists.",
+      location: "Art Gallery, San Francisco",
       type: "Art Exhibition",
-      pic: images.event,
+      favorites: 85,
+      interests: 150,
+      pic: images.eventPic,
     },
     {
-      favorites: 300,
-      interested: 450,
+      id: 3,
       date: "Dec 1, 2024",
+      description: "A gathering of tech enthusiasts and innovators.",
+      location: "Tech Hall, Silicon Valley",
       type: "Tech Conference",
-      pic: images.event,
+      favorites: 300,
+      interests: 450,
+      pic: images.eventPic,
     },
     {
-      favorites: 200,
-      interested: 320,
+      id: 4,
       date: "Dec 10, 2024",
+      description: "Enjoy delicious food from around the world.",
+      location: "Food Street, Los Angeles",
       type: "Food Festival",
-      pic: images.event,
+      favorites: 200,
+      interests: 320,
+      pic: images.eventPic,
     },
   ];
+
   return (
     <SafeAreaView className=" bg-Main h-full">
       <ScrollView className="mx-3">
-        <View className="mt-5">
+        <View className="mt-10">
           <View>
             <Text className="text-Vivid font-PoppinsExtraBold text-xl">
               Last 30 Days
@@ -70,12 +86,8 @@ const dashboard = () => {
           <View className="pb-10 mt-2">
             {events.map((event, index) => (
               <EventCard
-                key={index}
-                favorites={event.favorites}
-                interests={event.interested}
-                date={event.date}
-                type={event.type}
-                eventPic={event.pic}
+                event={event}
+                user={{ username, dp, role }}
                 containerStyles="mt-2"
               />
             ))}

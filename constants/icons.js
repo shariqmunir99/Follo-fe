@@ -18,6 +18,7 @@ import search from "../assets/icons/search.png";
 import profile from "../assets/icons/profile.png";
 import star from "../assets/icons/star.png";
 import upload from "../assets/icons/upload.png";
+import welcome from "../assets/icons/welcome.png";
 
 export default {
   calender,
@@ -40,6 +41,7 @@ export default {
   profile,
   star,
   upload,
+  welcome,
 };
 
 

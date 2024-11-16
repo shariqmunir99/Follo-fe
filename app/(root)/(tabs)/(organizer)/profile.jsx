@@ -2,9 +2,9 @@ import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useState } from "react";
 import { Link, router } from "expo-router";
-import CustomButton from "../../../components/CustomButton";
-import InfoField from "../../../components/InfoField";
-import { icons, images } from "../../../constants";
+import CustomButton from "../../../../components/CustomButton";
+import InfoField from "../../../../components/InfoField";
+import { icons, images } from "../../../../constants";
 
 export const profile = () => {
   const [dp, setDp] = useState(null);
@@ -53,6 +53,8 @@ export const profile = () => {
             }
             textStyles={"text-Main"}
             handlePress={edit}
+            isIcon={false}
+            iconOnly={false}
           />
           <View className="flex-col items-center mt-5 px-2">
             <InfoField

@@ -1,7 +1,7 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
-import EventDetails from "../../../components/EventDetails";
-import { icons, images } from "../../../constants";
+import EventDetails from "../../../../components/EventDetails";
+import { icons, images } from "../../../../constants";
 
 const myevents = () => {
   const [dp, setDp] = useState(images.johnwickdp);
@@ -16,7 +16,7 @@ const myevents = () => {
       type: "Music Concert",
       description:
         "A thrilling live music concert featuring top local bands and artists.",
-      pic: images.event,
+      pic: images.eventPic,
     },
     {
       id: 2,
@@ -27,7 +27,7 @@ const myevents = () => {
       type: "Food Festival",
       description:
         "Enjoy delicious cuisines from around the world at the annual food festival.",
-      pic: images.event,
+      pic: images.eventPic,
     },
     {
       id: 3,
@@ -38,7 +38,7 @@ const myevents = () => {
       type: "Tech Conference",
       description:
         "A gathering of tech enthusiasts to discuss the latest innovations in technology.",
-      pic: images.event,
+      pic: images.eventPic,
     },
     {
       id: 4,
@@ -49,7 +49,7 @@ const myevents = () => {
       type: "Art Exhibition",
       description:
         "Explore the latest artwork from talented local and international artists.",
-      pic: images.event,
+      pic: images.eventPic,
     },
     {
       id: 5,
@@ -60,27 +60,21 @@ const myevents = () => {
       type: "Sports Event",
       description:
         "Watch an exciting cricket match between top national teams.",
-      pic: images.event,
+      pic: images.eventPic,
     },
   ];
   return (
     <SafeAreaView className="h-full bg-Main">
-      <ScrollView className="mx-3">
+      <ScrollView className=" mt-7">
         {events.map((event, index) => (
           <EventDetails
-            key={index}
-            favorites={event.favorites}
-            interests={event.interests}
-            date={event.date}
-            type={event.type}
-            eventPic={event.pic}
-            containerStyles="mt-2"
-            showDeleteOption={true}
-            description={event.description}
-            dp={dp}
-            username={username}
-            location={event.location}
-            picStyles={"h-[20%]"}
+            user={{
+              dp: dp,
+              username: username,
+            }}
+            event={event}
+            containerStyles={"mt-10"}
+            button={"delete"}
           />
         ))}
       </ScrollView>

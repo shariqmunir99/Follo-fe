@@ -6,90 +6,97 @@ import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
 import CheckBox from "react-native-check-box";
 
-
 const SignUp = () => {
-  const [organizerCheck, setOrganizerCheck] = useState(false)
+  const [organizerCheck, setOrganizerCheck] = useState(false);
   const [form, setForm] = useState({
-    username:'',
-    email : '',
-    accountfrom: '',
-    password : '',
-    cpassword : ''
+    username: "",
+    email: "",
+    accountfrom: "",
+    password: "",
+    cpassword: "",
   });
 
   const onClick = () => {
     if (form.password !== form.cpassword) {
       Alert.alert("Error", "Passwords do not match");
     } else {
-      router.push('/sign-in');
+      router.push("/sign-in");
     }
   };
   return (
     <SafeAreaView className="bg-Main h-full">
       <ScrollView>
         <View className="w-full justify-center ">
-          <View className = "">
-            <Text className="font-Rakkas text-Vivid text-8xl text-center pt-[50px]">Follo</Text>
+          <View className="">
+            <Text className="font-Rakkas text-Vivid text-8xl text-center pt-[50px]">
+              Follo
+            </Text>
           </View>
-          <View className ="px-8">
-            <Text className="text-Text font-PoppinsSemiBold text-3xl">Sign up</Text>
-            <InputField 
+          <View className="px-8">
+            <Text className="text-Text font-PoppinsSemiBold text-3xl">
+              Sign up
+            </Text>
+            <InputField
               title="Username"
               placeHolder="Moiz Asif"
               value={form.username}
-              handleChangeText={(e) => setForm({...form, username: e})}
+              handleChangeText={(e) => setForm({ ...form, username: e })}
               containerStyles={"mt-7"}
             />
-            <InputField 
-                title="Email"
-                value={form.email}
-                placeHolder="moiz@follo.com"
-                handleChangeText={(e) => setForm({...form, email: e})}
-                containerStyles={"mt-7"}
-                keyboardType="email-address"
+            <InputField
+              title="Email"
+              value={form.email}
+              placeHolder="moiz@follo.com"
+              handleChangeText={(e) => setForm({ ...form, email: e })}
+              containerStyles={"mt-7"}
+              keyboardType="email-address"
             />
-            <InputField 
+            <InputField
               title="Account From"
               placeHolder="Lahore/Pakistan"
               value={form.accountfrom}
-              handleChangeText = {(e) => setForm({...form, accountfrom: e})}
+              handleChangeText={(e) => setForm({ ...form, accountfrom: e })}
               containerStyles={"mt-7"}
             />
-            <InputField 
+            <InputField
               title="Password"
               placeholder="********"
               value={form.password}
-              handleChangeText = {(e) => setForm({...form, password: e})}
+              handleChangeText={(e) => setForm({ ...form, password: e })}
               containerStyles="mt-7"
             />
-            <InputField 
+            <InputField
               title="Confirm Password"
               placeHolder="********"
               value={form.cpassword}
-              handleChangeText = {(e) => setForm({...form, cpassword: e})}
+              handleChangeText={(e) => setForm({ ...form, cpassword: e })}
               containerStyles={"mt-7"}
-              confirmPasswordProp = {form.password}
+              confirmPasswordProp={form.password}
             />
-            <View className = "flex-row mt-5 items-center">
-              <Text className="text-Text font-PoppinsRegular pr-2">Sign up as Organizer</Text>
-              <CheckBox 
-                isChecked={organizerCheck} 
+            <View className="flex-row mt-5 items-center">
+              <Text className="text-Text font-PoppinsRegular pr-2">
+                Sign up as Organizer
+              </Text>
+              <CheckBox
+                isChecked={organizerCheck}
                 onClick={() => setOrganizerCheck(!organizerCheck)}
                 checkedCheckBoxColor="#FAFF00"
                 uncheckedCheckBoxColor="#ffffff"
-                
               />
             </View>
-            <CustomButton 
+            <CustomButton
               title="Sign up"
               handlePress={onClick}
-              containerStyles={"mt-7 mb-10 w-[40%]  min-h-[65px] mx-auto rounded-3xl"}
+              containerStyles={
+                "mt-7 mb-10 w-[40%]  min-h-[65px] mx-auto rounded-3xl"
+              }
+              isIcon={false}
+              iconOnly={false}
             />
           </View>
         </View>
       </ScrollView>
     </SafeAreaView>
-
   );
 };
 

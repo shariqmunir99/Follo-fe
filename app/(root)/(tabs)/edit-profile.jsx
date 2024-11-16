@@ -77,6 +77,8 @@ const editprofile = () => {
                 textStyles={"text-Main"}
                 handlePress={submit}
                 isLoading={isSubmitting}
+                isIcon={false}
+                iconOnly={false}
               />
             </View>
           </View>
