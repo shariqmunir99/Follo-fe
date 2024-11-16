@@ -14,7 +14,14 @@ import { router } from "expo-router";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";
 
-const EventDetails = ({ user, event, button, containerStyles }) => {
+const EventDetails = ({
+  user,
+  event,
+  button,
+  containerStyles,
+  interactionButtonPressed,
+  interactionType,
+}) => {
   const screenHeight = Dimensions.get("window").height;
   const [isFollowed, setIsFollowed] = useState(false);
 
@@ -110,21 +117,52 @@ const EventDetails = ({ user, event, button, containerStyles }) => {
             style={{ height: screenHeight * 0.3 }}
           />
         </View>
-        <View className="py-2 flex-row justify-between items-baseline">
-          <InteractionButton
-            user={user}
-            iconFor={"favorite"}
-            onPress={organizerPressedFavorite}
-            value={event.favorites}
-            eventId={event.id}
-          />
-          <InteractionButton
-            user={user}
-            iconFor={"interest"}
-            onPress={organizerPressedInterest}
-            value={event.interests}
-            eventId={event.id}
-          />
+        <View
+          className={`py-2 flex-row ${interactionButtonPressed === "yes" ? "justify-center" : "justify-between"} items-baseline`}
+        >
+          {interactionButtonPressed === "yes" &&
+            interactionType === "favorite" && (
+              <InteractionButton
+                user={user}
+                iconFor={"favorite"}
+                onPress={organizerPressedFavorite}
+                value={event.favorites}
+                eventId={event.id}
+                alreadyPressed={interactionButtonPressed}
+              />
+            )}
+
+          {interactionButtonPressed === "yes" &&
+            interactionType === "interest" && (
+              <InteractionButton
+                user={user}
+                iconFor={"interest"}
+                onPress={organizerPressedInterest}
+                value={event.interests}
+                eventId={event.id}
+                alreadyPressed={interactionButtonPressed}
+              />
+            )}
+
+          {/* If interactionButtonPressed is not 'yes', show both buttons */}
+          {interactionButtonPressed !== "yes" && (
+            <>
+              <InteractionButton
+                user={user}
+                iconFor={"favorite"}
+                onPress={organizerPressedFavorite}
+                value={event.favorites}
+                eventId={event.id}
+              />
+              <InteractionButton
+                user={user}
+                iconFor={"interest"}
+                onPress={organizerPressedInterest}
+                value={event.interests}
+                eventId={event.id}
+              />
+            </>
+          )}
         </View>
       </View>
     </SafeAreaView>

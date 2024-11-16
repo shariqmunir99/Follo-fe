@@ -6,12 +6,8 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { icons } from "../constants";
-
-const { width, height } = Dimensions.get("window");
-const buttonWidth = width * 0.1;
-const buttonHeight = height * 0.05;
 
 const InteractionButton = ({
   user,
@@ -20,6 +16,7 @@ const InteractionButton = ({
   onPress,
   iconStyles,
   eventId,
+  alreadyPressed,
 }) => {
   const [isPressed, setIsPressed] = useState(false);
   const [role, setRole] = useState("user");
@@ -27,6 +24,10 @@ const InteractionButton = ({
     setIsPressed(!isPressed);
     //update in database
   };
+  useEffect(() => {
+    if (alreadyPressed === "yes") setIsPressed(true);
+  }, [alreadyPressed]);
+
   const getIcon = () => {
     if (role === "organizer") {
       if (iconFor === "favorite") {
@@ -56,8 +57,14 @@ const InteractionButton = ({
     >
       <View className="bg-MainLight  h-[35px] flex-row rounded-md items-center p-2 box-border">
         {!isPressed && (
-          <View className=" my-auto">
-            <Text className="text-Text font-PoppinsRegular">{value}</Text>
+          <View className=" my-auto px-1">
+            <Text className="text-Text font-PoppinsRegular">
+              {role === "user"
+                ? iconFor === "favorite"
+                  ? "Favorite"
+                  : "Interest"
+                : value}
+            </Text>
           </View>
         )}
         <View className={`${!isPressed ? "pl-1" : ""}`}>

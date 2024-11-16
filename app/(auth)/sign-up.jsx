@@ -60,7 +60,7 @@ const SignUp = () => {
             />
             <InputField
               title="Password"
-              placeholder="********"
+              placeHolder="********"
               value={form.password}
               handleChangeText={(e) => setForm({ ...form, password: e })}
               containerStyles="mt-7"

@@ -66,8 +66,8 @@ const home = () => {
     },
   ];
   return (
-    <SafeAreaView className="h-full w-full bg-Main">
-      <ScrollView className="pt-7">
+    <SafeAreaView className=" w-full bg-Main">
+      <ScrollView className="mt-7">
         {events.map((event, index) => (
           <EventDetails
             user={user}
@@ -77,6 +77,9 @@ const home = () => {
           />
         ))}
       </ScrollView>
+      {/* <View>
+        <Text className="text-Main text-3xl">123</Text>
+      </View> */}
     </SafeAreaView>
   );
 };
