@@ -14,9 +14,9 @@ const SignIn = () => {
   const [role, setRole] = useState("user");
   const submit = () => {
     if (role === "user") {
-      router.push("(user)/home");
-      } else if (role === "organizer") {
       router.push("(organizer)/dashboard");
+      } else if (role === "organizer") {
+      router.push("(user)/home");
   }
   };
   return (

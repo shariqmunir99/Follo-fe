@@ -8,7 +8,8 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import InputField from "../../../../components/InputField"; // 
+import InputField1 from "../../../../components/InputField1";  
+import InputField from "../../../../components/InputField";  
 import CustomButton from "../../../../components/CustomButton";
 import { Link, router } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
@@ -61,7 +62,7 @@ const Upload = () => {
             <Image
               source={dp}
               resizeMode="contain"
-              className="w-[150px] h-[150px] rounded-full"
+              className="w-[150px] h-[150px] "
             />
             <TouchableOpacity
               style={{
@@ -95,7 +96,7 @@ const Upload = () => {
                 handleChangeText={(e) => setForm({ ...form, type: e })}
                 containerStyles={"mt-7"}
               />
-              <InputField
+              <InputField1
                title="Description"
                placeHolder="Nice view of the crowd"
                value={form.description}

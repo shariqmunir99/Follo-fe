@@ -1,14 +1,17 @@
-import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   TextInput,
   View,
+  Image,
   TouchableOpacity,
   Platform,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { MaterialIcons } from "@expo/vector-icons";
+import React, { useState } from "react";
+import { icons, images } from "../constants";
+
 
 const DatePickerStyled = () => {
   const [form, setForm] = useState({
@@ -24,17 +27,21 @@ const DatePickerStyled = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Date</Text>
-      <View style={styles.inputContainer}>
+    <View className={`space-y-2`}>
+      <Text className="text-xl text-Text font-PoppinsLight">Date</Text>
+      <View 
+      className=" border-2 w-full h-16 px-4 bg-MainLight
+      rounded-3xl focus:border-secondary items-center flex-row"
+      >
         <TextInput
-          style={styles.textInput}
+         className="flex-1 text-white font-PoppinsRegular text-base "
           value={form.date.toLocaleDateString("en-GB")} // Format: DD.MM.YYYY
           editable={false} // Prevent manual typing
           placeholder="Select a date"
+          
         />
         <TouchableOpacity onPress={() => setShowDatePicker(true)}>
-          <MaterialIcons name="calendar-today" size={24} color="#bbb" />
+          <MaterialIcons name="calendar-today" size={24} color="#7b7b8b" />
         </TouchableOpacity>
       </View>
       {showDatePicker && (
@@ -49,27 +56,6 @@ const DatePickerStyled = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-  },
-  label: {
-    color: "#fff",
-    fontSize: 16,
-    marginBottom: 8,
-  },
-  inputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#2c034a", // Your desired dark purple background
-    borderRadius: 8,
-    padding: 12,
-  },
-  textInput: {
-    flex: 1,
-    color: "#fff",
-    fontSize: 16,
-  },
-});
+
 
 export default DatePickerStyled;
