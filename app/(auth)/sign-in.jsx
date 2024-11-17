@@ -15,9 +15,9 @@ const SignIn = () => {
   const submit = () => {
     if (role === "user") {
       router.push("(user)/home");
-    } else if (role === "organizer") {
+      } else if (role === "organizer") {
       router.push("(organizer)/dashboard");
-    }
+  }
   };
   return (
     <SafeAreaView className="bg-Main h-full">
