@@ -20,6 +20,7 @@ import star from "../assets/icons/star.png";
 import upload from "../assets/icons/upload.png";
 import welcome from "../assets/icons/welcome.png";
 import plus from "../assets/icons/plus.png";
+import down from "../assets/icons/down.png";
 
 
 export default {
@@ -45,6 +46,7 @@ export default {
   upload,
   welcome,
   plus,
+  down,
 };
 
 

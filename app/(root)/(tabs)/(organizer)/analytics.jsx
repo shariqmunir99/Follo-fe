@@ -6,12 +6,13 @@ import {
   View,
   Image,
   Animated,
+  BackHandler,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
 import { images } from "../../../../constants";
-import InteractionInfo from "../../../../components/InteractionInfo";
-import { useLocalSearchParams } from "expo-router";
+import UserInfo from "../../../../components/UserInfo";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 const analytics = () => {
   const { id, buttonPressed } = useLocalSearchParams();
@@ -33,8 +34,20 @@ const analytics = () => {
 
   const renderList = (list) =>
     list.map((user, index) => (
-      <InteractionInfo user={user} containerStyles={"mx-[3%] w-[94%] mt-2"} />
+      <UserInfo user={user} containerStyles={"mx-[3%] w-[94%] mt-2"} />
     ));
+
+  const router = useRouter();
+  useEffect(() => {
+    const backHandler = () => {
+      router.push("/myevents");
+      return true; // Return true to prevent the default behavior
+    };
+    BackHandler.addEventListener("hardwareBackPress", backHandler);
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", backHandler);
+    };
+  }, [router]);
 
   return (
     <SafeAreaView className="bg-Main w-full h-full">

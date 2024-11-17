@@ -1,7 +1,14 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  BackHandler,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import EventDetails from "../../../../components/EventDetails";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 const eventdetail = () => {
   const {
@@ -17,6 +24,18 @@ const eventdetail = () => {
     username,
     role,
   } = useLocalSearchParams();
+
+  const router = useRouter();
+  useEffect(() => {
+    const backHandler = () => {
+      router.back();
+      return true; // Return true to prevent the default behavior
+    };
+    BackHandler.addEventListener("hardwareBackPress", backHandler);
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", backHandler);
+    };
+  }, [router]);
 
   return (
     <SafeAreaView className="h-full w-full bg-Main">
