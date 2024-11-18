@@ -125,6 +125,17 @@ const TabsLayout = () => {
             ),
           }}
         />
+        <Tabs.Screen
+          name="profile-preview"
+          options={{
+            title: "Profile preview",
+            tabBarButton: () => null,
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon color={color} name="Profile preview" focused={focused} />
+            ),
+          }}
+        />
       </Tabs>
     </>
   );

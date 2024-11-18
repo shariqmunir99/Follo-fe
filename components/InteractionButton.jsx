@@ -19,7 +19,7 @@ const InteractionButton = ({
   alreadyPressed,
 }) => {
   const [isPressed, setIsPressed] = useState(false);
-  const [role, setRole] = useState("user");
+  const [role, setRole] = useState("organizer");
   const userPressed = () => {
     setIsPressed(!isPressed);
     //update in database

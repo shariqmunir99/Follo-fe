@@ -11,13 +11,13 @@ const SignIn = () => {
     password: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [role, setRole] = useState("user");
+  const [role, setRole] = useState("organizer");
   const submit = () => {
     if (role === "user") {
       router.push("(user)/home");
-      } else if (role === "organizer") {
+    } else if (role === "organizer") {
       router.push("(organizer)/dashboard");
-  }
+    }
   };
   return (
     <SafeAreaView className="bg-Main h-full">

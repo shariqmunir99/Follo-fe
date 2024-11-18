@@ -57,17 +57,31 @@ const EventDetails = ({
       <View className="flex-col border-b-[1px] border-MainLight pb-2 px-3">
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center w-[50%] mt-3">
-            <View>
+            <TouchableOpacity
+              onPress={() =>
+                router.push({
+                  pathname: "/profile-preview",
+                  params: { dp: user.dp, username: user.username },
+                })
+              }
+            >
               <Image
                 source={user.dp}
                 resizeMode="contain"
                 className="w-12 h-12 rounded-full"
               />
-            </View>
+            </TouchableOpacity>
             <View className="flex-col ml-2">
-              <View>
+              <TouchableOpacity
+                onPress={() =>
+                  router.push({
+                    pathname: "/profile-preview",
+                    params: { dp: user.dp, username: user.username },
+                  })
+                }
+              >
                 <Text className="text-Text text-xs">@{user.username}</Text>
-              </View>
+              </TouchableOpacity>
               <View>
                 <Text className="text-Vivid opacity-50 text-xs">
                   {event.date}
