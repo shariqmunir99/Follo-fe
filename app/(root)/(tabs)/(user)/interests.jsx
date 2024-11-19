@@ -1,4 +1,11 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  BackHandler,
+} from "react-native";
 import React from "react";
 import { images, icons } from "../../../../constants";
 import EventDetails from "../../../../components/EventDetails";

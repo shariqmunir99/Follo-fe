@@ -38,19 +38,25 @@ const Profile = ({
           <Text className="text-Text text-base mt-1.5">@{user.username}</Text>
           <View className="flex-row items-center justify-around w-[60%] mt-3">
             <View className="flex-col justify-between items-center">
-              <Text className="text-Text font-bold">1.9k</Text>
+              <Text className="text-Text font-bold">
+                {role === "organizer" ? user.followers : user.following}
+              </Text>
               <Text className="text-Text text-xs opacity-50">
                 {role === "user" ? "Following" : "Followers"}
               </Text>
             </View>
             <View className="flex-col justify-between items-center">
-              <Text className="text-Text font-bold">46k</Text>
+              <Text className="text-Text font-bold">
+                {role === "organizer" ? user.interests : user.interested}
+              </Text>
               <Text className="text-Text text-xs opacity-50">
                 {role === "user" ? "Interested" : "Interests"}
               </Text>
             </View>
             <View className="flex-col justify-between items-center">
-              <Text className="font-bold text-Text">27</Text>
+              <Text className="font-bold text-Text">
+                {role === "organizer" ? user.posts : user.favorited}
+              </Text>
               <Text className="text-Text text-xs opacity-50">
                 {role === "user" ? "Favorited" : "Posts"}
               </Text>
@@ -61,7 +67,7 @@ const Profile = ({
           {isPreview ? (
             <CustomButton
               title={isFollowed ? "Unfollow" : "Follow"}
-              containerStyles="w-[38%] min-h-[50px] mx-auto rounded-2xl bg-Vivid mt-5"
+              containerStyles="px-3 py-3 mx-auto rounded-2xl bg-Vivid mt-5"
               textStyles="text-Main"
               // handlePress={isFollowed ? handleUnfollow : handleFollow}
               isIcon={!isFollowed}
@@ -71,7 +77,7 @@ const Profile = ({
           ) : (
             <CustomButton
               title="Edit Profile"
-              containerStyles="w-[38%] min-h-[50px] mx-auto rounded-2xl bg-Vivid mt-5"
+              containerStyles="px-3 py-3 mx-auto rounded-2xl bg-Vivid mt-5"
               textStyles="text-Main"
               handlePress={handlePress}
               isIcon={false}
@@ -84,13 +90,13 @@ const Profile = ({
               <>
                 <InfoField
                   primary={"Joined on"}
-                  secondary={"21/10/2024"}
+                  secondary={user.joinon}
                   icon={icons.calender}
                   containerStyles={"mt-3"}
                 />
                 <InfoField
                   primary={"Account from"}
-                  secondary={"Lahore, Pakistan"}
+                  secondary={user.location}
                   icon={icons.location}
                   containerStyles={"mt-3"}
                 />
@@ -100,11 +106,11 @@ const Profile = ({
                   containerStyles={"mt-3"}
                 />
                 <CustomButton
-                  containerStyles={"w-full rounded-3xl bg-Vivid mt-9 p-3 mb-10"}
+                  containerStyles={"w-full rounded-2xl bg-Vivid mt-9 p-3 mb-10"}
                   isIcon={true}
                   title={"Logout"}
                   icon={icons.logout}
-                  textStyles={"text-black"}
+                  textStyles={"text-Main"}
                   iconStyles={"ml-1"}
                   handlePress={() => {
                     router.replace("/sign-in");

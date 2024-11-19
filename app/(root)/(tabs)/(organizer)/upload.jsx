@@ -5,11 +5,12 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  BackHandler,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import InputField1 from "../../../../components/InputField1";  
-import InputField from "../../../../components/InputField";  
+import InputField1 from "../../../../components/InputField1";
+import InputField from "../../../../components/InputField";
 import CustomButton from "../../../../components/CustomButton";
 import { Link, router } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
@@ -97,27 +98,27 @@ const Upload = () => {
                 containerStyles={"mt-7"}
               />
               <InputField1
-               title="Description"
-               placeHolder="Nice view of the crowd"
-               value={form.description}
-               handleChangeText={(e) => setForm({ ...form, description: e })}
-               containerStyles={"mt-7"}
+                title="Description"
+                placeHolder="Nice view of the crowd"
+                value={form.description}
+                handleChangeText={(e) => setForm({ ...form, description: e })}
+                containerStyles={"mt-7"}
               />
               <InputField
-               title="Venue"
-               placeHolder="New York,USA"
-               value={form.venue}
-               handleChangeText={(e) => setForm({ ...form,venue: e })}
-               containerStyles={"mt-7"}
+                title="Venue"
+                placeHolder="New York,USA"
+                value={form.venue}
+                handleChangeText={(e) => setForm({ ...form, venue: e })}
+                containerStyles={"mt-7"}
               />
-               <Spacer height={20} />
-               <DatePickerStyled
+              <Spacer height={20} />
+              <DatePickerStyled
                 value={form.date}
                 onChange={(selectedDate) =>
                   setForm({ ...form, date: selectedDate })
                 }
               />
-              
+
               <Spacer height={20} />
               <CustomButton
                 title="Update"
@@ -139,6 +140,3 @@ const Upload = () => {
 };
 
 export default Upload;
-
-
-  

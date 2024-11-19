@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   ScrollView,
+  BackHandler,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import SearchBar from "../../../../components/SearchBar";

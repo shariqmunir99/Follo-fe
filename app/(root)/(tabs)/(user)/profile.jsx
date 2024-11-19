@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Image,
+  BackHandler,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useState } from "react";
 import { Link, router } from "expo-router";
@@ -20,16 +27,18 @@ export const profile = () => {
   const [isEdit, setIsEdit] = useState(false);
 
   return (
-    <Profile
-      user={{
-        username: "john_wick",
-        dp: images.johnwickdp,
-      }}
-      role={"user"}
-      isPreview={false}
-      handlePress={edit}
-      isFollowed={true}
-    />
+    <ScrollView>
+      <Profile
+        user={{
+          username: "john_wick",
+          dp: images.johnwickdp,
+        }}
+        role={"user"}
+        isPreview={false}
+        handlePress={edit}
+        isFollowed={true}
+      />
+    </ScrollView>
   );
 };
 

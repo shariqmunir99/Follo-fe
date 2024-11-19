@@ -1,11 +1,32 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
-import EventDetails from "../../../../components/EventDetails";
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  BackHandler,
+  RefreshControl,
+} from "react-native";
+import React, { useState, useCallback } from "react";
 import { icons, images } from "../../../../constants";
+import EventDetails from "../../../../components/EventDetails";
+import { usePullToRefresh } from "../../../../constants/functions";
 
 const myevents = () => {
   const [dp, setDp] = useState(images.johnwickdp);
   const [username, setUsername] = useState("john_wick");
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+
+    // Simulate a network request or async operation (replace with actual logic)
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000); // This simulates a 2-second refresh time
+  }, []);
+
   const events = [
     {
       id: 1,
@@ -65,7 +86,12 @@ const myevents = () => {
   ];
   return (
     <SafeAreaView className="h-full bg-Main">
-      <ScrollView className=" mt-2">
+      <ScrollView
+        className=" mt-7"
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         {events.map((event, index) => (
           <EventDetails
             user={{
@@ -73,7 +99,7 @@ const myevents = () => {
               username: username,
             }}
             event={event}
-            containerStyles={"mt-10"}
+            containerStyles={""}
             button={"delete"}
           />
         ))}

@@ -40,7 +40,8 @@ const analytics = () => {
   const router = useRouter();
   useEffect(() => {
     const backHandler = () => {
-      router.push("/myevents");
+      router.back();
+      console.log("Router.back called");
       return true; // Return true to prevent the default behavior
     };
     BackHandler.addEventListener("hardwareBackPress", backHandler);
