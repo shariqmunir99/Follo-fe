@@ -91,7 +91,7 @@ const TabsLayout = () => {
           }}
         />
         <Tabs.Screen
-          name="my-events"
+          name="myevents"
           options={{
             title: "My Events",
             headerShown: false,
