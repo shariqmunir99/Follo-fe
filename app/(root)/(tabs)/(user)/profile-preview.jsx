@@ -16,6 +16,7 @@ import Profile from "../../../../components/Profile";
 import { useLocalSearchParams } from "expo-router";
 import { BackHandler, Platform } from "react-native";
 import { useRefresh } from "../../../../constants/functions";
+import ProfileRefreshing from "../../../../components/ProfileRefreshing";
 
 const profilepreview = () => {
   const [user, setUser] = useState(null);
@@ -56,9 +57,7 @@ const profilepreview = () => {
   return (
     <SafeAreaView className="bg-Main h-full">
       {refreshing ? (
-        <View className="flex-1 bg-Main justify-center items-center">
-          <Text className="text-Vivid font-PoppinsBold mt-2">Loading...</Text>
-        </View>
+        <ProfileRefreshing isPreview={true} />
       ) : (
         <ScrollView
           refreshControl={

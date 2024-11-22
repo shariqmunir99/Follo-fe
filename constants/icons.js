@@ -22,6 +22,7 @@ import welcome from "../assets/icons/welcome.png";
 import plus from "../assets/icons/plus.png";
 import down from "../assets/icons/down.png";
 import logout from "../assets/icons/logout.png";
+import edit from "../assets/icons/edit.png";
 
 
 
@@ -50,6 +51,7 @@ export default {
   plus,
   down,
   logout,
+  edit,
 };
 
 

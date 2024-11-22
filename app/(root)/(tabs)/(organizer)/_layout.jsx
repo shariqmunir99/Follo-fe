@@ -91,7 +91,7 @@ const TabsLayout = () => {
           }}
         />
         <Tabs.Screen
-          name="myevents"
+          name="my-events"
           options={{
             title: "My Events",
             headerShown: false,
@@ -164,12 +164,6 @@ const TabsLayout = () => {
               />
             ),
           }}
-          // listeners={{
-          //   tabPress: (e) => {
-          //     e.preventDefault(); // Prevent default tab behavior
-          //     router.push("/dashboard"); // Push route into stack
-          //   },
-          // }}
         />
         <Tabs.Screen
           name="analytics"
@@ -182,6 +176,22 @@ const TabsLayout = () => {
                 icon={icons.upload}
                 color={color}
                 name="Analytics"
+                focused={focused}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="edit-event"
+          options={{
+            title: "Edit Event",
+            tabBarButton: () => null,
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
+                icon={icons.upload}
+                color={color}
+                name="Edit Event"
                 focused={focused}
               />
             ),

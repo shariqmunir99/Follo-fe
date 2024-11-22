@@ -4,7 +4,7 @@ import ShimmerEffect from "./ShimmerEffect";
 
 const EventRefreshing = () => {
   return (
-    <View className="flex-col mt-10 px-3 ">
+    <View className="flex-col mt-10 px-3 pb-3 border-b-[1px] border-MainLight">
       <View className="flex-row items-center">
         <ShimmerEffect containerStyles={"w-[55px] h-[55px] rounded-full"} />
         <ShimmerEffect

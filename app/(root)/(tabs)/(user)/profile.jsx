@@ -15,6 +15,7 @@ import InfoField from "../../../../components/InfoField";
 import { icons, images } from "../../../../constants";
 import Profile from "../../../../components/Profile";
 import { useRefresh } from "../../../../constants/functions";
+import ProfileRefreshing from "../../../../components/ProfileRefreshing";
 
 export const profile = () => {
   const [user, setUser] = useState(null);
@@ -27,7 +28,7 @@ export const profile = () => {
       location: "Chicago/USA",
       following: "11.3k",
       interested: "2.1k",
-      favorited: "1.5k",
+      favorited: 124,
     };
   };
 
@@ -40,7 +41,7 @@ export const profile = () => {
     refreshing,
     onRefresh,
   } = useRefresh(
-    1000,
+    4000,
     getUserData,
     [], //these empTy braces means no parameters to the function getUserData
     true
@@ -55,9 +56,7 @@ export const profile = () => {
   return (
     <SafeAreaView className="bg-Main h-full">
       {refreshing ? (
-        <View className="flex-1 bg-Main justify-center items-center">
-          <Text className="text-Vivid font-PoppinsBold mt-2">Loading...</Text>
-        </View>
+        <ProfileRefreshing isPreview={false} />
       ) : (
         <ScrollView
           refreshControl={

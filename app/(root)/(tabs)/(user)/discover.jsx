@@ -7,6 +7,7 @@ import {
   Keyboard,
   ScrollView,
   BackHandler,
+  RefreshControl,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import SearchBar from "../../../../components/SearchBar";
@@ -14,6 +15,9 @@ import Dropdown from "../../../../components/DropDown";
 import { icons, images } from "../../../../constants";
 import EventDetails from "../../../../components/EventDetails";
 import UserInfo from "../../../../components/UserInfo";
+import { useRefresh } from "../../../../constants/functions";
+import EventRefreshing from "../../../../components/EventRefreshing";
+import UserRefreshing from "../../../../components/UserRefreshing";
 
 const discover = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -143,7 +147,18 @@ const discover = () => {
             />
           </View>
         </View>
-        <ScrollView className="mt-[13%] " style={{ zIndex: -1 }}>
+        <ScrollView
+          className="mt-[13%] "
+          style={{ zIndex: -1 }}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              progressBackgroundColor="transparent"
+              colors={["#FAFF00"]}
+            />
+          }
+        >
           {selectedOption === "People" &&
             searchTerm &&
             users.length > 0 &&
