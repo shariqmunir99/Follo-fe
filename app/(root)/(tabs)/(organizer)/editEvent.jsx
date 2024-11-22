@@ -30,7 +30,7 @@ import {
     const [dp, setDp] = useState(images.eventPic);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showDatePicker, setShowDatePicker] = useState(false);
-    const fetchProfileData = async () => {
+    const fetchEventData = async () => {
         const userData = {
           name: "Concert",
           type: "Music Concert",
@@ -53,7 +53,7 @@ import {
     };
     
       useEffect(() => {
-        fetchProfileData();
+        fetchEventData();
       }, []);
     
     const pickImage = async () => {
