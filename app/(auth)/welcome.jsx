@@ -7,7 +7,7 @@ import { icons } from "../../constants";
 
 const Onboarding = () => {
   const onClick = () => {
-    router.push("/sign-in");
+    router.push("/dashboard");
   };
   return (
     <SafeAreaView className="min-h-screen relative justify-center bg-Main">

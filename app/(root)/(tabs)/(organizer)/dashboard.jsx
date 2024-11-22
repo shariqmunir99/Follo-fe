@@ -8,18 +8,19 @@ import {
   RefreshControl,
   TouchableOpacity,
 } from "react-native";
+
 import React, { useEffect, useState } from "react";
 import InfoCard from "../../../../components/InfoCard";
 import EventCard from "../../../../components/EventCard";
 import { icons, images } from "../../../../constants";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useRefresh } from "../../../../constants/functions";
+import ShimmerEffect from "../../../../components/ShimmerEffect";
 
 const dashboard = () => {
   const [followers, setFollowers] = useState("");
   const [interactions, setInteractions] = useState("");
   const [events, setEvents] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   // const [newEvents, setNewEvents] = useState([]);
 
   const dp = images.johnwickdp;
@@ -76,7 +77,7 @@ const dashboard = () => {
   };
   const params = ["11.3k", "2.1k"];
   const { data, refreshing, onRefresh } = useRefresh(
-    2000,
+    5000,
     getEventData,
     params,
     true
@@ -102,19 +103,30 @@ const dashboard = () => {
       setFollowers(data.followers);
       setInteractions(data.interactions);
       setEvents(data.events);
-      setIsLoading(false); ////shariq bhai this state ensure k first time jb is page pr ayin
-      ////to tb tk kuch show na ho jb tk data fetch nai kr letay
     }
   }, [data]);
 
   return (
     <SafeAreaView className=" bg-Main h-full">
-      {isLoading ? (
-        <View className="flex-1 justify-center items-center">
-          <Text className="text-Vivid font-PoppinsBold mt-2">
-            Loading data...
-          </Text>
-        </View>
+      {refreshing ? (
+        //<View className="bg-gray-950 h-[25%] w-[96%] ml-[2%]  mt-10 rounded-2xl"/>
+        <>
+          <ShimmerEffect
+            containerStyles={"h-[45px] w-[150px] ml-[12px] mt-10 rounded-lg "}
+          />
+          <ShimmerEffect
+            containerStyles={"h-[22%] w-[94%] ml-[12px] mt-3.5 rounded-2xl "}
+          />
+          <ShimmerEffect
+            containerStyles={"h-[22%] w-[94%] ml-[12px] mt-2.5 rounded-2xl "}
+          />
+          <ShimmerEffect
+            containerStyles={" h-[45px] w-[150px] ml-[12px] mt-3 rounded-lg "}
+          />
+          <ShimmerEffect
+            containerStyles={"h-[22%] w-[94%] ml-[12px] mt-2.5 rounded-2xl "}
+          />
+        </>
       ) : (
         <ScrollView
           className="mx-3"

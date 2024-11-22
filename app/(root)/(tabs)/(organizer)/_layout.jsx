@@ -61,6 +61,12 @@ const TabsLayout = () => {
               />
             ),
           }}
+          listeners={{
+            tabPress: (e) => {
+              e.preventDefault(); // Prevent default tab behavior
+              router.push("/dashboard"); // Push route into stack
+            },
+          }}
         />
         <Tabs.Screen
           name="upload"
@@ -76,6 +82,12 @@ const TabsLayout = () => {
                 focused={focused}
               />
             ),
+          }}
+          listeners={{
+            tabPress: (e) => {
+              e.preventDefault(); // Prevent default tab behavior
+              router.push("/upload"); // Push route into stack
+            },
           }}
         />
         <Tabs.Screen
@@ -101,6 +113,12 @@ const TabsLayout = () => {
               />
             ),
           }}
+          listeners={{
+            tabPress: (e) => {
+              e.preventDefault(); // Prevent default tab behavior
+              router.push("/myevents"); // Push route into stack
+            },
+          }}
         />
         <Tabs.Screen
           name="profile"
@@ -124,6 +142,12 @@ const TabsLayout = () => {
               />
             ),
           }}
+          listeners={{
+            tabPress: (e) => {
+              e.preventDefault(); // Prevent default tab behavior
+              router.push("/profile"); // Push route into stack
+            },
+          }}
         />
         <Tabs.Screen
           name="event-detail"
@@ -140,6 +164,12 @@ const TabsLayout = () => {
               />
             ),
           }}
+          // listeners={{
+          //   tabPress: (e) => {
+          //     e.preventDefault(); // Prevent default tab behavior
+          //     router.push("/dashboard"); // Push route into stack
+          //   },
+          // }}
         />
         <Tabs.Screen
           name="analytics"

@@ -1,21 +1,7 @@
-// import { useState } from "react";
-
-// export const useRefresh = (delay = 2000) => {
-//   const [refreshing, setRefreshing] = useState(false);
-
-//   const onRefresh = () => {
-//     setRefreshing(true);
-//     setTimeout(() => {
-//       setRefreshing(false);
-//     }, delay);
-//   };
-
-//   return [refreshing, onRefresh];
-// };
 import { useState, useEffect, useCallback } from "react";
 
-export const useRefresh = (delay = 2000, fetchFunction, params = [], trigger = true) => {
-  const [refreshing, setRefreshing] = useState(false);
+export const useRefresh = (delay = 0, fetchFunction, params = [], trigger = true) => {
+  const [refreshing, setRefreshing] = useState(true);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
@@ -24,7 +10,7 @@ export const useRefresh = (delay = 2000, fetchFunction, params = [], trigger = t
     try {
       setRefreshing(true);
       const result = await fetchFunction(...params); // Spread params dynamically
-      console.log("Fetched data:", result);
+      //console.log("Fetched data:", result);
       setData(result);
     } catch (err) {
       console.error("Error fetching data:", err);

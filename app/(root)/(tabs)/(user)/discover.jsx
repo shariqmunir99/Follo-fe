@@ -23,6 +23,7 @@ const discover = () => {
 
   const handleSearchPress = (term) => {
     setSearchTerm(term);
+    console.log("MOOZ ayy");
   };
 
   useEffect(() => {
@@ -33,6 +34,7 @@ const discover = () => {
   }, [searchTerm, selectedOption]);
 
   const handleTouchOutside = () => {
+    console.log("shariq ayy");
     Keyboard.dismiss();
   };
 
@@ -141,40 +143,38 @@ const discover = () => {
             />
           </View>
         </View>
-        <ScrollView className="mt-[13%]" style={{ zIndex: -1 }}>
-          {selectedOption === "People" && searchTerm && users.length > 0 && (
-            <View>
-              {users.map((u) => (
-                <UserInfo
-                  key={u.username}
-                  user={u}
-                  containerStyles={"mx-[3%] w-[94%] mt-2"}
-                  showDetails={"yes"}
-                />
-              ))}
-            </View>
-          )}
+        <ScrollView className="mt-[13%] " style={{ zIndex: -1 }}>
+          {selectedOption === "People" &&
+            searchTerm &&
+            users.length > 0 &&
+            users.map((u, index) => (
+              <UserInfo
+                key={index}
+                user={u}
+                containerStyles={"mx-[3%] w-[94%] mt-2"}
+                showDetails={"yes"}
+              />
+            ))}
 
           {/* {selectedOption === "People" &&
-            searchTerm &&
-            filteredUsers.length === 0 && <Text>No users found</Text>} */}
+    searchTerm &&
+    filteredUsers.length === 0 && <Text>No users found</Text>} */}
 
-          {selectedOption === "Events" && searchTerm && users.length > 0 && (
-            <View className="">
-              {events.map((event) => (
-                <EventDetails
-                  key={event.date}
-                  user={user}
-                  event={event}
-                  containerStyles={""}
-                />
-              ))}
-            </View>
-          )}
+          {selectedOption === "Events" &&
+            searchTerm &&
+            events.length > 0 &&
+            events.map((event, index) => (
+              <EventDetails
+                key={index}
+                user={user}
+                event={event}
+                containerStyles={""}
+              />
+            ))}
 
           {/* {selectedOption === "Events" &&
-            searchTerm &&
-            filteredEvents.length === 0 && <Text>No events found</Text>} */}
+    searchTerm &&
+    filteredEvents.length === 0 && <Text>No events found</Text>} */}
         </ScrollView>
       </SafeAreaView>
     </TouchableWithoutFeedback>

@@ -15,6 +15,7 @@ import InfoField from "../../../../components/InfoField";
 import { icons, images } from "../../../../constants";
 import Profile from "../../../../components/Profile";
 import { useRefresh } from "../../../../constants/functions";
+import ProfileRefreshing from "../../../../components/ProfileRefreshing";
 
 export const profile = () => {
   const [user, setUser] = useState(null);
@@ -40,7 +41,7 @@ export const profile = () => {
     refreshing,
     onRefresh,
   } = useRefresh(
-    2000,
+    4000,
     getUserData,
     [], //these empTy braces means no parameters to the function getUserData
     true
@@ -53,32 +54,32 @@ export const profile = () => {
   }, [userData]);
 
   return (
-    <ScrollView
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-          progressBackgroundColor="transparent"
-          colors={["#FAFF00"]}
-        />
-      }
-    >
-      {user ? (
-        <Profile
-          user={user}
-          role={"organizer"}
-          isPreview={false}
-          handlePress={edit}
-          isFollowed={true}
-        />
+    <SafeAreaView className="bg-Main h-full">
+      {refreshing ? (
+        <ProfileRefreshing isPreview={true} />
       ) : (
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              progressBackgroundColor="transparent"
+              colors={["#FAFF00"]}
+            />
+          }
         >
-          <Text>Loading...</Text>
-        </View>
+          {user && (
+            <Profile
+              user={user}
+              role={"organizer"}
+              isPreview={false}
+              handlePress={edit}
+              isFollowed={true}
+            />
+          )}
+        </ScrollView>
       )}
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 

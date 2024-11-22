@@ -5,10 +5,13 @@ import {
   Text,
   View,
   BackHandler,
+  RefreshControl,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import EventDetails from "../../../../components/EventDetails";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { useRefresh } from "../../../../constants/functions";
+import { images } from "../../../../constants";
 
 const eventdetail = () => {
   const {
@@ -25,6 +28,8 @@ const eventdetail = () => {
     role,
   } = useLocalSearchParams();
 
+  const [item, setItem] = useState(null);
+
   const router = useRouter();
   useEffect(() => {
     const backHandler = () => {
@@ -37,25 +42,65 @@ const eventdetail = () => {
     };
   }, [router]);
 
+  const getEventDetails = (eventId) => {
+    return {
+      user: {
+        dp: images.johnwickdp,
+        username: "john_wick",
+      },
+      event: {
+        id: 1,
+        date: "Nov 15, 2024",
+        description: "Join us for an amazing night of music and entertainment.",
+        location: "Central Park, New York",
+        type: "Music Concert",
+        favorites: 120,
+        interests: 230,
+        pic: images.eventPic,
+      },
+    };
+  };
+
+  const { data, refreshing, onRefresh } = useRefresh(
+    800,
+    getEventDetails,
+    [id], //these empTy braces means no parameters to the function getUserData
+    true
+  );
+
+  useEffect(() => {
+    if (data) {
+      setItem(data);
+    }
+  }, [data]);
+
   return (
     <SafeAreaView className="h-full w-full bg-Main">
-      <ScrollView>
-        <EventDetails
-          user={{ username, dp, role }}
-          event={{
-            id: id,
-            location: location,
-            type: type,
-            pic: pic,
-            favorites: favorites,
-            interests: interests,
-            description: description,
-            date: date,
-          }}
-          containerStyles={"mt-10"}
-          button={"delete"}
-        />
-      </ScrollView>
+      {refreshing ? (
+        <View className="flex-1 bg-Main justify-center items-center">
+          <Text className="text-Vivid font-PoppinsBold mt-2">Loading...</Text>
+        </View>
+      ) : (
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              progressBackgroundColor="transparent"
+              colors={["#FAFF00"]}
+            />
+          }
+        >
+          {item && (
+            <EventDetails
+              user={item.user}
+              event={item.event}
+              containerStyles={"mt-10"}
+              button={"delete"}
+            />
+          )}
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };
