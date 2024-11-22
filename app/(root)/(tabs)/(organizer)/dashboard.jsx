@@ -16,6 +16,7 @@ import { icons, images } from "../../../../constants";
 import { router, useLocalSearchParams } from "expo-router";
 import { useRefresh } from "../../../../constants/functions";
 import ShimmerEffect from "../../../../components/ShimmerEffect";
+import DashboardRefreshing from "../../../../components/DashboardRefreshing";
 
 const dashboard = () => {
   const [followers, setFollowers] = useState("");
@@ -110,23 +111,7 @@ const dashboard = () => {
     <SafeAreaView className=" bg-Main h-full">
       {refreshing ? (
         //<View className="bg-gray-950 h-[25%] w-[96%] ml-[2%]  mt-10 rounded-2xl"/>
-        <>
-          <ShimmerEffect
-            containerStyles={"h-[45px] w-[150px] ml-[12px] mt-10 rounded-lg "}
-          />
-          <ShimmerEffect
-            containerStyles={"h-[22%] w-[94%] ml-[12px] mt-3.5 rounded-2xl "}
-          />
-          <ShimmerEffect
-            containerStyles={"h-[22%] w-[94%] ml-[12px] mt-2.5 rounded-2xl "}
-          />
-          <ShimmerEffect
-            containerStyles={" h-[45px] w-[150px] ml-[12px] mt-3 rounded-lg "}
-          />
-          <ShimmerEffect
-            containerStyles={"h-[22%] w-[94%] ml-[12px] mt-2.5 rounded-2xl "}
-          />
-        </>
+        <DashboardRefreshing />
       ) : (
         <ScrollView
           className="mx-3"

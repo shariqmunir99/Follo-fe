@@ -56,7 +56,7 @@ export const profile = () => {
   return (
     <SafeAreaView className="bg-Main h-full">
       {refreshing ? (
-        <ProfileRefreshing isPreview={true} />
+        <ProfileRefreshing isPreview={false} />
       ) : (
         <ScrollView
           refreshControl={

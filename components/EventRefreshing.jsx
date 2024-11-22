@@ -16,7 +16,7 @@ const EventRefreshing = () => {
         <ShimmerEffect containerStyles={"w-[30%] h-[30px] rounded-lg"} />
         <ShimmerEffect containerStyles={"w-[30%] h-[30px] rounded-lg"} />
       </View>
-      <ShimmerEffect containerStyles={"rounded-xl w-[100%] h-[45%] mt-1.5"} />
+      <ShimmerEffect containerStyles={"rounded-xl w-[100%] h-[200px] mt-1.5"} />
       <View className="flex-row justify-between mt-1.5">
         <ShimmerEffect containerStyles={"w-[25%] h-[45px] rounded-lg"} />
         <ShimmerEffect containerStyles={"w-[25%] h-[45px] rounded-lg"} />

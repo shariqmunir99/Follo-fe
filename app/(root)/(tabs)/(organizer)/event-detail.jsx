@@ -12,6 +12,7 @@ import EventDetails from "../../../../components/EventDetails";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useRefresh } from "../../../../constants/functions";
 import { images } from "../../../../constants";
+import EventRefreshing from "../../../../components/EventRefreshing";
 
 const eventdetail = () => {
   const {
@@ -62,7 +63,7 @@ const eventdetail = () => {
   };
 
   const { data, refreshing, onRefresh } = useRefresh(
-    800,
+    2000,
     getEventDetails,
     [id], //these empTy braces means no parameters to the function getUserData
     true
@@ -77,9 +78,7 @@ const eventdetail = () => {
   return (
     <SafeAreaView className="h-full w-full bg-Main">
       {refreshing ? (
-        <View className="flex-1 bg-Main justify-center items-center">
-          <Text className="text-Vivid font-PoppinsBold mt-2">Loading...</Text>
-        </View>
+        <EventRefreshing />
       ) : (
         <ScrollView
           refreshControl={

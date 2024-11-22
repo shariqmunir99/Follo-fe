@@ -20,7 +20,7 @@ const ProfileRefreshing = ({ isPreview }) => {
           />
         </View>
         {!isPreview ? (
-          <View className="w-full px-1.5 mt-6">
+          <View className="w-full px-3 mt-6">
             <ShimmerEffect containerStyles={"w-[100%] h-[70px] rounded-xl"} />
             <ShimmerEffect
               containerStyles={"w-[100%] h-[70px] rounded-xl mt-2"}

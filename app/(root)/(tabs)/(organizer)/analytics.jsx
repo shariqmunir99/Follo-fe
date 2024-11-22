@@ -15,6 +15,7 @@ import { images } from "../../../../constants";
 import UserInfo from "../../../../components/UserInfo";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useRefresh } from "../../../../constants/functions";
+import UserRefreshing from "../../../../components/UserRefreshing";
 
 const analytics = () => {
   const { id, buttonPressed } = useLocalSearchParams();
@@ -41,7 +42,7 @@ const analytics = () => {
   };
 
   const { data, refreshing, onRefresh } = useRefresh(
-    800, // Delay in milliseconds
+    2000, // Delay in milliseconds
     getAnalyticsData,
     [id], // No parameters for now
     true
@@ -92,9 +93,7 @@ const analytics = () => {
         </TouchableOpacity>
       </View>
       {refreshing ? (
-        <View className="flex-1 justify-center items-center">
-          <Text className="text-Vivid font-PoppinsBold mt-2">Loading...</Text>
-        </View>
+        <UserRefreshing />
       ) : (
         <ScrollView
           refreshControl={
