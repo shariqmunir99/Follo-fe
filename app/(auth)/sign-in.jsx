@@ -11,7 +11,7 @@ const SignIn = () => {
     password: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [role, setRole] = useState("user");
+  const [role, setRole] = useState("organizer");
   const submit = () => {
     if (role === "user") {
       router.replace("(user)/home");

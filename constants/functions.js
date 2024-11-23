@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { locations } from "./data";
 
 export const useRefresh = (delay = 0, fetchFunction, params = [], trigger = true) => {
   const [refreshing, setRefreshing] = useState(true);
@@ -31,4 +32,8 @@ export const useRefresh = (delay = 0, fetchFunction, params = [], trigger = true
   }, [trigger]);
 
   return { data, error, refreshing, onRefresh: loadData };
+};
+
+export const isValidLocation = (location) => {
+  return locations.includes(location);
 };

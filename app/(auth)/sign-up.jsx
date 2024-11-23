@@ -5,13 +5,14 @@ import InputField from "../../components/InputField";
 import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
 import CheckBox from "react-native-check-box";
+import { isValidLocation } from "../../constants/functions";
 
 const SignUp = () => {
   const [organizerCheck, setOrganizerCheck] = useState(false);
   const [form, setForm] = useState({
     username: "",
     email: "",
-    accountfrom: "",
+    location: "",
     password: "",
     cpassword: "",
   });
@@ -19,6 +20,8 @@ const SignUp = () => {
   const onClick = () => {
     if (form.password !== form.cpassword) {
       Alert.alert("Error", "Passwords do not match");
+    } else if (!isValidLocation(form.location)) {
+      Alert.alert("Error", "Select valid location");
     } else {
       router.push("/sign-in");
     }
@@ -53,9 +56,9 @@ const SignUp = () => {
             />
             <InputField
               title="Account From"
-              placeHolder="Lahore/Pakistan"
-              value={form.accountfrom}
-              handleChangeText={(e) => setForm({ ...form, accountfrom: e })}
+              placeHolder="city/country"
+              value={form.location}
+              handleChangeText={(e) => setForm({ ...form, location: e })}
               containerStyles={"mt-7"}
             />
             <InputField

@@ -78,7 +78,7 @@ const dashboard = () => {
   };
   const params = ["11.3k", "2.1k"];
   const { data, refreshing, onRefresh } = useRefresh(
-    5000,
+    2000,
     getEventData,
     params,
     true
