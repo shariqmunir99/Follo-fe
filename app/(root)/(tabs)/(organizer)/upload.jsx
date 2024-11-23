@@ -62,8 +62,8 @@ const Upload = () => {
           <View className="mt-5 relative">
             <Image
               source={dp}
-              resizeMode="contain"
-              className="w-[150px] h-[150px] "
+              resizeMode="cover" 
+              style={{ width: 300, height: 150 }}
             />
             <TouchableOpacity
               style={{

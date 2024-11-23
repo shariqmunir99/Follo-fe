@@ -86,11 +86,11 @@ import {
         <ScrollView>
           <View className="w-full h-[45%] items-center">
             <View className="mt-5 relative">
-              <Image
-                source={dp}
-                resizeMode="contain"
-                className="w-[150px] h-[150px] "
-              />
+            <Image
+              source={dp}
+              resizeMode="cover" 
+              style={{ width: 300, height: 150 }}
+            />
               <TouchableOpacity
                 style={{
                   position: "absolute",
@@ -166,4 +166,3 @@ import {
   };
   
   export default EditEvent;
-  
