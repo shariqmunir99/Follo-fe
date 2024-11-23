@@ -32,10 +32,10 @@ import {
     const [showDatePicker, setShowDatePicker] = useState(false);
     const fetchEventData = async () => {
         const userData = {
-          name: "Concert",
-          type: "Music Concert",
-          description: "Nice view of crowd",
-          venue: "New York,USA",
+          name: "",
+          type: "",
+          description: "",
+          venue: "",
           profilePicture: images.eventPic,
           
         };
