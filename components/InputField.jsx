@@ -8,6 +8,7 @@ import {
   FlatList,
   Keyboard,
   TouchableWithoutFeedback,
+  ScrollView,
 } from "react-native";
 import React, { useState } from "react";
 import { icons, images } from "../constants";
@@ -31,10 +32,14 @@ const InputField = ({
         setFilteredLocations([]);
       } else {
         const matches = locations
-          .filter((location) =>
-            location.toLowerCase().startsWith(text.toLowerCase())
-          )
-          .slice(0, 3);
+          .filter((location) => {
+            const [city, country] = location.split("/");
+            return (
+              city.toLowerCase().startsWith(text.toLowerCase()) ||
+              (country && country.toLowerCase().startsWith(text.toLowerCase()))
+            );
+          })
+          .slice(0, 5);
         setFilteredLocations(matches);
       }
     } else {
@@ -60,8 +65,8 @@ const InputField = ({
           placeholder={placeHolder}
           placeholderTextColor="#7b7b8b"
           onChangeText={handleInputChange}
-          onFocus={() => setIsFocused(true)} // Show suggestions on focus
-          onBlur={() => setIsFocused(false)} // Hide suggestions on blur
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           secureTextEntry={
             (title === "Password" ||
               title === "Confirm Password" ||
@@ -83,18 +88,7 @@ const InputField = ({
       </View>
       {title.toLowerCase() === "account from" &&
         filteredLocations.length > 0 && (
-          // isFocused &&
-          <FlatList
-            data={filteredLocations}
-            keyExtractor={(item, index) => `${item}-${index}`}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => handleLocationPress(item)}
-                className={`bg-secondary px-4 py-2 my-1 rounded-md border-b-[1px] border-white} mb-0`}
-              >
-                <Text className="text-Vivid font-PoppinsRegular">{item}</Text>
-              </TouchableOpacity>
-            )}
+          <ScrollView
             className="bg-MainLight mt-2 rounded-lg z-10"
             style={{
               position: "absolute",
@@ -102,7 +96,17 @@ const InputField = ({
               left: 0,
               right: 0,
             }}
-          />
+          >
+            {filteredLocations.map((item, index) => (
+              <TouchableOpacity
+                key={`${item}-${index}`}
+                onPress={() => handleLocationPress(item)}
+                className={`bg-secondary px-4 py-2 my-1 rounded-md border-b-[1px] border-white} mb-0`}
+              >
+                <Text className="text-Vivid font-PoppinsRegular">{item}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
         )}
     </View>
   );
