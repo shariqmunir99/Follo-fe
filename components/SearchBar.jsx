@@ -13,13 +13,25 @@ import { icons } from "../constants";
 import { TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
 
-const SearchBar = ({ containerStyles, handleSearchPress }) => {
+const SearchBar = ({
+  containerStyles,
+  handleSearchPress,
+  onKeyboardToggle,
+}) => {
   const [isFocused, setIsFocused] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const onSearchPress = () => {
     Keyboard.dismiss();
     handleSearchPress(searchTerm); // Execute the passed function
     setSearchTerm(""); // Clear the input field
+  };
+  const handleFocus = () => {
+    setIsFocused(true);
+    onKeyboardToggle(true); // Call the keyboard toggle function
+  };
+  const handleBlur = () => {
+    setIsFocused(false);
+    onKeyboardToggle(false); // Call the keyboard toggle function
   };
 
   return (
@@ -42,8 +54,8 @@ const SearchBar = ({ containerStyles, handleSearchPress }) => {
             placeholder={"Search"}
             value={searchTerm}
             onChangeText={setSearchTerm}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             autoCorrect={false}
             className="ml-2 p-2 h-12 text-Text w-[90%]"
             placeholderTextColor="grey"

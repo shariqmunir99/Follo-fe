@@ -24,6 +24,11 @@ const EventDetails = ({
 }) => {
   const screenHeight = Dimensions.get("window").height;
   const [isFollowed, setIsFollowed] = useState(false);
+  const [role, setRole] = useState("user");
+
+  const editHandlePress = () => {
+    router.push("/edit-event");
+  };
 
   const organizerPressedInterest = (eventId) => {
     router.push({
@@ -58,11 +63,14 @@ const EventDetails = ({
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center w-[50%] mt-3">
             <TouchableOpacity
-              onPress={() =>
-                router.push({
-                  pathname: "/profile-preview",
-                  params: { dp: user.dp, username: user.username },
-                })
+              onPress={
+                role === "user"
+                  ? () =>
+                      router.push({
+                        pathname: "/profile-preview",
+                        params: { dp: user.dp, username: user.username },
+                      })
+                  : null
               }
             >
               <Image
@@ -73,11 +81,14 @@ const EventDetails = ({
             </TouchableOpacity>
             <View className="flex-col ml-2">
               <TouchableOpacity
-                onPress={() =>
-                  router.push({
-                    pathname: "/profile-preview",
-                    params: { dp: user.dp, username: user.username },
-                  })
+                onPress={
+                  role === "user"
+                    ? () =>
+                        router.push({
+                          pathname: "/profile-preview",
+                          params: { dp: user.dp, username: user.username },
+                        })
+                    : null
                 }
               >
                 <Text className="text-Text text-xs">@{user.username}</Text>
@@ -90,12 +101,20 @@ const EventDetails = ({
             </View>
           </View>
           {button === "delete" && (
-            <View>
+            <View className="flex-row ">
+              <CustomButton
+                iconOnly={true}
+                isIcon={true}
+                icon={icons.edit}
+                containerStyles={"bg-Vivid p-2 rounded-xl w-9 h-9"}
+                iconStyles={"w-8 h-8"}
+                handlePress={editHandlePress}
+              />
               <CustomButton
                 iconOnly={true}
                 isIcon={true}
                 icon={icons.bin}
-                containerStyles={"bg-Vivid p-2 rounded-xl w-9 h-9"}
+                containerStyles={"bg-Vivid p-2 rounded-xl w-9 h-9 ml-2"}
                 iconStyles={"w-4 h-4"}
               />
             </View>

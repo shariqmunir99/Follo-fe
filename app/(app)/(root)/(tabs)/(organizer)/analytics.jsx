@@ -7,30 +7,52 @@ import {
   Image,
   Animated,
   BackHandler,
+  RefreshControl,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
 import { images } from "@/constants";
 import UserInfo from "@/components/UserInfo";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { useRefresh } from "../../../../constants/functions";
+import UserRefreshing from "../../../../components/UserRefreshing";
 
 const analytics = () => {
   const { id, buttonPressed } = useLocalSearchParams();
   const [pressed, setPressed] = useState("");
 
+  const [item, setItem] = useState(null);
+
   useEffect(() => {
     setPressed(buttonPressed);
   }, [buttonPressed]);
 
-  const interestsList = Array.from({ length: 20 }, (_, index) => ({
-    dp: images.defaultProfile,
-    username: `rick_grimes`,
-  }));
+  const getAnalyticsData = (eventId) => {
+    const interestsList = Array.from({ length: 20 }, (_, index) => ({
+      dp: images.defaultProfile,
+      username: `rick_grimes`,
+    }));
 
-  const favoritesList = Array.from({ length: 20 }, (_, index) => ({
-    dp: images.johnwickdp,
-    username: `john_wick`,
-  }));
+    const favoritesList = Array.from({ length: 20 }, (_, index) => ({
+      dp: images.johnwickdp,
+      username: `john_wick`,
+    }));
+
+    return { interestsList, favoritesList };
+  };
+
+  const { data, refreshing, onRefresh } = useRefresh(
+    2000, // Delay in milliseconds
+    getAnalyticsData,
+    [id], // No parameters for now
+    true
+  );
+
+  useEffect(() => {
+    if (data) {
+      setItem(data);
+    }
+  }, [data]);
 
   const renderList = (list) =>
     list.map((user, index) => (
@@ -70,11 +92,24 @@ const analytics = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <ScrollView>
-        {pressed === "left"
-          ? renderList(favoritesList)
-          : renderList(interestsList)}
-      </ScrollView>
+      {refreshing ? (
+        <UserRefreshing />
+      ) : (
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              progressBackgroundColor="transparent"
+              colors={["#FAFF00"]}
+            />
+          }
+        >
+          {pressed === "left"
+            ? renderList(item?.favoritesList || [])
+            : renderList(item?.interestsList || [])}
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };

@@ -64,7 +64,7 @@ const Dropdown = ({
         onPress={toggleDropdown}
         className={`flex-row items-center ${primaryStyles}`}
       >
-        <Text className={`${primaryTextStyles}`}>{selectedOption}</Text>
+        <Text className={`${primaryTextStyles} ml-2`}>{selectedOption}</Text>
         <Image
           source={icons.down}
           className={`w-3 h-3 mt-1`}
@@ -87,7 +87,7 @@ const Dropdown = ({
             onPress={() => handleOptionSelect(option)}
             className={`${secondaryStyles}`}
           >
-            <Text className={`${secondaryTextStyles}`}>{option}</Text>
+            <Text className={`${secondaryTextStyles} ml-2`}>{option}</Text>
           </TouchableOpacity>
         ))}
       </Animated.View>

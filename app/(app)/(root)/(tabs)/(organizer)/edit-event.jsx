@@ -19,7 +19,7 @@ import { icons, images } from "@/constants";
 import DatePickerStyled from "@/components/DatePickerStyled";
 
 const Spacer = ({ height }) => <View style={{ height }} />;
-const Upload = () => {
+const EditEvent = () => {
   const [form, setForm] = useState({
     name: "",
     type: "",
@@ -30,6 +30,30 @@ const Upload = () => {
   const [dp, setDp] = useState(images.eventPic);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const fetchEventData = async () => {
+    const userData = {
+      name: "",
+      type: "",
+      description: "",
+      venue: "",
+      profilePicture: images.eventPic,
+    };
+
+    setForm({
+      name: userData.name,
+      type: userData.type,
+      description: userData.description,
+      venue: userData.venue,
+      date: userData.date,
+    });
+
+    setDp(userData.profilePicture);
+  };
+
+  useEffect(() => {
+    fetchEventData();
+  }, []);
+
   const pickImage = async () => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -52,7 +76,7 @@ const Upload = () => {
 
   const submit = async () => {
     // Submit the form data
-    console.log("Uploaded An Event:", form);
+    console.log("Updated An Event:", form);
     router.back();
   };
   return (
@@ -62,7 +86,7 @@ const Upload = () => {
           <View className="mt-5 relative">
             <Image
               source={dp}
-              resizeMode="cover" 
+              resizeMode="cover"
               style={{ width: 250, height: 150 }}
             />
             <TouchableOpacity
@@ -139,4 +163,4 @@ const Upload = () => {
   );
 };
 
-export default Upload;
+export default EditEvent;

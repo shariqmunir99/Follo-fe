@@ -37,8 +37,8 @@ const Profile = ({
             />
           </View>
           <Text className="text-Text text-base mt-1.5">@{user.username}</Text>
-          <View className="flex-row items-center justify-around w-[60%] mt-3">
-            <View className="flex-col justify-between items-center">
+          <View className="flex-row items-center justify-around mt-3">
+            <View className="flex-col pr-3 justify-between items-center">
               <Text className="text-Text font-bold">
                 {role === "organizer" ? user.followers : user.following}
               </Text>
@@ -46,7 +46,7 @@ const Profile = ({
                 {role === "user" ? "Following" : "Followers"}
               </Text>
             </View>
-            <View className="flex-col justify-between items-center">
+            <View className="flex-col px-1 justify-between items-center">
               <Text className="text-Text font-bold">
                 {role === "organizer" ? user.interests : user.interested}
               </Text>
@@ -54,7 +54,7 @@ const Profile = ({
                 {role === "user" ? "Interested" : "Interests"}
               </Text>
             </View>
-            <View className="flex-col justify-between items-center">
+            <View className="flex-col pl-3 justify-between items-center">
               <Text className="font-bold text-Text">
                 {role === "organizer" ? user.posts : user.favorited}
               </Text>
@@ -68,17 +68,17 @@ const Profile = ({
           {isPreview ? (
             <CustomButton
               title={isFollowed ? "Unfollow" : "Follow"}
-              containerStyles="px-3 py-3 mx-auto rounded-2xl bg-Vivid mt-5"
+              containerStyles="px-4 py-2 mx-auto rounded-xl bg-Vivid mt-5"
               textStyles="text-Main"
               // handlePress={isFollowed ? handleUnfollow : handleFollow}
               isIcon={!isFollowed}
               icon={!isFollowed ? icons.plus : null}
-              iconStyles="w-4 h-4 ml-2"
+              iconStyles="w-3 h-3 ml-2"
             />
           ) : (
             <CustomButton
               title="Edit Profile"
-              containerStyles="px-3 py-3 mx-auto rounded-2xl bg-Vivid mt-5"
+              containerStyles="px-4 py-2 mx-auto rounded-xl bg-Vivid mt-5"
               textStyles="text-Main"
               handlePress={handlePress}
               isIcon={false}

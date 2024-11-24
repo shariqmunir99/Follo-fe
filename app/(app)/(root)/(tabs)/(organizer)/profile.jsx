@@ -10,6 +10,8 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useState } from "react";
 import { Link, router } from "expo-router";
+
+import ProfileRefreshing from "../../../../components/ProfileRefreshing";
 import CustomButton from "@/components/CustomButton";
 import InfoField from "@/components/InfoField";
 import { icons, images } from "@/constants";
@@ -42,7 +44,7 @@ export const profile = () => {
     refreshing,
     onRefresh,
   } = useRefresh(
-    2000,
+    4000,
     getUserData,
     [], //these empTy braces means no parameters to the function getUserData
     true
@@ -55,33 +57,33 @@ export const profile = () => {
   }, [userData]);
 
   return (
-    <ScrollView
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-          progressBackgroundColor="transparent"
-          colors={["#FAFF00"]}
-        />
-      }
-    >
-      {user ? (
-        <Profile
-          user={user}
-          role={"organizer"}
-          isPreview={false}
-          handlePress={edit}
-          isFollowed={true}
-          handleLogout={onLogout}
-        />
+    <SafeAreaView className="bg-Main h-full">
+      {refreshing ? (
+        <ProfileRefreshing isPreview={false} />
       ) : (
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              progressBackgroundColor="transparent"
+              colors={["#FAFF00"]}
+            />
+          }
         >
-          <Text>Loading...</Text>
-        </View>
+          {user && (
+            <Profile
+              user={user}
+              role={"organizer"}
+              isPreview={false}
+              handlePress={edit}
+              isFollowed={true}
+              handleLogout={onLogout}
+            />
+          )}
+        </ScrollView>
       )}
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 

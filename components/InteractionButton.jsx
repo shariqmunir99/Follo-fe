@@ -19,7 +19,7 @@ const InteractionButton = ({
   alreadyPressed,
 }) => {
   const [isPressed, setIsPressed] = useState(false);
-  const [role, setRole] = useState("organizer");
+  const [role, setRole] = useState("user");
   const userPressed = () => {
     setIsPressed(!isPressed);
     //update in database
@@ -58,13 +58,7 @@ const InteractionButton = ({
       <View className="bg-MainLight  h-[35px] flex-row rounded-md items-center p-2 box-border">
         {!isPressed && (
           <View className=" my-auto px-1">
-            <Text className="text-Text font-PoppinsRegular">
-              {role === "user"
-                ? iconFor === "favorite"
-                  ? "Favorite"
-                  : "Interest"
-                : value}
-            </Text>
+            <Text className="text-Text font-PoppinsRegular">{value}</Text>
           </View>
         )}
         <View className={`${!isPressed ? "pl-1" : ""}`}>
