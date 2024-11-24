@@ -1,8 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
-
-enum Roles {}
+import { Platform } from "react-native";
 
 interface AuthProps {
   authState?: {
@@ -19,8 +18,11 @@ interface AuthProps {
   ) => Promise<any>;
   onLogin?: (email: string, password: string) => Promise<any>;
   onLogout?: () => Promise<any>;
+  onForgetPassword?: (email: string, baseUrl: string) => Promise<any>;
+  onResetPassword?: (reset_token: string, new_password: string) => Promise<any>;
   authLoading?: boolean;
 }
+
 const TOKEN_KEY = "JWT_TOKEN";
 const ROLE_KEY = "ROLE";
 export const API_URL = "http://192.168.1.130:3001/api";
@@ -42,12 +44,12 @@ export const AuthProvider = ({ children }: any) => {
   useEffect(() => {
     const loadToken = async () => {
       const token = await SecureStore.getItemAsync(TOKEN_KEY);
-      // console.log("stored:", token);
+      console.log("stored:", token);
 
       if (token) {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         const role = await SecureStore.getItemAsync(ROLE_KEY);
-        // console.log("Role: ", role);
+        console.log("Role: ", role);
 
         setAuthState({
           token: token,
@@ -58,7 +60,7 @@ export const AuthProvider = ({ children }: any) => {
 
       setAuthLoading(false);
     };
-    loadToken();
+    if (Platform.OS !== "web") loadToken();
   }, []);
 
   const register = async (
@@ -76,7 +78,33 @@ export const AuthProvider = ({ children }: any) => {
         baseUrl,
         isOrganizer,
       });
-    } catch (e) {
+    } catch (e: any) {
+      console.log(e.message);
+
+      return { error: true, msg: (e as any).response.data.msgs };
+    }
+  };
+
+  const forgetPassword = async (email: string, baseUrl: string) => {
+    try {
+      return await axios.post(`${API_URL}/auth/forgot-password`, {
+        email,
+        baseUrl,
+      });
+    } catch (e: any) {
+      console.log(e.message);
+      return { error: true, msg: (e as any).response.data.msgs };
+    }
+  };
+
+  const resetPassword = async (reset_token: string, new_password: string) => {
+    try {
+      return await axios.put(`${API_URL}/auth/reset-password`, {
+        reset_token,
+        new_password,
+      });
+    } catch (e: any) {
+      console.log(e.message);
       return { error: true, msg: (e as any).response.data.msgs };
     }
   };
@@ -108,7 +136,6 @@ export const AuthProvider = ({ children }: any) => {
 
       return result; //Return it to whoever needs it. (idk who will need it but we never know.)
     } catch (e: any) {
-      console.log(e.message);
       return { error: true, msg: (e as any).response.data.msgs };
     }
   };
@@ -134,6 +161,8 @@ export const AuthProvider = ({ children }: any) => {
     onRegister: register,
     onLogin: login,
     onLogout: logout,
+    onForgetPassword: forgetPassword,
+    onResetPassword: resetPassword,
     authState,
     authLoading,
   };

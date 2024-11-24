@@ -13,8 +13,10 @@ import CustomButton from "@/components/CustomButton";
 import InfoField from "@/components/InfoField";
 import { icons, images } from "@/constants";
 import Profile from "@/components/Profile";
+import { useAuth } from "@/context/AuthContext";
 
 export const profile = () => {
+  const { onLogout } = useAuth();
   const [dp, setDp] = useState(null);
   useEffect(() => {
     if (dp === null) {
@@ -37,6 +39,7 @@ export const profile = () => {
         isPreview={false}
         handlePress={edit}
         isFollowed={true}
+        handleLogout={onLogout}
       />
     </ScrollView>
   );

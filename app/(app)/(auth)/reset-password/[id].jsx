@@ -1,21 +1,42 @@
 import { View, Text, ScrollView, Alert } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import InputField from "@/components/InputField";
 import CustomButton from "@/components/CustomButton";
-import { Link, router } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router"; // Import hooks for routing
+import { useAuth } from "@/context/AuthContext";
 
 const ResetPassword = () => {
+  const { onResetPassword } = useAuth();
   const [form, setForm] = useState({
     npassword: "",
     cpassword: "",
   });
+  const [resetToken, setResetToken] = useState(null);
+  const router = useRouter();
+  const params = useLocalSearchParams();
 
-  const clickReset = () => {
+  useEffect(() => {
+    // Extract the token from the current URL path
+    if (params?.id) {
+      setResetToken(params.id);
+    }
+  }, [params]);
+
+  const clickReset = async () => {
+    console.log("ShariqMunir");
+
     if (form.npassword !== form.cpassword) {
       Alert.alert("Error", "Passwords do not match");
+    } else if (!resetToken) {
+      Alert.alert("Error", "Invalid reset token");
     } else {
-      router.push("/sign-in");
+      console.log(resetToken);
+      const result = await onResetPassword(resetToken, form.npassword);
+      if (result && !result.error) {
+        alert("Password Reset Successfully");
+        router.replace("/sign-in");
+      }
     }
   };
 
@@ -23,7 +44,7 @@ const ResetPassword = () => {
     <SafeAreaView className="bg-Main h-full">
       <ScrollView>
         <View className="w-full justify-center">
-          <View className="">
+          <View>
             <Text className="font-Rakkas text-Vivid text-8xl text-center pt-[50px]">
               Follo
             </Text>

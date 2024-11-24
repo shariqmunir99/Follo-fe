@@ -24,14 +24,8 @@ const SignIn = () => {
     } else {
       if (result.data.result.roleName === "Organizer")
         router.replace("(organizer)/dashboard");
-      router.replace("(organizer)/dashboard");
+      router.replace("(user)/home");
     }
-
-    // if (role === "user") {
-    //   router.replace("(user)/home");
-    // } else if (role === "organizer") {
-    //   router.replace("(organizer)/dashboard");
-    // }
   };
   return (
     <SafeAreaView className="bg-Main h-full">
@@ -70,7 +64,7 @@ const SignIn = () => {
               iconOnly={false}
             />
             <Link
-              href="/find-account"
+              href="/forget-password"
               className="text-Text text-base mx-auto mt-8"
             >
               Forget Password
