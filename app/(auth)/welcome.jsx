@@ -9,7 +9,7 @@ import { BlurView } from "expo-blur";
 
 const Onboarding = () => {
   const onClick = () => {
-    router.push("/sign-in");
+    router.push("/discover");
   };
   const screenHeight = Dimensions.get("window").height;
   return (

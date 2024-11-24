@@ -1,3 +1,5 @@
+import { images } from "../constants";
+
 export const locations = [
   "Karachi/Pakistan",
   "Lahore/Pakistan",
@@ -20,3 +22,4 @@ export const locations = [
   "Jhelum/Pakistan",
   "Sargodha/Pakistan"
 ];
+
