@@ -67,7 +67,7 @@ import {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
-        aspect: [1, 1],
+        aspect: [7, 4],
         quality: 1,
       });
   
@@ -89,7 +89,7 @@ import {
             <Image
               source={dp}
               resizeMode="cover" 
-              style={{ width: 300, height: 150 }}
+              style={{ width: 250, height: 150 }}
             />
               <TouchableOpacity
                 style={{
