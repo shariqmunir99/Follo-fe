@@ -1,11 +1,12 @@
 import { View, Text, Image, Dimensions } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomButton from "../../components/CustomButton";
+import CustomButton from "@/components/CustomButton";
 import { Redirect, router } from "expo-router";
-import { icons, images } from "../../constants";
+
 import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
+import { icons, images } from "@/constants";
 
 const Onboarding = () => {
   const onClick = () => {

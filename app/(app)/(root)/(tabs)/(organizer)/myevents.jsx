@@ -6,15 +6,22 @@ import {
   View,
   BackHandler,
   RefreshControl,
+  Dimensions,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import { images, icons } from "../../../../constants";
-import EventDetails from "../../../../components/EventDetails";
-import { useRefresh } from "../../../../constants/functions";
-import EventRefreshing from "../../../../components/EventRefreshing";
+import React, { useState, useEffect } from "react";
+import { useRefresh } from "@/constants/functions";
+import { router, useRouter } from "expo-router";
+import EventRefreshing from "@/components/EventRefreshing";
+import React, { useState, useCallback } from "react";
+import { icons, images } from "@/constants";
+import EventDetails from "@/components/EventDetails";
 
-const interests = () => {
+const myevents = () => {
+  const [dp, setDp] = useState(images.johnwickdp);
+  const [username, setUsername] = useState("john_wick");
   const [items, setItems] = useState([]);
+  const screenHeight = Dimensions.get("window").height;
+
   const getMyEventsData = () => {
     const events = [
       {
@@ -88,8 +95,21 @@ const interests = () => {
     return userEvents;
   };
 
+  const router = useRouter();
+  useEffect(() => {
+    const backHandler = () => {
+      router.back();
+      console.log("Router.back called");
+      return true; // Return true to prevent the default behavior
+    };
+    BackHandler.addEventListener("hardwareBackPress", backHandler);
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", backHandler);
+    };
+  }, [router]);
+
   const { data, refreshing, onRefresh } = useRefresh(
-    2000,
+    4000,
     getMyEventsData,
     [],
     true
@@ -100,13 +120,17 @@ const interests = () => {
       setItems(data);
     }
   }, [data]);
+
   return (
-    <SafeAreaView className=" w-full h-full bg-Main">
+    <SafeAreaView className="h-full bg-Main">
       {refreshing ? (
+        // <View className="flex-1 justify-center items-center">
+        //   <Text className="text-Vivid font-PoppinsBold mt-2">Loading...</Text>
+        // </View>
         <EventRefreshing />
       ) : (
         <ScrollView
-          className="mt-7"
+          className=" mt-7"
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
@@ -116,9 +140,7 @@ const interests = () => {
               user={item.user}
               event={item.event}
               containerStyles={""}
-              button={"follow"}
-              interactionButtonPressed={"yes"}
-              interactionType={"interest"}
+              button={"delete"}
             />
           ))}
         </ScrollView>
@@ -127,4 +149,6 @@ const interests = () => {
   );
 };
 
-export default interests;
+export default myevents;
+
+const styles = StyleSheet.create({});

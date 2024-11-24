@@ -1,9 +1,10 @@
 import { View, Text, ScrollView } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import InputField from "../../components/InputField";
-import CustomButton from "../../components/CustomButton";
+import InputField from "@/components/InputField";
+import CustomButton from "@/components/CustomButton";
 import { Link, router } from "expo-router";
+import { useAuth } from "@/context/AuthContext";
 
 const SignIn = () => {
   const [form, setForm] = useState({
@@ -12,11 +13,18 @@ const SignIn = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [role, setRole] = useState("organizer");
-  const submit = () => {
-    if (role === "user") {
+  const { onLogin } = useAuth();
+  const submit = async () => {
+    //TODO: Add Input Validation for email and password.
+    console.log("Login");
+    const result = await onLogin(form.email, form.password);
+    console.log(result);
+    if (result && result.error) {
+      console.log(result.msg);
+    } else {
+      if (result.data.result.roleName === "Organizer")
+        router.replace("(organizer)/dashboard");
       router.replace("(user)/home");
-    } else if (role === "organizer") {
-      router.replace("(organizer)/dashboard");
     }
   };
   return (
@@ -56,7 +64,7 @@ const SignIn = () => {
               iconOnly={false}
             />
             <Link
-              href="/find-account"
+              href="/forget-password"
               className="text-Text text-base mx-auto mt-8"
             >
               Forget Password

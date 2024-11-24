@@ -10,15 +10,15 @@ import {
   RefreshControl,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import SearchBar from "../../../../components/SearchBar";
-import Dropdown from "../../../../components/DropDown";
-import { icons, images } from "../../../../constants";
-import EventDetails from "../../../../components/EventDetails";
-import UserInfo from "../../../../components/UserInfo";
-import { useRefresh } from "../../../../constants/functions";
-import EventRefreshing from "../../../../components/EventRefreshing";
-import UserRefreshing from "../../../../components/UserRefreshing";
-import { getSearchedData } from "../../../../constants/functions";
+
+import EventRefreshing from "@/components/EventRefreshing";
+import UserRefreshing from "@/components/UserRefreshing";
+import { getSearchedData } from "@/constants/functions";
+import SearchBar from "@/components/SearchBar";
+import Dropdown from "@/components/DropDown";
+import { icons, images } from "@/constants";
+import EventDetails from "@/components/EventDetails";
+import UserInfo from "@/components/UserInfo";
 
 const discover = () => {
   const [searched, setSearched] = useState(false);

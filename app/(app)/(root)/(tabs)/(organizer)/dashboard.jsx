@@ -8,20 +8,18 @@ import {
   RefreshControl,
   TouchableOpacity,
 } from "react-native";
-
 import React, { useEffect, useState } from "react";
-import InfoCard from "../../../../components/InfoCard";
-import EventCard from "../../../../components/EventCard";
-import { icons, images } from "../../../../constants";
-import { router, useLocalSearchParams } from "expo-router";
-import { useRefresh } from "../../../../constants/functions";
-import ShimmerEffect from "../../../../components/ShimmerEffect";
-import DashboardRefreshing from "../../../../components/DashboardRefreshing";
+import InfoCard from "@/components/InfoCard";
+import EventCard from "@/components/EventCard";
+import { icons, images } from "@/constants";
+import { router } from "expo-router";
+import { useRefresh } from "@/constants/functions";
 
 const dashboard = () => {
   const [followers, setFollowers] = useState("");
   const [interactions, setInteractions] = useState("");
   const [events, setEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   // const [newEvents, setNewEvents] = useState([]);
 
   const dp = images.johnwickdp;
@@ -104,14 +102,19 @@ const dashboard = () => {
       setFollowers(data.followers);
       setInteractions(data.interactions);
       setEvents(data.events);
+      setIsLoading(false); ////shariq bhai this state ensure k first time jb is page pr ayin
+      ////to tb tk kuch show na ho jb tk data fetch nai kr letay
     }
   }, [data]);
 
   return (
     <SafeAreaView className=" bg-Main h-full">
-      {refreshing ? (
-        //<View className="bg-gray-950 h-[25%] w-[96%] ml-[2%]  mt-10 rounded-2xl"/>
-        <DashboardRefreshing />
+      {isLoading ? (
+        <View className="flex-1 justify-center items-center">
+          <Text className="text-Vivid font-PoppinsBold mt-2">
+            Loading data...
+          </Text>
+        </View>
       ) : (
         <ScrollView
           className="mx-3"
@@ -151,11 +154,13 @@ const dashboard = () => {
             </View>
             <View className="pb-10 mt-2">
               {events.map((event, index) => (
-                <EventCard
-                  event={event}
-                  user={{ username, dp, role }}
-                  containerStyles="mt-2"
-                />
+                <View key={event.id}>
+                  <EventCard
+                    event={event}
+                    user={{ username, dp, role }}
+                    containerStyles="mt-2"
+                  />
+                </View>
               ))}
             </View>
           </View>

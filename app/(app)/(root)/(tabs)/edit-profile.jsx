@@ -5,31 +5,52 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
-  BackHandler,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import InputField1 from "../../../../components/InputField1";
-import InputField from "../../../../components/InputField";
-import CustomButton from "../../../../components/CustomButton";
+import InputField from "@/components/InputField";
+import CustomButton from "@/components/CustomButton";
 import { Link, router } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialIcons } from "@expo/vector-icons";
-import { icons, images } from "../../../../constants";
-import DatePickerStyled from "../../../../components/DatePickerStyled";
+import defaultDp from "@/assets/icons/defaultProfile.png";
 
 const Spacer = ({ height }) => <View style={{ height }} />;
-const Upload = () => {
+
+const EditProfile = () => {
   const [form, setForm] = useState({
-    name: "",
-    type: "",
-    description: "",
-    venue: "",
-    date: new Date(),
+    username: "",
+    accountFrom: "",
+    oldPassword: "",
+    newPasssword: "",
   });
-  const [dp, setDp] = useState(images.eventPic);
+
+  const [dp, setDp] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const fetchProfileData = async () => {
+    const userData = {
+      username: "Faseeh_Ahmed",
+      accountFrom: "Lahore/Pakistan",
+      oldPassword: "********",
+      newPasssword: "",
+      profilePicture: defaultDp,
+    };
+
+    setForm({
+      username: userData.username,
+      accountFrom: userData.accountFrom,
+      oldPassword: "",
+      newPasssword: "",
+    });
+
+    setDp(userData.profilePicture);
+  };
+
+  useEffect(() => {
+    fetchProfileData();
+  }, []);
+
   const pickImage = async () => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -41,7 +62,7 @@ const Upload = () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [7, 4],
+      aspect: [1, 1],
       quality: 1,
     });
 
@@ -52,9 +73,10 @@ const Upload = () => {
 
   const submit = async () => {
     // Submit the form data
-    console.log("Uploaded An Event:", form);
+    console.log("Updated Profile Data:", form);
     router.back();
   };
+
   return (
     <SafeAreaView className=" bg-Main h-full">
       <ScrollView>
@@ -62,8 +84,8 @@ const Upload = () => {
           <View className="mt-5 relative">
             <Image
               source={dp}
-              resizeMode="cover" 
-              style={{ width: 250, height: 150 }}
+              resizeMode="contain"
+              className="w-[150px] h-[150px] rounded-full"
             />
             <TouchableOpacity
               style={{
@@ -84,41 +106,33 @@ const Upload = () => {
           <View className="w-full justify-center mt-10">
             <View className="px-8">
               <InputField
-                title="Name"
-                placeHolder="Concert"
-                value={form.name}
-                handleChangeText={(e) => setForm({ ...form, name: e })}
-                containerStyles={"mt-7"}
+                title="Username"
+                value={form.username}
+                placeHolder="Enter your username"
+                handleChangeText={(e) => setForm({ ...form, username: e })}
+                containerStyles={"mt-5"}
               />
               <InputField
-                title="Type"
-                placeHolder="Music Concert"
-                value={form.type}
-                handleChangeText={(e) => setForm({ ...form, type: e })}
-                containerStyles={"mt-7"}
-              />
-              <InputField1
-                title="Description"
-                placeHolder="Nice view of the crowd"
-                value={form.description}
-                handleChangeText={(e) => setForm({ ...form, description: e })}
-                containerStyles={"mt-7"}
+                title="Account from"
+                value={form.accountFrom}
+                placeHolder="Account from"
+                handleChangeText={(e) => setForm({ ...form, accountFrom: e })}
+                containerStyles={"mt-5"}
               />
               <InputField
-                title="Venue"
-                placeHolder="New York,USA"
-                value={form.venue}
-                handleChangeText={(e) => setForm({ ...form, venue: e })}
-                containerStyles={"mt-7"}
+                title="Old Password"
+                value={form.oldPassword}
+                placeHolder="Enter old password"
+                handleChangeText={(e) => setForm({ ...form, oldPassword: e })}
+                containerStyles={"mt-5"}
               />
-              <Spacer height={20} />
-              <DatePickerStyled
-                value={form.date}
-                onChange={(selectedDate) =>
-                  setForm({ ...form, date: selectedDate })
-                }
+              <InputField
+                title="New Password"
+                value={form.newPasssword}
+                placeHolder="Enter new password"
+                handleChangeText={(e) => setForm({ ...form, newPasssword: e })}
+                containerStyles={"mt-5"}
               />
-
               <Spacer height={20} />
               <CustomButton
                 title="Update"
@@ -139,4 +153,4 @@ const Upload = () => {
   );
 };
 
-export default Upload;
+export default EditProfile;

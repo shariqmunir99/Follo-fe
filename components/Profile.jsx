@@ -21,6 +21,7 @@ const Profile = ({
   role,
   isFollowed,
   events,
+  handleLogout,
 }) => {
   //Since i have hardcoded user object user object just have two properties dp and username
   //Once backend will be integrated user object will have all its information inlcuding followers/following....
@@ -113,6 +114,7 @@ const Profile = ({
                   textStyles={"text-Main"}
                   iconStyles={"ml-1"}
                   handlePress={() => {
+                    handleLogout();
                     router.replace("/sign-in");
                   }}
                 />

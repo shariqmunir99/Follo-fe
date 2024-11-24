@@ -10,15 +10,18 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useState } from "react";
 import { Link, router } from "expo-router";
-import CustomButton from "../../../../components/CustomButton";
-import InfoField from "../../../../components/InfoField";
-import { icons, images } from "../../../../constants";
-import Profile from "../../../../components/Profile";
-import { useRefresh } from "../../../../constants/functions";
+
 import ProfileRefreshing from "../../../../components/ProfileRefreshing";
+import CustomButton from "@/components/CustomButton";
+import InfoField from "@/components/InfoField";
+import { icons, images } from "@/constants";
+import Profile from "@/components/Profile";
+import { useRefresh } from "@/constants/functions";
+import { useAuth } from "@/context/AuthContext";
 
 export const profile = () => {
   const [user, setUser] = useState(null);
+  const { onLogout } = useAuth();
 
   const getUserData = () => {
     return {
@@ -75,6 +78,7 @@ export const profile = () => {
               isPreview={false}
               handlePress={edit}
               isFollowed={true}
+              handleLogout={onLogout}
             />
           )}
         </ScrollView>

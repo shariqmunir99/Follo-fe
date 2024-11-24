@@ -1,29 +1,35 @@
 import { View, Text, ScrollView, Alert } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import InputField from "../../components/InputField";
-import CustomButton from "../../components/CustomButton";
+import InputField from "@/components/InputField";
+import CustomButton from "@/components/CustomButton";
 import { Link, router } from "expo-router";
 import CheckBox from "react-native-check-box";
-import { isValidLocation } from "../../constants/functions";
+import { useAuth } from "@/context/AuthContext";
 
 const SignUp = () => {
   const [organizerCheck, setOrganizerCheck] = useState(false);
+  const { onRegister } = useAuth();
   const [form, setForm] = useState({
     username: "",
     email: "",
-    location: "",
+    accountfrom: "",
     password: "",
     cpassword: "",
   });
 
-  const onClick = () => {
+  const onClick = async () => {
     if (form.password !== form.cpassword) {
       Alert.alert("Error", "Passwords do not match");
-    } else if (!isValidLocation(form.location)) {
-      Alert.alert("Error", "Select valid location");
     } else {
-      router.push("/sign-in");
+      const result = await onRegister(
+        form.email,
+        form.password,
+        form.username,
+        "example.com",
+        organizerCheck
+      );
+      if (result && !result.error) router.push("/sign-in");
     }
   };
   return (
@@ -56,9 +62,9 @@ const SignUp = () => {
             />
             <InputField
               title="Account From"
-              placeHolder="city/country"
-              value={form.location}
-              handleChangeText={(e) => setForm({ ...form, location: e })}
+              placeHolder="Lahore/Pakistan"
+              value={form.accountfrom}
+              handleChangeText={(e) => setForm({ ...form, accountfrom: e })}
               containerStyles={"mt-7"}
             />
             <InputField

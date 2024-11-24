@@ -11,8 +11,8 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
-import { images } from "../../../../constants";
-import UserInfo from "../../../../components/UserInfo";
+import { images } from "@/constants";
+import UserInfo from "@/components/UserInfo";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useRefresh } from "../../../../constants/functions";
 import UserRefreshing from "../../../../components/UserRefreshing";

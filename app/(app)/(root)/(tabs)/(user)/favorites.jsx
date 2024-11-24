@@ -1,11 +1,19 @@
-import { SafeAreaView, ScrollView, RefreshControl } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  BackHandler,
+  RefreshControl,
+} from "react-native";
 import React, { useEffect, useState } from "react";
-import { images, icons } from "../../../../constants";
-import EventDetails from "../../../../components/EventDetails";
 import { useRefresh } from "../../../../constants/functions";
 import EventRefreshing from "../../../../components/EventRefreshing";
+import { images, icons } from "@/constants";
+import EventDetails from "@/components/EventDetails";
 
-const home = () => {
+const favorites = () => {
   const [items, setItems] = useState([]);
   const getMyEventsData = () => {
     const events = [
@@ -92,7 +100,6 @@ const home = () => {
       setItems(data);
     }
   }, [data]);
-
   return (
     <SafeAreaView className=" w-full h-full bg-Main">
       {refreshing ? (
@@ -110,6 +117,8 @@ const home = () => {
               event={item.event}
               containerStyles={""}
               button={"follow"}
+              interactionButtonPressed={"yes"}
+              interactionType={"favorite"}
             />
           ))}
         </ScrollView>
@@ -118,4 +127,6 @@ const home = () => {
   );
 };
 
-export default home;
+export default favorites;
+
+const styles = StyleSheet.create({});

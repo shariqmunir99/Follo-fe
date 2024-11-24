@@ -8,7 +8,7 @@ import {
   RefreshControl,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import EventDetails from "../../../../components/EventDetails";
+import EventDetails from "@/components/EventDetails";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useRefresh } from "../../../../constants/functions";
 import { images } from "../../../../constants";

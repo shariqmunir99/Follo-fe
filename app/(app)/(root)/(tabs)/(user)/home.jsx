@@ -1,3 +1,7 @@
+import { SafeAreaView, ScrollView, RefreshControl } from "react-native";
+import React, { useEffect, useState } from "react";
+import { useRefresh } from "@/constants/functions";
+import EventRefreshing from "@/components/EventRefreshing";
 import {
   SafeAreaView,
   ScrollView,
@@ -5,15 +9,11 @@ import {
   Text,
   View,
   BackHandler,
-  RefreshControl,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import { images, icons } from "../../../../constants";
-import EventDetails from "../../../../components/EventDetails";
-import { useRefresh } from "../../../../constants/functions";
-import EventRefreshing from "../../../../components/EventRefreshing";
+import { images, icons } from "@/constants";
+import EventDetails from "@/components/EventDetails";
 
-const favorites = () => {
+const home = () => {
   const [items, setItems] = useState([]);
   const getMyEventsData = () => {
     const events = [
@@ -100,6 +100,7 @@ const favorites = () => {
       setItems(data);
     }
   }, [data]);
+
   return (
     <SafeAreaView className=" w-full h-full bg-Main">
       {refreshing ? (
@@ -117,8 +118,6 @@ const favorites = () => {
               event={item.event}
               containerStyles={""}
               button={"follow"}
-              interactionButtonPressed={"yes"}
-              interactionType={"favorite"}
             />
           ))}
         </ScrollView>
@@ -127,6 +126,4 @@ const favorites = () => {
   );
 };
 
-export default favorites;
-
-const styles = StyleSheet.create({});
+export default home;
