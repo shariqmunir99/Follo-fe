@@ -14,8 +14,8 @@ import { TouchableOpacity } from "react-native";
 import { images } from "@/constants";
 import UserInfo from "@/components/UserInfo";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useRefresh } from "../../../../constants/functions";
-import UserRefreshing from "../../../../components/UserRefreshing";
+import { useRefresh } from "@/constants/functions";
+import UserRefreshing from "@/components/UserRefreshing";
 
 const analytics = () => {
   const { id, buttonPressed } = useLocalSearchParams();

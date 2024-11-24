@@ -11,7 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useState } from "react";
 import { Link, router } from "expo-router";
 
-import ProfileRefreshing from "../../../../components/ProfileRefreshing";
+import ProfileRefreshing from "@/components/ProfileRefreshing";
 import CustomButton from "@/components/CustomButton";
 import InfoField from "@/components/InfoField";
 import { icons, images } from "@/constants";

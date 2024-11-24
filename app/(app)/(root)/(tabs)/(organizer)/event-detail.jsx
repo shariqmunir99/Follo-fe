@@ -10,9 +10,9 @@ import {
 import React, { useEffect, useState } from "react";
 import EventDetails from "@/components/EventDetails";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useRefresh } from "../../../../constants/functions";
-import { images } from "../../../../constants";
-import EventRefreshing from "../../../../components/EventRefreshing";
+import { useRefresh } from "@/constants/functions";
+import { images } from "@/constants";
+import EventRefreshing from "@/components/EventRefreshing";
 
 const eventdetail = () => {
   const {

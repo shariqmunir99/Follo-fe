@@ -15,8 +15,8 @@ import { icons, images } from "@/constants";
 import Profile from "@/components/Profile";
 import { useLocalSearchParams } from "expo-router";
 import { BackHandler, Platform } from "react-native";
-import { useRefresh } from "../../../../constants/functions";
-import ProfileRefreshing from "../../../../components/ProfileRefreshing";
+import { useRefresh } from "@/constants/functions";
+import ProfileRefreshing from "@/components/ProfileRefreshing";
 
 const profilepreview = () => {
   const [user, setUser] = useState(null);

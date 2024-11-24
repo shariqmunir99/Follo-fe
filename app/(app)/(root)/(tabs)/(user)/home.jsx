@@ -1,15 +1,8 @@
-import { SafeAreaView, ScrollView, RefreshControl } from "react-native";
+import { SafeAreaView, ScrollView, View, RefreshControl } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useRefresh } from "@/constants/functions";
 import EventRefreshing from "@/components/EventRefreshing";
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  BackHandler,
-} from "react-native";
+
 import { images, icons } from "@/constants";
 import EventDetails from "@/components/EventDetails";
 
@@ -113,12 +106,14 @@ const home = () => {
           }
         >
           {items.map((item, index) => (
-            <EventDetails
-              user={item.user}
-              event={item.event}
-              containerStyles={""}
-              button={"follow"}
-            />
+            <View key={item.event.id}>
+              <EventDetails
+                user={item.user}
+                event={item.event}
+                containerStyles={""}
+                button={"follow"}
+              />
+            </View>
           ))}
         </ScrollView>
       )}

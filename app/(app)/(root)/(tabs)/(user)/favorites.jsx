@@ -8,8 +8,8 @@ import {
   RefreshControl,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useRefresh } from "../../../../constants/functions";
-import EventRefreshing from "../../../../components/EventRefreshing";
+import { useRefresh } from "@/constants/functions";
+import EventRefreshing from "@/components/EventRefreshing";
 import { images, icons } from "@/constants";
 import EventDetails from "@/components/EventDetails";
 

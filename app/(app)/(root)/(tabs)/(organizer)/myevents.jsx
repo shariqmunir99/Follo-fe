@@ -12,7 +12,6 @@ import React, { useState, useEffect } from "react";
 import { useRefresh } from "@/constants/functions";
 import { router, useRouter } from "expo-router";
 import EventRefreshing from "@/components/EventRefreshing";
-import React, { useState, useCallback } from "react";
 import { icons, images } from "@/constants";
 import EventDetails from "@/components/EventDetails";
 
