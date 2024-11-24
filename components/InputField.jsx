@@ -22,7 +22,7 @@ const InputField = ({
     <View className={`space-y-2 ${containerStyles}`}>
       <Text className="text-xl text-Text font-PoppinsLight">{title}</Text>
       <View
-        className=" border-2 w-full h-16 px-4 bg-MainLight
+        className="  w-full h-16 px-4 bg-MainLight
       rounded-3xl focus:border-secondary items-center flex-row"
       >
         <TextInput

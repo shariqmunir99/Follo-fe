@@ -8,12 +8,12 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import InputField from "../../../components/InputField";
-import CustomButton from "../../../components/CustomButton";
+import InputField from "@/components/InputField";
+import CustomButton from "@/components/CustomButton";
 import { Link, router } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialIcons } from "@expo/vector-icons";
-import defaultDp from "../../../assets/icons/defaultProfile.png";
+import defaultDp from "@/assets/icons/defaultProfile.png";
 
 const Spacer = ({ height }) => <View style={{ height }} />;
 

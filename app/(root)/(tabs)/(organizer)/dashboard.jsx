@@ -9,11 +9,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import InfoCard from "../../../../components/InfoCard";
-import EventCard from "../../../../components/EventCard";
-import { icons, images } from "../../../../constants";
+import InfoCard from "@/components/InfoCard";
+import EventCard from "@/components/EventCard";
+import { icons, images } from "@/constants";
 import { router } from "expo-router";
-import { useRefresh } from "../../../../constants/functions";
+import { useRefresh } from "@/constants/functions";
 
 const dashboard = () => {
   const [followers, setFollowers] = useState("");
@@ -154,11 +154,13 @@ const dashboard = () => {
             </View>
             <View className="pb-10 mt-2">
               {events.map((event, index) => (
-                <EventCard
-                  event={event}
-                  user={{ username, dp, role }}
-                  containerStyles="mt-2"
-                />
+                <View key={event.id}>
+                  <EventCard
+                    event={event}
+                    user={{ username, dp, role }}
+                    containerStyles="mt-2"
+                  />
+                </View>
               ))}
             </View>
           </View>

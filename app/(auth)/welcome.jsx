@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomButton from "../../components/CustomButton";
+import CustomButton from "@/components/CustomButton";
 import { Redirect, router } from "expo-router";
-import { icons } from "../../constants";
+import { icons } from "@/constants";
 
 const Onboarding = () => {
   const onClick = () => {

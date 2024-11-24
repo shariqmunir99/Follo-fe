@@ -7,8 +7,8 @@ import {
   BackHandler,
 } from "react-native";
 import React from "react";
-import { images, icons } from "../../../../constants";
-import EventDetails from "../../../../components/EventDetails";
+import { images, icons } from "@/constants";
+import EventDetails from "@/components/EventDetails";
 
 const home = () => {
   const user = {

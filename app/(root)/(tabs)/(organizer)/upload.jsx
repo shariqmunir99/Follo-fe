@@ -9,14 +9,14 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import InputField1 from "../../../../components/InputField1";
-import InputField from "../../../../components/InputField";
-import CustomButton from "../../../../components/CustomButton";
+import InputField1 from "@/components/InputField1";
+import InputField from "@/components/InputField";
+import CustomButton from "@/components/CustomButton";
 import { Link, router } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialIcons } from "@expo/vector-icons";
-import { icons, images } from "../../../../constants";
-import DatePickerStyled from "../../../../components/DatePickerStyled";
+import { icons, images } from "@/constants";
+import DatePickerStyled from "@/components/DatePickerStyled";
 
 const Spacer = ({ height }) => <View style={{ height }} />;
 const Upload = () => {

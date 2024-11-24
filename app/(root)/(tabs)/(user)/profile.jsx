@@ -9,10 +9,10 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useState } from "react";
 import { Link, router } from "expo-router";
-import CustomButton from "../../../../components/CustomButton";
-import InfoField from "../../../../components/InfoField";
-import { icons, images } from "../../../../constants";
-import Profile from "../../../../components/Profile";
+import CustomButton from "@/components/CustomButton";
+import InfoField from "@/components/InfoField";
+import { icons, images } from "@/constants";
+import Profile from "@/components/Profile";
 
 export const profile = () => {
   const [dp, setDp] = useState(null);

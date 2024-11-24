@@ -1,8 +1,8 @@
 import { View, Text, Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Tabs, Redirect } from "expo-router";
-import { icons, images } from "../../../../constants";
-import { colors, fonts } from "../../../../tailwind.config.js";
+import { icons, images } from "@/constants";
+import { colors, fonts } from "@/tailwind.config.js";
 
 const TabIcon = ({ icon, color, name, focused }) => {
   return (
@@ -42,7 +42,6 @@ const TabsLayout = () => {
           name="home"
           options={{
             title: "Home",
-
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon

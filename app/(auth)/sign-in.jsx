@@ -1,9 +1,10 @@
 import { View, Text, ScrollView } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import InputField from "../../components/InputField";
-import CustomButton from "../../components/CustomButton";
+import InputField from "@/components/InputField";
+import CustomButton from "@/components/CustomButton";
 import { Link, router } from "expo-router";
+import { useAuth } from "@/context/AuthContext";
 
 const SignIn = () => {
   const [form, setForm] = useState({
@@ -12,12 +13,25 @@ const SignIn = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [role, setRole] = useState("organizer");
-  const submit = () => {
-    if (role === "user") {
-      router.replace("(user)/home");
-    } else if (role === "organizer") {
+  const { onLogin } = useAuth();
+  const submit = async () => {
+    //TODO: Add Input Validation for email and password.
+    console.log("Login");
+    const result = await onLogin(form.email, form.password);
+    console.log(result);
+    if (result && result.error) {
+      console.log(result.msg);
+    } else {
+      if (result.data.result.roleName === "Organizer")
+        router.replace("(organizer)/dashboard");
       router.replace("(organizer)/dashboard");
     }
+
+    // if (role === "user") {
+    //   router.replace("(user)/home");
+    // } else if (role === "organizer") {
+    //   router.replace("(organizer)/dashboard");
+    // }
   };
   return (
     <SafeAreaView className="bg-Main h-full">

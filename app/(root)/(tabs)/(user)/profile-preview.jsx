@@ -2,10 +2,10 @@ import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useState } from "react";
 import { Link, router } from "expo-router";
-import CustomButton from "../../../../components/CustomButton";
-import InfoField from "../../../../components/InfoField";
-import { icons, images } from "../../../../constants";
-import Profile from "../../../../components/Profile";
+import CustomButton from "@/components/CustomButton";
+import InfoField from "@/components/InfoField";
+import { icons, images } from "@/constants";
+import Profile from "@/components/Profile";
 import { useLocalSearchParams } from "expo-router";
 import { BackHandler, Platform } from "react-native";
 

@@ -9,11 +9,11 @@ import {
   BackHandler,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import SearchBar from "../../../../components/SearchBar";
-import Dropdown from "../../../../components/DropDown";
-import { icons, images } from "../../../../constants";
-import EventDetails from "../../../../components/EventDetails";
-import UserInfo from "../../../../components/UserInfo";
+import SearchBar from "@/components/SearchBar";
+import Dropdown from "@/components/DropDown";
+import { icons, images } from "@/constants";
+import EventDetails from "@/components/EventDetails";
+import UserInfo from "@/components/UserInfo";
 
 const discover = () => {
   const [searchTerm, setSearchTerm] = useState("");

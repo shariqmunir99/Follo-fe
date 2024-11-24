@@ -8,9 +8,8 @@ import {
   RefreshControl,
 } from "react-native";
 import React, { useState, useCallback } from "react";
-import { icons, images } from "../../../../constants";
-import EventDetails from "../../../../components/EventDetails";
-import { usePullToRefresh } from "../../../../constants/functions";
+import { icons, images } from "@/constants";
+import EventDetails from "@/components/EventDetails";
 
 const myevents = () => {
   const [dp, setDp] = useState(images.johnwickdp);
@@ -93,15 +92,17 @@ const myevents = () => {
         }
       >
         {events.map((event, index) => (
-          <EventDetails
-            user={{
-              dp: dp,
-              username: username,
-            }}
-            event={event}
-            containerStyles={""}
-            button={"delete"}
-          />
+          <View key={event.id}>
+            <EventDetails
+              user={{
+                dp: dp,
+                username: username,
+              }}
+              event={event}
+              containerStyles={""}
+              button={"delete"}
+            />
+          </View>
         ))}
       </ScrollView>
     </SafeAreaView>

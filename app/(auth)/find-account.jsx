@@ -1,8 +1,8 @@
 import { View, Text, ScrollView, Alert } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import InputField from "../../components/InputField";
-import CustomButton from "../../components/CustomButton";
+import InputField from "@/components/InputField";
+import CustomButton from "@/components/CustomButton";
 import { Link, router } from "expo-router";
 
 const FindAccount = () => {
