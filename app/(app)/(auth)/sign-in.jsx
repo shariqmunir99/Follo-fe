@@ -19,12 +19,14 @@ const SignIn = () => {
     console.log("Login");
     const result = await onLogin(form.email, form.password);
     console.log(result);
+    console.log(result);
     if (result && result.error) {
       console.log(result.msg);
     } else {
-      if (result.data.result.roleName === "Organizer")
-        router.replace("(organizer)/dashboard");
-      router.replace("(user)/home");
+      // if (result.data.result.roleName === "Organizer")
+      //   router.replace("(organizer)/dashboard");
+      // else router.replace("(user)/home");
+      router.replace("verify/[id]");
     }
   };
   return (

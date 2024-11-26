@@ -10,7 +10,7 @@ import { icons, images } from "@/constants";
 
 const Onboarding = () => {
   const onClick = () => {
-    router.push("/discover");
+    router.replace("/sign-up");
   };
   const screenHeight = Dimensions.get("window").height;
   return (

@@ -97,11 +97,19 @@ const SignUp = () => {
               title="Sign up"
               handlePress={onClick}
               containerStyles={
-                "mt-7 mb-10 w-[40%]  min-h-[65px] mx-auto rounded-3xl"
+                "mt-7 mb-6 w-[40%]  min-h-[65px] mx-auto rounded-3xl"
               }
               isIcon={false}
               iconOnly={false}
             />
+            <View className="mx-auto mb-6 flex-row">
+              <Text className="text-lg text-Text">
+                Already have an account?{" "}
+              </Text>
+              <Link href="/sign-in" className="text-lg text-Vivid">
+                Sign In
+              </Link>
+            </View>
           </View>
         </View>
       </ScrollView>
