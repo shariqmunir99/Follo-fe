@@ -23,10 +23,10 @@ const SignIn = () => {
     if (result && result.error) {
       console.log(result.msg);
     } else {
-      // if (result.data.result.roleName === "Organizer")
-      //   router.replace("(organizer)/dashboard");
-      // else router.replace("(user)/home");
-      router.replace("verify/[id]");
+      if (result.data.result.roleName === "Organizer")
+        router.replace("(organizer)/dashboard");
+      else router.replace("(user)/home");
+      //router.replace("verify/[id]");  //for testing the verify page
     }
   };
   return (
