@@ -30,3 +30,14 @@ export const signupSchema = z.object({
       });
     }
   });
+  export const signinSchema = z.object({
+    email: z
+      .string()
+      .email({ message: "Invalid email" }),
+  
+    password: z
+      .string()
+      .min(8, { message: "Invalid password" })
+      .regex(/[a-zA-Z]/, { message: "Invalid password" })
+      .regex(/[0-9]/, { message: "Invalid password" }),
+  });

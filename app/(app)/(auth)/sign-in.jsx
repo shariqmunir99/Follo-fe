@@ -26,7 +26,6 @@ const SignIn = () => {
       if (result.data.result.roleName === "Organizer")
         router.replace("(organizer)/dashboard");
       else router.replace("(user)/home");
-      //router.replace("verify/[id]");  //for testing the verify page
     }
   };
   return (
