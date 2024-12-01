@@ -1,71 +1,48 @@
 import {
   SafeAreaView,
   ScrollView,
-  StyleSheet,
   Text,
-  View,
   BackHandler,
   RefreshControl,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import EventDetails from "@/components/EventDetails";
-import { useLocalSearchParams, useRouter } from "expo-router";
-import { useRefresh } from "@/constants/functions";
-import { images } from "@/constants";
 import EventRefreshing from "@/components/EventRefreshing";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { images } from "@/constants";
+import { useQuery } from "@tanstack/react-query";
+import { EventService } from "../../../../../services/event.service";
+import { format } from "date-fns";
 
 const eventdetail = () => {
-  const { event } = useLocalSearchParams();
-
+  const { id } = useLocalSearchParams();
+  // const id = "4835d882-a9bd-4f8a-b841-fb080880d538";
+  // const event_id = "4835d882-a9bd-4f8a-b841-fb080880d538";
   const [item, setItem] = useState(null);
 
-  const router = useRouter();
-  useEffect(() => {
-    const backHandler = () => {
-      router.back();
-      return true; // Return true to prevent the default behavior
-    };
-    BackHandler.addEventListener("hardwareBackPress", backHandler);
-    return () => {
-      BackHandler.removeEventListener("hardwareBackPress", backHandler);
-    };
-  }, [router]);
+  const { data, isLoading, isError, error, isSuccess } = useQuery({
+    queryKey: ["event", id],
+    queryFn: () => {
+      return EventService.getEvent(id);
+    },
+  });
 
-  const getEventDetails = (eventId) => {
-    return {
-      user: {
-        dp: images.johnwickdp,
-        username: "john_wick",
-      },
-      event: {
-        id: 1,
-        date: "Nov 15, 2024",
-        description: "Join us for an amazing night of music and entertainment.",
-        location: "Central Park, New York",
-        type: "Music Concert",
-        favorites: 120,
-        interests: 230,
-        pic: images.eventPic,
-      },
-    };
-  };
+  const [refreshing, setRefreshing] = useState(false);
 
-  const { data, refreshing, onRefresh } = useRefresh(
-    2000,
-    getEventDetails,
-    [id], //these empTy braces means no parameters to the function getUserData
-    true
-  );
-
-  useEffect(() => {
-    if (data) {
-      setItem(data);
+  const onRefresh = async () => {
+    setRefreshing(true); // Start the refreshing animation
+    try {
+      await refetch(); // Refetch the data from the backend
+    } finally {
+      setRefreshing(false); // Stop the refreshing animation
     }
-  }, [data]);
+  };
 
   return (
     <SafeAreaView className="h-full w-full bg-Main">
-      {refreshing ? (
+      <Stack.Screen />
+
+      {isLoading ? (
         <EventRefreshing />
       ) : (
         <ScrollView
@@ -78,10 +55,25 @@ const eventdetail = () => {
             />
           }
         >
-          {item && (
+          {data && (
             <EventDetails
-              user={item.user}
-              event={item.event}
+              user={{
+                dp: images.johnwickdp,
+                username: data.organizer,
+              }}
+              event={{
+                id: data.id,
+                date: format(new Date(data.date), "do MMM, yyyy"),
+                description: data.description,
+                type: data.type,
+                city: data.city,
+                country: data.country,
+                favourites: data.interests,
+                interests: data.favourites,
+                createdAt: format(new Date(data.createdAt), "do MMM, yyyy"),
+                venue: data.venue,
+                pic: images.eventPic,
+              }}
               containerStyles={"mt-10"}
               button={"delete"}
             />

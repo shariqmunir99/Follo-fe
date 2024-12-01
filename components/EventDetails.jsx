@@ -26,11 +26,15 @@ const EventDetails = ({
   const [isFollowed, setIsFollowed] = useState(false);
   const [role, setRole] = useState("user");
 
+  console.log("DATA: ", event);
+
   const editHandlePress = () => {
     router.push("/edit-event");
   };
 
   const organizerPressedInterest = (eventId) => {
+    console.log("Pushing on Local Param", eventId);
+
     router.push({
       pathname: "/analytics",
       params: {
@@ -40,6 +44,7 @@ const EventDetails = ({
     });
   };
   const organizerPressedFavorite = (eventId) => {
+    console.log("Pushing on Local Param", eventId);
     router.push({
       pathname: "/analytics",
       params: {
@@ -95,7 +100,7 @@ const EventDetails = ({
               </TouchableOpacity>
               <View>
                 <Text className="text-Vivid opacity-50 text-xs">
-                  {event.date}
+                  {event.createdAt}
                 </Text>
               </View>
             </View>
@@ -137,7 +142,9 @@ const EventDetails = ({
         </View>
         <View className="flex-row justify-between">
           <View>
-            <Text className="text-Text opacity-90">{event.location}</Text>
+            <Text className="text-Text opacity-90">
+              {event.venue}, {event.city} {event.country}
+            </Text>
           </View>
           <View>
             <Text className="text-Text opacity-90">{event.type}</Text>
@@ -158,7 +165,7 @@ const EventDetails = ({
               <InteractionButton
                 user={user}
                 iconFor={"favorite"}
-                onPress={organizerPressedFavorite}
+                onPress={() => organizerPressedInterest(event.id)}
                 value={event.favorites}
                 eventId={event.id}
                 alreadyPressed={interactionButtonPressed}
@@ -170,27 +177,29 @@ const EventDetails = ({
               <InteractionButton
                 user={user}
                 iconFor={"interest"}
-                onPress={organizerPressedInterest}
+                onPress={() => organizerPressedFavorite(event.id)}
                 value={event.interests}
                 eventId={event.id}
                 alreadyPressed={interactionButtonPressed}
               />
             )}
 
-          {/* If interactionButtonPressed is not 'yes', show both buttons */}
           {interactionButtonPressed !== "yes" && (
             <>
               <InteractionButton
                 user={user}
                 iconFor={"favorite"}
-                onPress={organizerPressedFavorite}
-                value={event.favorites}
+                onPress={() => organizerPressedInterest(event.id)}
+                value={event.favourites}
                 eventId={event.id}
               />
+              <View>
+                <Text className="text-Text opacity-90">{event.date}</Text>
+              </View>
               <InteractionButton
                 user={user}
                 iconFor={"interest"}
-                onPress={organizerPressedInterest}
+                onPress={() => organizerPressedFavorite(event.id)}
                 value={event.interests}
                 eventId={event.id}
               />

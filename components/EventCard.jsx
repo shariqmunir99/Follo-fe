@@ -10,7 +10,7 @@ const EventCard = ({ event, user, containerStyles }) => {
     router.push({
       pathname: "/event-detail",
       params: {
-        event: event,
+        id: event.id,
       },
     });
   };

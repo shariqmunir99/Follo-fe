@@ -1,24 +1,24 @@
 import {
   SafeAreaView,
   ScrollView,
-  StyleSheet,
   Text,
   View,
-  Image,
-  Animated,
-  BackHandler,
   RefreshControl,
+  BackHandler,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
-import { images } from "@/constants";
 import UserInfo from "@/components/UserInfo";
-import { useLocalSearchParams, useRouter } from "expo-router";
-import { useRefresh } from "@/constants/functions";
 import UserRefreshing from "@/components/UserRefreshing";
+import { useQuery } from "@tanstack/react-query";
+import { EventService } from "../../../../../services/event.service";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 const analytics = () => {
   const { id, buttonPressed } = useLocalSearchParams();
+  // const id = "4835d882-a9bd-4f8a-b841-fb080880d538";
+
+  console.log("IDDD: ", id);
   const [pressed, setPressed] = useState("");
 
   const [item, setItem] = useState(null);
@@ -27,57 +27,40 @@ const analytics = () => {
     setPressed(buttonPressed);
   }, [buttonPressed]);
 
-  const getAnalyticsData = (eventId) => {
-    const interestsList = Array.from({ length: 20 }, (_, index) => ({
-      dp: images.defaultProfile,
-      username: `rick_grimes`,
-    }));
-
-    const favoritesList = Array.from({ length: 20 }, (_, index) => ({
-      dp: images.johnwickdp,
-      username: `john_wick`,
-    }));
-
-    return { interestsList, favoritesList };
-  };
-
-  const { data, refreshing, onRefresh } = useRefresh(
-    2000, // Delay in milliseconds
-    getAnalyticsData,
-    [id], // No parameters for now
-    true
-  );
-
-  useEffect(() => {
-    if (data) {
-      setItem(data);
-    }
-  }, [data]);
+  const button = buttonPressed === "left" ? "interested-by" : "favorited-by";
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: ["event"],
+    id,
+    button,
+    queryFn: () => EventService.getAnalytics(id, buttonPressed),
+  });
 
   const renderList = (list) =>
-    list.map((user, index) => (
-      <UserInfo user={user} containerStyles={"mx-[3%] w-[94%] mt-2"} />
+    list.map((user) => (
+      <View key={user.userId}>
+        <UserInfo user={user} containerStyles={"mx-[3%] w-[94%] mt-2"} />
+      </View>
     ));
 
-  const router = useRouter();
-  useEffect(() => {
-    const backHandler = () => {
-      router.back();
-      console.log("Router.back called");
-      return true; // Return true to prevent the default behavior
-    };
-    BackHandler.addEventListener("hardwareBackPress", backHandler);
-    return () => {
-      BackHandler.removeEventListener("hardwareBackPress", backHandler);
-    };
-  }, [router]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true); // Start the refreshing animation
+    try {
+      await refetch(); // Refetch the data from the backend
+    } finally {
+      setRefreshing(false); // Stop the refreshing animation
+    }
+  };
 
   return (
     <SafeAreaView className="bg-Main w-full h-full">
       <View className="flex-row gap-2 justify-center items-center pb-4 pt-10 border-b-[1px] border-MainLight">
         <TouchableOpacity
           className={`${pressed == "left" ? "bg-MainLight" : ""} rounded-3xl`}
-          onPress={() => setPressed("left")}
+          onPress={async () => {
+            setPressed("left");
+          }}
         >
           <Text className="px-7 py-2 text-Text text-lg font-PoppinsRegular">
             Favorited By
@@ -85,14 +68,16 @@ const analytics = () => {
         </TouchableOpacity>
         <TouchableOpacity
           className={`${pressed == "right" ? "bg-MainLight" : ""} rounded-3xl`}
-          onPress={() => setPressed("right")}
+          onPress={async () => {
+            setPressed("right");
+          }}
         >
           <Text className="px-7 py-2 text-Text text-lg font-PoppinsRegular">
             Interested By
           </Text>
         </TouchableOpacity>
       </View>
-      {refreshing ? (
+      {isLoading ? (
         <UserRefreshing />
       ) : (
         <ScrollView
@@ -100,14 +85,14 @@ const analytics = () => {
             <RefreshControl
               refreshing={refreshing}
               onRefresh={onRefresh}
-              progressBackgroundColor="transparent"
+              progressBackgroundColor="#100425"
               colors={["#FAFF00"]}
             />
           }
         >
           {pressed === "left"
-            ? renderList(item?.favoritesList || [])
-            : renderList(item?.interestsList || [])}
+            ? renderList(data.interestedBy || [])
+            : renderList(data.favoritedBy || [])}
         </ScrollView>
       )}
     </SafeAreaView>

@@ -6,6 +6,7 @@ import { Image } from "react-native";
 const UserInfo = ({ user, containerStyles, showDetails }) => {
   return (
     <View
+      key={user.userId}
       className={`w-full bg-MainLight rounded-3xl flex-row items-center p-3 ${containerStyles}`}
     >
       <View className="">

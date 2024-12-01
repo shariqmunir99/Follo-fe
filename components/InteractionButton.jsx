@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { icons } from "../constants";
+import { useAuth } from "@/context/AuthContext";
 
 const InteractionButton = ({
   user,
@@ -18,8 +19,9 @@ const InteractionButton = ({
   eventId,
   alreadyPressed,
 }) => {
+  const { authState } = useAuth();
   const [isPressed, setIsPressed] = useState(false);
-  const [role, setRole] = useState("user");
+  const [role, setRole] = useState(authState.role);
   const userPressed = () => {
     setIsPressed(!isPressed);
     //update in database
@@ -29,13 +31,13 @@ const InteractionButton = ({
   }, [alreadyPressed]);
 
   const getIcon = () => {
-    if (role === "organizer") {
+    if (role === "Organizer") {
       if (iconFor === "favorite") {
         return icons.filledheart;
       } else if (iconFor === "interest") {
         return icons.filledstar;
       }
-    } else if (role === "user") {
+    } else if (role === "User") {
       if (iconFor === "interest") {
         return isPressed ? icons.filledstar : icons.star;
       } else if (iconFor === "favorite") {
@@ -48,7 +50,7 @@ const InteractionButton = ({
   return (
     <TouchableOpacity
       onPress={() => {
-        if (role === "user") {
+        if (role === "User") {
           userPressed();
         } else {
           onPress(eventId);

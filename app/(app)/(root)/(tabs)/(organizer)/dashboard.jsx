@@ -13,7 +13,7 @@ import InfoCard from "@/components/InfoCard";
 import EventCard from "@/components/EventCard";
 import DashboardRefreshing from "@/components/DashboardRefreshing";
 import { icons, images } from "@/constants";
-import { router } from "expo-router";
+import { router, Stack } from "expo-router";
 import { useRefresh } from "@/constants/functions";
 import { useQuery } from "@tanstack/react-query";
 import { UserService } from "../../../../../services/user.service";
@@ -99,6 +99,7 @@ const dashboard = () => {
 
   return (
     <SafeAreaView className=" bg-Main h-full">
+      <Stack.Screen />
       {isLoading ? (
         <DashboardRefreshing />
       ) : (

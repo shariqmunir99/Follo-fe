@@ -44,14 +44,6 @@ const TabsLayout = () => {
           options={{
             title: "Dashboard",
             headerShown: false,
-            headerStyle: {
-              backgroundColor: colors.Main,
-            },
-            headerTitleAlign: "center",
-            headerTitleStyle: {
-              color: colors.Text,
-              fontFamily: fonts.PoppinsRegular,
-            },
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
                 icon={icons.dashboard}
@@ -61,18 +53,11 @@ const TabsLayout = () => {
               />
             ),
           }}
-          listeners={{
-            tabPress: (e) => {
-              e.preventDefault(); // Prevent default tab behavior
-              router.push("/dashboard"); // Push route into stack
-            },
-          }}
         />
         <Tabs.Screen
           name="upload"
           options={{
             title: "Upload",
-
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
@@ -83,27 +68,12 @@ const TabsLayout = () => {
               />
             ),
           }}
-          listeners={{
-            tabPress: (e) => {
-              e.preventDefault(); // Prevent default tab behavior
-              router.push("/upload"); // Push route into stack
-            },
-          }}
         />
         <Tabs.Screen
           name="myevents"
           options={{
             title: "My Events",
             headerShown: false,
-
-            headerStyle: {
-              backgroundColor: colors.Main,
-            },
-            headerTitleAlign: "center",
-            headerTitleStyle: {
-              color: colors.Text,
-              fontFamily: fonts.PoppinsRegular,
-            },
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
                 icon={icons.myevents}
@@ -113,26 +83,12 @@ const TabsLayout = () => {
               />
             ),
           }}
-          listeners={{
-            tabPress: (e) => {
-              e.preventDefault(); // Prevent default tab behavior
-              router.push("/myevents"); // Push route into stack
-            },
-          }}
         />
         <Tabs.Screen
           name="profile"
           options={{
             title: "Profile",
             headerShown: false,
-            headerStyle: {
-              backgroundColor: colors.Main,
-            },
-            headerTitleAlign: "center",
-            headerTitleStyle: {
-              color: colors.Text,
-              fontFamily: fonts.PoppinsRegular,
-            },
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
                 icon={icons.profile}
@@ -141,12 +97,6 @@ const TabsLayout = () => {
                 focused={focused}
               />
             ),
-          }}
-          listeners={{
-            tabPress: (e) => {
-              e.preventDefault(); // Prevent default tab behavior
-              router.push("/profile"); // Push route into stack
-            },
           }}
         />
         <Tabs.Screen
