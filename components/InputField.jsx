@@ -56,17 +56,22 @@ const InputField = ({
     <View className={`space-y-2 ${containerStyles}`}>
       <Text className="text-xl text-Text font-PoppinsLight">{title}</Text>
       <View
-        className="  w-full h-16 px-4 bg-MainLight
-      rounded-3xl focus:border-secondary items-center flex-row"
+        className="  w-full  min-h-[64px] max-h-28 px-4 bg-MainLight
+      rounded-3xl focus:border-secondary items-center flex-row py-2 "
       >
         <TextInput
-          className="flex-1 text-white font-PoppinsRegular text-base "
+          className="flex-1 text-white font-PoppinsRegular overflow-auto  text-base "
           value={value}
           placeholder={placeHolder}
           placeholderTextColor="#7b7b8b"
           onChangeText={handleInputChange}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          multiline={
+            title !== "Password" &&
+            title !== "Confirm Password" &&
+            title !== "New Password"
+          }
           secureTextEntry={
             (title === "Password" ||
               title === "Confirm Password" ||

@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import { Platform } from "react-native";
+import { API_URL } from "@/constants";
 
 interface AuthProps {
   authState?: {
@@ -25,8 +26,10 @@ interface AuthProps {
 
 const TOKEN_KEY = "JWT_TOKEN";
 const ROLE_KEY = "ROLE";
+
 const VERIFIED_KEY = "VERIFY"
-export const API_URL = "http://192.168.1.100:3001/api";
+
+
 const AuthContext = createContext<AuthProps>({});
 
 export const useAuth = () => {
@@ -72,15 +75,17 @@ export const AuthProvider = ({ children }: any) => {
     isOrganizer: boolean
   ) => {
     try {
+      const location = "Lahore,Pakistan";
       return await axios.post(`${API_URL}/auth/register`, {
         email,
         password,
         username,
         baseUrl,
         isOrganizer,
+        location,
       });
     } catch (e: any) {
-      console.log(e.message);
+      console.log(e);
 
       return { error: true, msg: (e as any).response.data.msgs };
     }
@@ -137,6 +142,7 @@ export const AuthProvider = ({ children }: any) => {
 
       return result; //Return it to whoever needs it. (idk who will need it but we never know.)
     } catch (e: any) {
+      console.log(e.message);
       return { error: true, msg: (e as any).response.data.msgs };
     }
   };

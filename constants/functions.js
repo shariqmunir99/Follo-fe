@@ -1,8 +1,13 @@
 import { useState, useEffect, useCallback } from "react";
 import { locations } from "./data";
-import { images } from "../constants";
+import { codes, images } from "../constants";
 
-export const useRefresh = (delay = 0, fetchFunction, params = [], trigger = true) => {
+export const useRefresh = (
+  delay = 0,
+  fetchFunction,
+  params = [],
+  trigger = true
+) => {
   const [refreshing, setRefreshing] = useState(true);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -39,6 +44,19 @@ export const isValidLocation = (location) => {
   return locations.includes(location);
 };
 
+export const appropriateError = (error) => {
+  if (error.status === codes.ALREADYEXISTS) {
+    if (error.response.data.message.includes("email")) {
+      return "User with this email already exists.";
+    } else if (error.response.data.message.includes("username")) {
+      return "User with this username already exists.";
+    } else return error.response.data.message;
+  } else if (error.status === codes.NOTFOUND) {
+    return "User not found.";
+  } else if (error.status === codes.UNAUTHORIZED) {
+    return "Invalid email/password.";
+  } else return "This is embarassing. We don't know what error is this T.T";
+};
 
 ////Below are the fuctions used for front-end testing...
 
