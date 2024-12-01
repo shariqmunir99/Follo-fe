@@ -23,8 +23,6 @@ const Profile = ({
   events,
   handleLogout,
 }) => {
-  //Since i have hardcoded user object user object just have two properties dp and username
-  //Once backend will be integrated user object will have all its information inlcuding followers/following....
   return (
     <SafeAreaView className=" bg-Main h-full">
       <ScrollView className=" ">

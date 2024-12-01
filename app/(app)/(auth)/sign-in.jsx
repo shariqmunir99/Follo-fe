@@ -12,14 +12,11 @@ const SignIn = () => {
     password: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [role, setRole] = useState("organizer");
   const { onLogin } = useAuth();
   const submit = async () => {
     //TODO: Add Input Validation for email and password.
     console.log("Login");
     const result = await onLogin(form.email, form.password);
-    console.log(result);
-    console.log(result);
     if (result && result.error) {
       console.log(result.msg);
     } else {

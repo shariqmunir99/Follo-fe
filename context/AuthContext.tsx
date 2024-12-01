@@ -9,6 +9,7 @@ interface AuthProps {
     token: string | null;
     authenticated: boolean;
     role: string | null;
+    verified: boolean | null;
   };
   onRegister?: (
     email: string,
@@ -21,14 +22,14 @@ interface AuthProps {
   onLogout?: () => Promise<any>;
   onForgetPassword?: (email: string, baseUrl: string) => Promise<any>;
   onResetPassword?: (reset_token: string, new_password: string) => Promise<any>;
+  onVerifyPassword?: (verify_token: string) => Promise<any>;
   authLoading?: boolean;
 }
 
 const TOKEN_KEY = "JWT_TOKEN";
 const ROLE_KEY = "ROLE";
 
-const VERIFIED_KEY = "VERIFY"
-
+const VERIFIED_KEY = "VERIFY";
 
 const AuthContext = createContext<AuthProps>({});
 
@@ -41,24 +42,30 @@ export const AuthProvider = ({ children }: any) => {
     token: string | null;
     authenticated: boolean;
     role: string | null;
-  }>({ token: null, authenticated: false, role: null });
+    verified: boolean | null;
+  }>({ token: null, authenticated: false, role: null, verified: null });
   const [authLoading, setAuthLoading] = useState(true);
 
   //Loading the token from storage on first time startup.
   useEffect(() => {
     const loadToken = async () => {
       const token = await SecureStore.getItemAsync(TOKEN_KEY);
-      console.log("stored:", token);
-
+      console.log("Token Found: ", token ? "Yes" : "No");
       if (token) {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         const role = await SecureStore.getItemAsync(ROLE_KEY);
+        const temp = await SecureStore.getItemAsync(VERIFIED_KEY);
+        console.log("Verified:", temp ? true : false);
+        let verified = false;
+        if (temp && temp.length !== 0) verified = true;
+
         console.log("Role: ", role);
 
         setAuthState({
           token: token,
           authenticated: true,
           role: role,
+          verified: verified,
         });
       }
 
@@ -115,6 +122,25 @@ export const AuthProvider = ({ children }: any) => {
     }
   };
 
+  const verify = async (verify_token: string) => {
+    try {
+      console.log("Sending Request: Auth Verify");
+      await axios.put(`${API_URL}/auth/verify`, {
+        verify_token,
+      });
+      console.log("Request Successful: Auth Verify");
+      try {
+        await SecureStore.setItemAsync(VERIFIED_KEY, "1");
+      } catch (e) {
+        console.log(e);
+      }
+      return "Successful";
+    } catch (e: any) {
+      console.log(e.message);
+      return { error: true, msg: (e as any).response.data.msgs };
+    }
+  };
+
   const login = async (email: string, password: string) => {
     try {
       const result = await axios.post(`${API_URL}/auth/login`, {
@@ -127,7 +153,8 @@ export const AuthProvider = ({ children }: any) => {
       setAuthState({
         token: result.data.jwtToken,
         authenticated: true,
-        role: result.data.roleName,
+        role: result.data.result.roleName,
+        verified: result.data.result.isVerified,
       });
 
       axios.defaults.headers.common["Authorization"] =
@@ -135,7 +162,9 @@ export const AuthProvider = ({ children }: any) => {
       try {
         await SecureStore.setItemAsync(TOKEN_KEY, result.data.jwtToken);
         await SecureStore.setItemAsync(ROLE_KEY, result.data.result.roleName);
-        console.log("JWT Token: ", result.data.jwtToken);
+        if (result.data.result.isVerified)
+          await SecureStore.setItemAsync(VERIFIED_KEY, "1");
+        console.log("Verified: ", result.data.result.isVerified);
       } catch (e: any) {
         console.log(e.message);
       }
@@ -151,6 +180,8 @@ export const AuthProvider = ({ children }: any) => {
     try {
       //Delete the token from storage
       await SecureStore.deleteItemAsync(TOKEN_KEY);
+      await SecureStore.deleteItemAsync(ROLE_KEY);
+      await SecureStore.deleteItemAsync(VERIFIED_KEY);
       // Update HTTP Headers
       axios.defaults.headers.common["Authorization"] = "";
       // Reset auth state
@@ -158,6 +189,7 @@ export const AuthProvider = ({ children }: any) => {
         token: null,
         authenticated: false,
         role: null,
+        verified: null,
       });
     } catch (e) {
       return { error: true, msg: (e as any).response.data.msgs };
@@ -170,6 +202,7 @@ export const AuthProvider = ({ children }: any) => {
     onLogout: logout,
     onForgetPassword: forgetPassword,
     onResetPassword: resetPassword,
+    onVerify: verify,
     authState,
     authLoading,
   };

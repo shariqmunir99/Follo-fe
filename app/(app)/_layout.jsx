@@ -3,6 +3,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
+import { StatusBar } from "expo-status-bar";
 
 import { NativeWindStyleSheet } from "nativewind";
 import { useAuth, AuthProvider } from "@/context/AuthContext";
@@ -15,7 +16,7 @@ NativeWindStyleSheet.setOutput({
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const { authLoading, authState } = useAuth();
+  const { authLoading } = useAuth();
   const [loaded] = useFonts({
     "Rakkas-Regular": require("@/assets/fonts/Rakkas-Regular.ttf"),
     "Poppins-Black": require("@/assets/fonts/Poppins-Black.ttf"),
@@ -43,15 +44,17 @@ export default function RootLayout() {
     }
   }, [loaded, authLoading]);
 
-  if (!loaded) {
+  if (!loaded && authLoading) {
     return null;
   }
 
   return (
-    <Stack>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="(root)" options={{ headerShown: false }} />
-      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-    </Stack>
+    <>
+      <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="(root)" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      </Stack>
+    </>
   );
 }

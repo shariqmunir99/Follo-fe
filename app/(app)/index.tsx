@@ -1,17 +1,26 @@
-import React from "react";
-import { Redirect } from "expo-router";
+import React, { useEffect } from "react";
+import { router } from "expo-router";
 import { useAuth } from "@/context/AuthContext";
 
 const App = () => {
-  const { authState, onLogout } = useAuth();
-  console.log("AuthState: ", authState);
-  if (authState?.authenticated) {
-    if (authState.role === "Organizer") {
-      return <Redirect href="/(root)/(tabs)/(organizer)/dashboard" />;
+  const { authState, authLoading } = useAuth();
+
+  useEffect(() => {
+    if (!authLoading) {
+      console.log("In Landing Page: ", authState);
+      if (authState?.authenticated) {
+        if (authState.role === "Organizer") {
+          router.replace("/(root)/(tabs)/(organizer)/dashboard");
+        } else if (authState.role === "User") {
+          router.replace("/(root)/(tabs)/(user)/home");
+        }
+      } else {
+        router.replace("/(auth)/welcome");
+      }
     }
-    return <Redirect href="/(root)/(tabs)/(user)/home" />;
-  }
-  return <Redirect href="/(auth)/welcome" />;
+  }, [authState, authLoading]);
+
+  return null; // Avoid rendering anything during redirection
 };
 
 export default App;
