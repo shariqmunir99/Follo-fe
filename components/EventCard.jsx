@@ -3,23 +3,14 @@ import React from "react";
 import { icons, images } from "../constants";
 import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
+import { format } from "date-fns";
 
 const EventCard = ({ event, user, containerStyles }) => {
   const handlePress = (event) => {
     router.push({
       pathname: "/event-detail",
       params: {
-        id: event.id,
-        location: event.location,
-        type: event.type,
-        pic: event.pic,
-        favorites: event.favorites,
-        interests: event.interests,
-        description: event.description,
-        date: event.date,
-        dp: user.dp,
-        username: user.username,
-        role: user.role,
+        event: event,
       },
     });
   };
@@ -47,30 +38,19 @@ const EventCard = ({ event, user, containerStyles }) => {
           </View>
           <View className="ml-2.5">
             <Text className="text-Text text-2xl font-PoppinsBold">
-              {event.favorites}
+              {event.interactions}
             </Text>
           </View>
         </View>
-        <View className="flex-row items-baseline mt-1">
-          <View>
-            <Image
-              source={icons.filledstar}
-              className="w-4 h-4 "
-              resizeMode="contain"
-              style={{ tintColor: "#faff00" }}
-            />
-          </View>
-          <View className="ml-2.5">
-            <Text className="text-Text text-2xl font-PoppinsBold">
-              {event.interests}
-            </Text>
-          </View>
-        </View>
-        <Text className="mt-1 text-Text text-xl font-PoppinsSemiBold">
-          {event.date}
-        </Text>
-        <Text className="mt-1 text-Text text-xl font-PoppinsSemiBold">
+
+        <Text className="mt-1 text-gray-300 text-lg font-PoppinsSemiBold">
           {event.type}
+        </Text>
+        <Text className="mt-1 text-gray-300 text-lg font-PoppinsSemiBold">
+          {event.city}
+        </Text>
+        <Text className="mt-1 text-gray-300 text-lg font-PoppinsSemiBold">
+          {format(new Date(event.date), "do MMM, yyyy")}
         </Text>
       </View>
     </TouchableOpacity>

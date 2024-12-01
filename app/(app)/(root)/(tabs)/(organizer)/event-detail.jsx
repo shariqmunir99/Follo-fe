@@ -15,19 +15,7 @@ import { images } from "@/constants";
 import EventRefreshing from "@/components/EventRefreshing";
 
 const eventdetail = () => {
-  const {
-    id,
-    location,
-    type,
-    pic,
-    favorites,
-    interests,
-    description,
-    date,
-    dp,
-    username,
-    role,
-  } = useLocalSearchParams();
+  const { event } = useLocalSearchParams();
 
   const [item, setItem] = useState(null);
 

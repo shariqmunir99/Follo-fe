@@ -10,6 +10,18 @@ export class UserService {
   //TODO Add InterestedBy
   //TODO Remove InterestedBy
   //TODO Get user profile -> organizer and user.
+  static async getDashboard() {
+    try {
+      console.log("Sending Request: getDashboard");
+      const result = await axios.get(`${API_URL}/user/dashboard`);
+      console.log("Request Successful: getDashboard");
+      return result.data;
+    } catch (e) {
+      console.log(e.message);
+      return e;
+    }
+  }
+
   static async getProfile() {
     console.log("Sending Request: getProfile");
     const result = await axios.get(`${API_URL}/user/details`);
@@ -29,16 +41,11 @@ export class UserService {
   }
 
   static async verify() {
-    try {
-      console.log("Sending Request: Verify");
-      const result = await axios.post(`${API_URL}/user/verify`, {
-        baseUrl: verifyBaseUrl,
-      });
-      console.log("Request Successful: Verify");
-      return result.data;
-    } catch (e) {
-      console.log(e.message);
-      return e;
-    }
+    console.log("Sending Request: Verify");
+    const result = await axios.post(`${API_URL}/user/verify`, {
+      baseUrl: verifyBaseUrl,
+    });
+    console.log("Request Successful: Verify");
+    return result.data;
   }
 }
