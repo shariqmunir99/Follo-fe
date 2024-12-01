@@ -14,6 +14,6 @@
     "app/(app)/_layout.jsx",
     "app/+not-found.jsx"
 
-, "app/(app)/(auth)/sign-in.jsx", "app/(app)/(auth)/sign-up.jsx", "app/(app)/(auth)/welcome.jsx", "app/(app)/(auth)/reset-password/reset-password.jsx", "app/(app)/(auth)/forget-password.jsx","app/(app)/(auth)/verify/[id].jsx", "services/user.service.js", "services/event.service.ts"  ]
+, "app/(app)/(auth)/sign-in.jsx", "app/(app)/(auth)/sign-up.jsx", "app/(app)/(auth)/welcome.jsx", "app/(app)/(auth)/reset-password/reset-password.jsx", "app/(app)/(auth)/forget-password.jsx","app/(app)/(auth)/verify/[id].jsx", "services/user.service.js", "services/event.service.js"  ]
 
 }
