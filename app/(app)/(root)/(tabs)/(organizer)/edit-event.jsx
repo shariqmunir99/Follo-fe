@@ -24,8 +24,10 @@ const EditEvent = () => {
     name: "",
     type: "",
     description: "",
+    city: "",
+    country: "Pakistan",
     venue: "",
-    date: new Date(),
+    date: new Date().toISOString(),
   });
   const [dp, setDp] = useState(images.eventPic);
   const [isSubmitting, setIsSubmitting] = useState(false);
