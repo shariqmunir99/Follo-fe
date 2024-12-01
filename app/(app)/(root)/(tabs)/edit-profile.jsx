@@ -14,42 +14,51 @@ import { Link, router } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialIcons } from "@expo/vector-icons";
 import defaultDp from "@/assets/icons/defaultProfile.png";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { UserService } from "@/services/user.service";
 
 const Spacer = ({ height }) => <View style={{ height }} />;
-
 const EditProfile = () => {
   const [form, setForm] = useState({
-    username: "",
-    accountFrom: "",
-    oldPassword: "",
-    newPasssword: "",
+    new_username: undefined,
+    new_location: undefined,
+    new_passsword: undefined,
   });
+
+  const queryClient = useQueryClient();
 
   const [dp, setDp] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const fetchProfileData = async () => {
-    const userData = {
-      username: "Faseeh_Ahmed",
-      accountFrom: "Lahore/Pakistan",
-      oldPassword: "********",
-      newPasssword: "",
-      profilePicture: defaultDp,
-    };
+  const editProfileMutation = useMutation({
+    mutationFn: UserService.editProfile,
+    onSuccess: () => {
+      console.log("Profile Successfully updated");
+      queryClient.invalidateQueries(["profile"]);
+      router.back();
+    },
+  });
 
-    setForm({
-      username: userData.username,
-      accountFrom: userData.accountFrom,
-      oldPassword: "",
-      newPasssword: "",
-    });
+  // const fetchProfileData = async () => {
+  //   const userData = {
+  //     username: "Faseeh_Ahmed",
+  //     accountFrom: "Lahore/Pakistan",
+  //     newPasssword: "",
+  //     profilePicture: defaultDp,
+  //   };
 
-    setDp(userData.profilePicture);
-  };
+  //   setForm({
+  //     username: userData.username,
+  //     new_location: userData.accountFrom,
+  //     newPasssword: "",
+  //   });
 
-  useEffect(() => {
-    fetchProfileData();
-  }, []);
+  //   setDp(userData.profilePicture);
+  // };
+
+  // useEffect(() => {
+  //   fetchProfileData();
+  // }, []);
 
   const pickImage = async () => {
     const permissionResult =
@@ -73,8 +82,7 @@ const EditProfile = () => {
 
   const submit = async () => {
     // Submit the form data
-    console.log("Updated Profile Data:", form);
-    router.back();
+    editProfileMutation.mutate(form);
   };
 
   return (
@@ -107,30 +115,24 @@ const EditProfile = () => {
             <View className="px-8">
               <InputField
                 title="Username"
-                value={form.username}
+                value={form.new_username}
                 placeHolder="Enter your username"
-                handleChangeText={(e) => setForm({ ...form, username: e })}
+                handleChangeText={(e) => setForm({ ...form, new_username: e })}
                 containerStyles={"mt-5"}
               />
               <InputField
                 title="Account from"
-                value={form.accountFrom}
+                value={form.new_location}
                 placeHolder="Account from"
-                handleChangeText={(e) => setForm({ ...form, accountFrom: e })}
+                handleChangeText={(e) => setForm({ ...form, new_location: e })}
                 containerStyles={"mt-5"}
               />
-              <InputField
-                title="Old Password"
-                value={form.oldPassword}
-                placeHolder="Enter old password"
-                handleChangeText={(e) => setForm({ ...form, oldPassword: e })}
-                containerStyles={"mt-5"}
-              />
+
               <InputField
                 title="New Password"
                 value={form.newPasssword}
                 placeHolder="Enter new password"
-                handleChangeText={(e) => setForm({ ...form, newPasssword: e })}
+                handleChangeText={(e) => setForm({ ...form, new_password: e })}
                 containerStyles={"mt-5"}
               />
               <Spacer height={20} />
@@ -141,7 +143,7 @@ const EditProfile = () => {
                 }
                 textStyles={"text-Main"}
                 handlePress={submit}
-                isLoading={isSubmitting}
+                isLoading={editProfileMutation.isPending}
                 isIcon={false}
                 iconOnly={false}
               />

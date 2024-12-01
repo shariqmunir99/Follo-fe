@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React from "react";
 import CustomButton from "./CustomButton";
-import { icons } from "../constants";
+import { icons, images } from "../constants";
 import InfoField from "./InfoField";
 import { router } from "expo-router";
 import EventDetails from "./EventDetails";
@@ -31,7 +31,7 @@ const Profile = ({
         <View className="w-full items-center">
           <View className="mt-12">
             <Image
-              source={user.dp}
+              source={images.johnwickdp}
               resizeMode="contain"
               className="w-[150px] h-[150px] rounded-full"
             />
@@ -40,26 +40,26 @@ const Profile = ({
           <View className="flex-row items-center justify-around mt-3">
             <View className="flex-col pr-3 justify-between items-center">
               <Text className="text-Text font-bold">
-                {role === "organizer" ? user.followers : user.following}
+                {role === "Organizer" ? user.followers : user.following}
               </Text>
               <Text className="text-Text text-xs opacity-50">
-                {role === "user" ? "Following" : "Followers"}
+                {role === "User" ? "Following" : "Followers"}
               </Text>
             </View>
             <View className="flex-col px-1 justify-between items-center">
               <Text className="text-Text font-bold">
-                {role === "organizer" ? user.interests : user.interested}
+                {role === "Organizer" ? user.interactions : user.interests}
               </Text>
               <Text className="text-Text text-xs opacity-50">
-                {role === "user" ? "Interested" : "Interests"}
+                {role === "User" ? "Interested" : "Interactions"}
               </Text>
             </View>
             <View className="flex-col pl-3 justify-between items-center">
               <Text className="font-bold text-Text">
-                {role === "organizer" ? user.posts : user.favorited}
+                {role === "Organizer" ? user.posts : user.favorited}
               </Text>
               <Text className="text-Text text-xs opacity-50">
-                {role === "user" ? "Favorited" : "Posts"}
+                {role === "User" ? "Favorited" : "Posts"}
               </Text>
             </View>
           </View>
@@ -91,7 +91,7 @@ const Profile = ({
               <>
                 <InfoField
                   primary={"Joined on"}
-                  secondary={user.joinon}
+                  secondary={user.createdAt.split("T")[0]}
                   icon={icons.calender}
                   containerStyles={"mt-3"}
                 />
@@ -102,7 +102,7 @@ const Profile = ({
                   containerStyles={"mt-3"}
                 />
                 <InfoField
-                  primary={"Delete"}
+                  primary={"Delete Account"}
                   icon={icons.bin}
                   containerStyles={"mt-3"}
                 />

@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   BackHandler,
+  RefreshControl,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -17,6 +18,8 @@ import * as ImagePicker from "expo-image-picker";
 import { MaterialIcons } from "@expo/vector-icons";
 import { icons, images } from "@/constants";
 import DatePickerStyled from "@/components/DatePickerStyled";
+import { useMutation } from "@tanstack/react-query";
+import { EventService } from "../../../../../services/event.service";
 
 const Spacer = ({ height }) => <View style={{ height }} />;
 const Upload = () => {
@@ -24,12 +27,50 @@ const Upload = () => {
     name: "",
     type: "",
     description: "",
+    city: "",
+    country: "Pakistan",
     venue: "",
-    date: new Date(),
+    date: new Date().toISOString(),
   });
   const [dp, setDp] = useState(images.eventPic);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const postMutation = useMutation({
+    mutationFn: EventService.upload,
+
+    onSuccess: () => {
+      console.log("Uploaded Event");
+      router.replace("/myevents");
+    },
+  });
+
+  if (postMutation.isError) {
+    return (
+      <SafeAreaView>
+        <Text>{postMutation.error.message}</Text>
+      </SafeAreaView>
+    );
+  }
+
+  const onRefresh = async () => {
+    setRefreshing(true); // Start the refreshing animation
+    try {
+      setForm({
+        name: "asd",
+        type: "asd",
+        description: "asd",
+        city: "asd",
+        country: "Pakistan",
+        venue: "asd",
+        date: new Date().toISOString(),
+      });
+    } finally {
+      setRefreshing(false); // Stop the refreshing animation
+    }
+  };
+
   const pickImage = async () => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -52,17 +93,26 @@ const Upload = () => {
 
   const submit = async () => {
     // Submit the form data
-    console.log("Uploaded An Event:", form);
-    router.back();
+    postMutation.mutate(form);
   };
+
   return (
     <SafeAreaView className=" bg-Main h-full">
-      <ScrollView>
-        <View className="w-full h-[45%] items-center">
-          <View className="mt-5 relative">
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            progressBackgroundColor="#100425"
+            colors={["#FAFF00"]}
+          />
+        }
+      >
+        <View className="w-full items-center">
+          <View className="mt-5  ">
             <Image
               source={dp}
-              resizeMode="cover" 
+              resizeMode="cover"
               style={{ width: 250, height: 150 }}
             />
             <TouchableOpacity
@@ -80,8 +130,7 @@ const Upload = () => {
             </TouchableOpacity>
           </View>
 
-          <Spacer height={20} />
-          <View className="w-full justify-center mt-10">
+          <View className="w-full justify-center ">
             <View className="px-8">
               <InputField
                 title="Name"
@@ -97,11 +146,18 @@ const Upload = () => {
                 handleChangeText={(e) => setForm({ ...form, type: e })}
                 containerStyles={"mt-7"}
               />
-              <InputField1
+              <InputField
                 title="Description"
                 placeHolder="Nice view of the crowd"
                 value={form.description}
                 handleChangeText={(e) => setForm({ ...form, description: e })}
+                containerStyles={"mt-7"}
+              />
+              <InputField
+                title="City"
+                placeHolder="Lahore"
+                value={form.city}
+                handleChangeText={(e) => setForm({ ...form, city: e })}
                 containerStyles={"mt-7"}
               />
               <InputField
@@ -115,21 +171,20 @@ const Upload = () => {
               <DatePickerStyled
                 value={form.date}
                 onChange={(selectedDate) =>
-                  setForm({ ...form, date: selectedDate })
+                  setForm({ ...form, date: selectedDate.toISOString() })
                 }
               />
 
-              <Spacer height={20} />
               <CustomButton
-                title="Update"
+                title="Upload"
                 containerStyles={
-                  " w-[38%]  min-h-[50px] mx-auto rounded-2xl bg-Vivid"
+                  " w-[38%]  min-h-[50px] my-7 mx-auto rounded-2xl bg-Vivid"
                 }
                 textStyles={"text-Main"}
                 handlePress={submit}
-                isLoading={isSubmitting}
                 isIcon={false}
                 iconOnly={false}
+                isLoading={postMutation.isPending}
               />
             </View>
           </View>

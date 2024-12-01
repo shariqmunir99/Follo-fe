@@ -24,7 +24,7 @@ const SignIn = () => {
     } else {
       if (result.data.result.roleName === "Organizer")
         router.replace("(organizer)/dashboard");
-      router.replace("(user)/home");
+      else router.replace("(user)/home");
     }
   };
   return (
