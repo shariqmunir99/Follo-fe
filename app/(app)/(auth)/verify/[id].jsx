@@ -21,21 +21,18 @@ const Verify = () => {
   }, [params]);
 
   const clickVerify = async () => {
-    // const result = await onVerify(verifyToken);
-    // if (result && !result.error) {
-    //   setShow(false);
-    //   if (authState?.authenticated) {
-    //     if (result.data.result.roleName === "Organizer")
-    //       router.replace("(organizer)/dashboard");
-    //     else router.replace("(user)/home");
-    //   }
-    //   router.replace("/(auth)/sign-in");
-    // }
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+
+    const result = await onVerify(verifyToken);
+    if (result && !result.error) {
       setIsPressed(true);
-    }, 1500);
+      if (authState?.authenticated) {
+        if (result.data.result.roleName === "Organizer")
+          router.replace("(organizer)/dashboard");
+        else router.replace("(user)/home");
+      }
+      router.replace("/(auth)/sign-in");
+    }
   };
 
   return (

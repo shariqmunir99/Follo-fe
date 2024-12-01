@@ -1,4 +1,4 @@
-import { API_URL } from "@/constants";
+import { API_URL, verifyBaseUrl } from "@/constants";
 import axios from "axios";
 import { appropriateError } from "@/constants/functions";
 export class UserService {
@@ -19,15 +19,23 @@ export class UserService {
 
   static async editProfile({ new_username, new_location, new_password }) {
     console.log("Sending Request: editProfile");
+    const result = await axios.put(`${API_URL}/user/edit`, {
+      new_username,
+      new_location,
+      new_password,
+    });
+    console.log("Request Successful: editProfile");
+    return result;
+  }
+
+  static async verify() {
     try {
-      console.log(new_username, new_location, new_password);
-      const result = await axios.put(`${API_URL}/user/edit`, {
-        new_username,
-        new_location,
-        new_password,
+      console.log("Sending Request: Verify");
+      const result = await axios.post(`${API_URL}/user/verify`, {
+        baseUrl: verifyBaseUrl,
       });
-      console.log("Request Successful: editProfile");
-      return result;
+      console.log("Request Successful: Verify");
+      return result.data;
     } catch (e) {
       console.log(e.message);
       return e;

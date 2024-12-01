@@ -15,7 +15,8 @@ const ProfileScreen = () => {
     data: user,
     isLoading,
     isError,
-    refetch, // This is used for refreshing the data
+    refetch,
+    error,
   } = useQuery({
     queryKey: ["profile"],
     queryFn: UserService.getProfile,
@@ -43,11 +44,10 @@ const ProfileScreen = () => {
   if (isError) {
     return (
       <SafeAreaView>
-        <Text>Error....</Text>
+        <Text>{error.message}</Text>
       </SafeAreaView>
     );
   }
-
   return (
     <SafeAreaView className="bg-Main h-full">
       <ScrollView

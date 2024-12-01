@@ -13,7 +13,6 @@ export const useRefresh = (
   const [error, setError] = useState(null);
 
   const loadData = useCallback(async () => {
-    console.log("Fetching data...");
     try {
       setRefreshing(true);
       const result = await fetchFunction(...params); // Spread params dynamically
@@ -23,7 +22,6 @@ export const useRefresh = (
       console.error("Error fetching data:", err);
       setError(err.message || "An error occurred");
     } finally {
-      console.log("Setting refreshing to false...");
       setTimeout(() => {
         setRefreshing(false);
       }, delay);
@@ -32,7 +30,6 @@ export const useRefresh = (
 
   useEffect(() => {
     if (trigger) {
-      console.log("Triggering loadData...");
       loadData(); // Fetch data on initial load
     }
   }, [trigger]);

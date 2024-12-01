@@ -13,10 +13,7 @@ export default function Layout() {
         name="reset-password/[id]"
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="verify/[id]"
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="verify/[id]" options={{ headerShown: false }} />
     </Stack>
   );
 }
