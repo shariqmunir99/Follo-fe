@@ -6,6 +6,9 @@ import CustomButton from "@/components/CustomButton";
 import { Link, router } from "expo-router";
 import CheckBox from "react-native-check-box";
 import { useAuth } from "@/context/AuthContext";
+import { isValidLocation } from "@/constants/functions";
+import { signupSchema } from "@/constants/validate";
+import { z } from "zod";
 
 const SignUp = () => {
   const [organizerCheck, setOrganizerCheck] = useState(false);
@@ -19,17 +22,29 @@ const SignUp = () => {
   });
 
   const onClick = async () => {
-    if (form.password !== form.cpassword) {
-      Alert.alert("Error", "Passwords do not match");
-    } else {
-      const result = await onRegister(
-        form.email,
-        form.password,
-        form.username,
-        "example.com",
-        organizerCheck
-      );
-      if (result && !result.error) router.push("/sign-in");
+    try {
+      signupSchema.parse(form);
+      if (!isValidLocation(form.accountfrom)) {
+        Alert.alert("Error", "Select valid location.");
+      } else {
+        const result = await onRegister(
+          form.email,
+          form.password,
+          form.username,
+          "example.com",
+          organizerCheck
+        );
+        if (result && !result.error) router.push("/sign-in");
+      }
+    } catch (e) {
+      if (e instanceof z.ZodError) {
+        console.log("ZodError:", e.errors);
+        const firstErrorMessage = e.errors[0].message;
+        Alert.alert("Validation Error", firstErrorMessage);
+      } else {
+        console.log("Unknown error:", e);
+        Alert.alert("Error", "Something went wrong.");
+      }
     }
   };
   return (
@@ -97,11 +112,19 @@ const SignUp = () => {
               title="Sign up"
               handlePress={onClick}
               containerStyles={
-                "mt-7 mb-10 w-[40%]  min-h-[65px] mx-auto rounded-3xl"
+                "mt-7 mb-6 w-[40%]  min-h-[65px] mx-auto rounded-3xl"
               }
               isIcon={false}
               iconOnly={false}
             />
+            <View className="mx-auto mb-6 flex-row">
+              <Text className="text-lg text-Text">
+                Already have an account?{" "}
+              </Text>
+              <Link href="/sign-in" className="text-lg text-Vivid">
+                Sign In
+              </Link>
+            </View>
           </View>
         </View>
       </ScrollView>

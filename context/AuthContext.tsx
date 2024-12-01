@@ -26,6 +26,10 @@ interface AuthProps {
 
 const TOKEN_KEY = "JWT_TOKEN";
 const ROLE_KEY = "ROLE";
+
+const VERIFIED_KEY = "VERIFY"
+
+
 const AuthContext = createContext<AuthProps>({});
 
 export const useAuth = () => {

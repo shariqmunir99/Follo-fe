@@ -19,6 +19,7 @@ const SignIn = () => {
     console.log("Login");
     const result = await onLogin(form.email, form.password);
     console.log(result);
+    console.log(result);
     if (result && result.error) {
       console.log(result.msg);
     } else {

@@ -3,6 +3,7 @@ import images from "./images";
 
 export { icons, images };
 
+
 export const verifyBaseUrl = "http://192.168.1.130:8081/verify";
 export const resetBaseUrl = "http://192.168.1.130:8081/reset-password";
 export const API_URL = "http://192.168.1.130:3001/api";
@@ -14,3 +15,4 @@ export const codes = {
   NOTFOUND: 404, //When a resource that does not exist is fetched.
   ALREADYEXISTS: 409, //When a resource that already is recreated. (Creating a new user with the same email/username)
 };
+

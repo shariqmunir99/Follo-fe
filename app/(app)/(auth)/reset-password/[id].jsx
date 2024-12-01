@@ -25,7 +25,6 @@ const ResetPassword = () => {
 
   const clickReset = async () => {
     console.log("ShariqMunir");
-
     if (form.npassword !== form.cpassword) {
       Alert.alert("Error", "Passwords do not match");
     } else if (!resetToken) {
