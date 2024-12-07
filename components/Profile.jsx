@@ -17,7 +17,6 @@ const Profile = ({
   user,
   isPreview,
   handlePress,
-  buttonPressed,
   role,
   isFollowed,
   events,
@@ -29,7 +28,7 @@ const Profile = ({
         <View className="w-full items-center">
           <View className="mt-12">
             <Image
-              source={images.johnwickdp}
+              source={{ uri: user.profilePicUrl }}
               resizeMode="contain"
               className="w-[150px] h-[150px] rounded-full"
             />

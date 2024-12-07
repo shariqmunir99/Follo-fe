@@ -18,7 +18,7 @@ export class EventService {
     return result.data.result;
   }
 
-  static async getEvent(event_id: string) {
+  static async getEvent(event_id) {
     try {
       console.log("Sending Request: getEvent", event_id);
       const result = await axios.get(`${API_URL}/event/details`, {
@@ -36,17 +36,68 @@ export class EventService {
     try {
       let result;
       console.log("Sending Request: getAnalytics");
-      const InterestedByResult = await axios.get(`${API_URL}/event/interested-by`, {
+      const InterestedByResult = await axios.get(
+        `${API_URL}/event/interested-by`,
+        {
           params: { event_id: id },
-        });
-      const FavoritedByResult = await axios.get(`${API_URL}/event/favorited-by`, {
+        }
+      );
+      const FavoritedByResult = await axios.get(
+        `${API_URL}/event/favorited-by`,
+        {
           params: { event_id: id },
-        });
+        }
+      );
       console.log("Request Successful: getAnalytics");
-      return {interestedBy: InterestedByResult.data, favoritedBy: FavoritedByResult.data};
+      return {
+        interestedBy: InterestedByResult.data,
+        favoritedBy: FavoritedByResult.data,
+      };
     } catch (e) {
       console.log(e.message);
       return e;
+    }
+  }
+
+  static async editEvent({
+    id,
+    name,
+    type,
+    description,
+    date,
+    city,
+    country,
+    venue,
+  }) {
+    try {
+      console.log("Sending Request: editEvent");
+      const result = await axios.put(`${API_URL}/event/edit`, {
+        event_id: id,
+        name,
+        type,
+        description,
+        date,
+        city,
+        country,
+        venue,
+      });
+      console.log("Request Successful: editEvent");
+      return result;
+    } catch (e) {
+      console.log(e.response);
+      return e;
+    }
+  }
+
+  static async deleteEvent(id) {
+    try {
+      console.log("Sending Request:");
+      const result = axios.delete(`${API_URL}/event/delete`, {
+        data: { event_id: id },
+      });
+      console.log("Request Successful:");
+    } catch (e) {
+      console.log(e);
     }
   }
 }

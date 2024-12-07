@@ -29,13 +29,38 @@ export class UserService {
     return result.data.result;
   }
 
-  static async editProfile({ new_username, new_location, new_password }) {
+  static async editProfile({
+    new_username,
+    new_location,
+    new_password,
+    new_profPic: file,
+  }) {
     console.log("Sending Request: editProfile");
-    const result = await axios.put(`${API_URL}/user/edit`, {
-      new_username,
-      new_location,
-      new_password,
-    });
+
+    const formData = new FormData();
+    if (file) {
+      console.log(file);
+      formData.append("new_profile_pic", true);
+      formData.append("file", {
+        uri: file.uri,
+        name: file.fileName, // or dynamically use a picked file name
+        type: file.mimeType, // ensure it matches the selected file's type
+      });
+    }
+    formData.append("new_username", new_username);
+    formData.append("new_location", new_location);
+    if (new_password) {
+      formData.append("new_password", new_password);
+    }
+    let result;
+    try {
+      console.log("FormData:", formData);
+      result = await axios.put(`${API_URL}/user/edit`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+    } catch (e) {
+      console.log * ("ERRPRPRPR: ", e);
+    }
     console.log("Request Successful: editProfile");
     return result;
   }

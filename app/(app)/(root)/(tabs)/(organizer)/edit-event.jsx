@@ -12,49 +12,43 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import InputField1 from "@/components/InputField1";
 import InputField from "@/components/InputField";
 import CustomButton from "@/components/CustomButton";
-import { Link, router } from "expo-router";
+import { Link, router, useLocalSearchParams } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialIcons } from "@expo/vector-icons";
 import { icons, images } from "@/constants";
 import DatePickerStyled from "@/components/DatePickerStyled";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { EventService } from "@/services/event.service";
 
 const Spacer = ({ height }) => <View style={{ height }} />;
 const EditEvent = () => {
+  const { id, name, type, description, city, country, venue, date } =
+    useLocalSearchParams();
   const [form, setForm] = useState({
-    name: "",
-    type: "",
-    description: "",
-    city: "",
-    country: "Pakistan",
-    venue: "",
-    date: new Date().toISOString(),
+    id: id,
+    name: name,
+    type: type,
+    description: description,
+    city: city,
+    country: country,
+    venue: venue,
+    date: new Date(date),
   });
+
   const [dp, setDp] = useState(images.eventPic);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const fetchEventData = async () => {
-    const userData = {
-      name: "",
-      type: "",
-      description: "",
-      venue: "",
-      profilePicture: images.eventPic,
-    };
 
-    setForm({
-      name: userData.name,
-      type: userData.type,
-      description: userData.description,
-      venue: userData.venue,
-      date: userData.date,
-    });
+  const queryClient = useQueryClient();
 
-    setDp(userData.profilePicture);
-  };
-
-  useEffect(() => {
-    fetchEventData();
-  }, []);
+  const editeventMutation = useMutation({
+    mutationFn: EventService.editEvent,
+    onSuccess: () => {
+      console.log("Event Successfully updated");
+      queryClient.invalidateQueries(["event"]);
+      router.back();
+    },
+  });
 
   const pickImage = async () => {
     const permissionResult =
@@ -77,9 +71,7 @@ const EditEvent = () => {
   };
 
   const submit = async () => {
-    // Submit the form data
-    console.log("Updated An Event:", form);
-    router.back();
+    editeventMutation.mutate(form);
   };
   return (
     <SafeAreaView className=" bg-Main h-full">
@@ -123,7 +115,7 @@ const EditEvent = () => {
                 handleChangeText={(e) => setForm({ ...form, type: e })}
                 containerStyles={"mt-7"}
               />
-              <InputField1
+              <InputField
                 title="Description"
                 placeHolder="Nice view of the crowd"
                 value={form.description}
@@ -131,8 +123,15 @@ const EditEvent = () => {
                 containerStyles={"mt-7"}
               />
               <InputField
+                title="City"
+                placeHolder="New York"
+                value={form.city}
+                handleChangeText={(e) => setForm({ ...form, city: e })}
+                containerStyles={"mt-7"}
+              />
+              <InputField
                 title="Venue"
-                placeHolder="New York,USA"
+                placeHolder="Fast"
                 value={form.venue}
                 handleChangeText={(e) => setForm({ ...form, venue: e })}
                 containerStyles={"mt-7"}
@@ -141,7 +140,7 @@ const EditEvent = () => {
               <DatePickerStyled
                 value={form.date}
                 onChange={(selectedDate) =>
-                  setForm({ ...form, date: selectedDate })
+                  setForm({ ...form, date: selectedDate.toISOString() })
                 }
               />
 

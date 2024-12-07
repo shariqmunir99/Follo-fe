@@ -21,7 +21,9 @@ const EventCard = ({ event, user, containerStyles }) => {
     >
       <View className="w-[50%]">
         <Image
-          source={event.pic}
+          source={{
+            uri: event.imageUrl,
+          }}
           className="w-[145px] h-[145px] rounded-md"
           resizeMode="contain"
         />

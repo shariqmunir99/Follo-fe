@@ -13,6 +13,7 @@ import CustomButton from "./CustomButton";
 import { router } from "expo-router";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";
+import { format } from "date-fns";
 
 const EventDetails = ({
   user,
@@ -26,15 +27,23 @@ const EventDetails = ({
   const [isFollowed, setIsFollowed] = useState(false);
   const [role, setRole] = useState("user");
 
-  console.log("DATA: ", event);
-
   const editHandlePress = () => {
-    router.push("/edit-event");
+    router.push({
+      pathname: "/edit-event",
+      params: {
+        id: event.id,
+        name: event.name,
+        date: event.date,
+        description: event.description,
+        type: event.type,
+        city: event.city,
+        country: event.country,
+        venue: event.venue,
+      },
+    });
   };
 
   const organizerPressedInterest = (eventId) => {
-    console.log("Pushing on Local Param", eventId);
-
     router.push({
       pathname: "/analytics",
       params: {
@@ -44,7 +53,6 @@ const EventDetails = ({
     });
   };
   const organizerPressedFavorite = (eventId) => {
-    console.log("Pushing on Local Param", eventId);
     router.push({
       pathname: "/analytics",
       params: {
@@ -79,7 +87,7 @@ const EventDetails = ({
               }
             >
               <Image
-                source={user.dp}
+                source={{ uri: user.dp }}
                 resizeMode="contain"
                 className="w-12 h-12 rounded-full"
               />
@@ -96,10 +104,10 @@ const EventDetails = ({
                     : null
                 }
               >
-                <Text className="text-Text text-xs">@{user.username}</Text>
+                <Text className="text-Text text-base">@{user.username}</Text>
               </TouchableOpacity>
               <View>
-                <Text className="text-Vivid opacity-50 text-xs">
+                <Text className="text-Vivid opacity-50 text-sm">
                   {event.createdAt}
                 </Text>
               </View>
@@ -121,6 +129,7 @@ const EventDetails = ({
                 icon={icons.bin}
                 containerStyles={"bg-Vivid p-2 rounded-xl w-9 h-9 ml-2"}
                 iconStyles={"w-4 h-4"}
+                handlePress={() => console.log("Delete")}
               />
             </View>
           )}
@@ -137,12 +146,19 @@ const EventDetails = ({
             </TouchableOpacity>
           )}
         </View>
-        <View className="py-2">
-          <Text className="text-Text opacity-90">{event.description}</Text>
+        <View className="pt-2">
+          <Text className="text-Text opacity-90 text-lg text-center">
+            {event.name}
+          </Text>
+        </View>
+        <View className="pb-1">
+          <Text className="text-Text opacity-90 text-base">
+            {event.description}
+          </Text>
         </View>
         <View className="flex-row justify-between">
           <View>
-            <Text className="text-Text opacity-90">
+            <Text className="text-Text opacity-90 text-sm">
               {event.venue}, {event.city} {event.country}
             </Text>
           </View>
@@ -150,9 +166,9 @@ const EventDetails = ({
             <Text className="text-Text opacity-90">{event.type}</Text>
           </View>
         </View>
-        <View className="py-2">
+        <View className="pt-3 pb-2">
           <Image
-            source={event.pic}
+            source={{ uri: event.pic }}
             className={`w-full rounded-xl`}
             style={{ height: screenHeight * 0.3 }}
           />
@@ -194,7 +210,9 @@ const EventDetails = ({
                 eventId={event.id}
               />
               <View>
-                <Text className="text-Text opacity-90">{event.date}</Text>
+                <Text className="text-Text opacity-90 text-base">
+                  {format(new Date(event.date), "do MMM, yyyy")}
+                </Text>
               </View>
               <InteractionButton
                 user={user}

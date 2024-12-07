@@ -15,9 +15,8 @@ import { EventService } from "../../../../../services/event.service";
 import { format } from "date-fns";
 
 const eventdetail = () => {
-  const { id } = useLocalSearchParams();
-  // const id = "4835d882-a9bd-4f8a-b841-fb080880d538";
-  // const event_id = "4835d882-a9bd-4f8a-b841-fb080880d538";
+  // const { id } = useLocalSearchParams();
+  const id = "e8f12c4d-afde-4237-b6e2-668de04b7db7";
   const [item, setItem] = useState(null);
 
   const { data, isLoading, isError, error, isSuccess } = useQuery({
@@ -58,12 +57,13 @@ const eventdetail = () => {
           {data && (
             <EventDetails
               user={{
-                dp: images.johnwickdp,
+                dp: data.profilePic,
                 username: data.organizer,
               }}
               event={{
                 id: data.id,
-                date: format(new Date(data.date), "do MMM, yyyy"),
+                name: data.name,
+                date: data.date,
                 description: data.description,
                 type: data.type,
                 city: data.city,
@@ -72,7 +72,7 @@ const eventdetail = () => {
                 interests: data.favourites,
                 createdAt: format(new Date(data.createdAt), "do MMM, yyyy"),
                 venue: data.venue,
-                pic: images.eventPic,
+                pic: data.imageUrl,
               }}
               containerStyles={"mt-10"}
               button={"delete"}

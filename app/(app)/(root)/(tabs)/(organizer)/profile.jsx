@@ -34,7 +34,14 @@ const ProfileScreen = () => {
   };
 
   const edit = () => {
-    router.push("../edit-profile");
+    router.push({
+      pathname: "../edit-profile",
+      params: {
+        username: user.username,
+        location: user.location,
+        profilePicUrl: user.profilePicUrl,
+      },
+    });
   };
 
   if (isLoading) {

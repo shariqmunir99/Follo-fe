@@ -14,7 +14,6 @@ export default function Layout() {
     mutationFn: UserService.verify,
   });
   const { authState } = useAuth();
-  console.log("Inside Tabs Layout: ", authState);
 
   const handleVerify = () => {
     setIsPressed(true);

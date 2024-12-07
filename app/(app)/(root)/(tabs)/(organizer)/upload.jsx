@@ -58,12 +58,12 @@ const Upload = () => {
     setRefreshing(true); // Start the refreshing animation
     try {
       setForm({
-        name: "asd",
-        type: "asd",
-        description: "asd",
-        city: "asd",
+        name: "",
+        type: "",
+        description: "",
+        city: "",
         country: "Pakistan",
-        venue: "asd",
+        venue: "",
         date: new Date().toISOString(),
       });
     } finally {

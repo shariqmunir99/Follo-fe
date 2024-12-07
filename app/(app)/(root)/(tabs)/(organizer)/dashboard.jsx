@@ -19,11 +19,6 @@ import { useQuery } from "@tanstack/react-query";
 import { UserService } from "../../../../../services/user.service";
 
 const dashboard = () => {
-  const [followers, setFollowers] = useState("");
-  const [interactions, setInteractions] = useState("");
-  const [events, setEvents] = useState([]);
-  // const [newEvents, setNewEvents] = useState([]);
-
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["dashboard"],
     queryFn: UserService.getDashboard,

@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import InputField from "@/components/InputField";
 import CustomButton from "@/components/CustomButton";
-import { Link, router } from "expo-router";
+import { Link, router, useLocalSearchParams } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialIcons } from "@expo/vector-icons";
 import defaultDp from "@/assets/icons/defaultProfile.png";
@@ -19,15 +19,18 @@ import { UserService } from "@/services/user.service";
 
 const Spacer = ({ height }) => <View style={{ height }} />;
 const EditProfile = () => {
+  const { username, location, profilePicUrl } = useLocalSearchParams();
+  useLocalSearchParams();
   const [form, setForm] = useState({
-    new_username: undefined,
-    new_location: undefined,
+    new_username: username,
+    new_location: location,
     new_passsword: undefined,
   });
 
   const queryClient = useQueryClient();
 
-  const [dp, setDp] = useState(null);
+  const [dp, setDp] = useState(profilePicUrl);
+  const [profPic, setProfPic] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const editProfileMutation = useMutation({
@@ -38,27 +41,6 @@ const EditProfile = () => {
       router.back();
     },
   });
-
-  // const fetchProfileData = async () => {
-  //   const userData = {
-  //     username: "Faseeh_Ahmed",
-  //     accountFrom: "Lahore/Pakistan",
-  //     newPasssword: "",
-  //     profilePicture: defaultDp,
-  //   };
-
-  //   setForm({
-  //     username: userData.username,
-  //     new_location: userData.accountFrom,
-  //     newPasssword: "",
-  //   });
-
-  //   setDp(userData.profilePicture);
-  // };
-
-  // useEffect(() => {
-  //   fetchProfileData();
-  // }, []);
 
   const pickImage = async () => {
     const permissionResult =
@@ -75,14 +57,22 @@ const EditProfile = () => {
       quality: 1,
     });
 
+    console.log("Result: ", result);
     if (!result.canceled) {
-      setDp({ uri: result.assets[0].uri });
+      setProfPic(result.assets[0]);
+      setDp(result.assets[0].uri);
     }
   };
 
   const submit = async () => {
     // Submit the form data
-    editProfileMutation.mutate(form);
+    const payload = {
+      new_username: form.new_username,
+      new_location: form.new_location,
+      new_passsword: form.new_passsword,
+      new_profPic: profPic,
+    };
+    editProfileMutation.mutate(payload);
   };
 
   return (
@@ -91,7 +81,7 @@ const EditProfile = () => {
         <View className="w-full h-[45%] items-center">
           <View className="mt-5 relative">
             <Image
-              source={dp}
+              source={{ uri: dp }}
               resizeMode="contain"
               className="w-[150px] h-[150px] rounded-full"
             />

@@ -12,10 +12,9 @@ import { MaterialIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { icons, images } from "../constants";
 
-
-const DatePickerStyled = () => {
+const DatePickerStyled = ({ value }) => {
   const [form, setForm] = useState({
-    date: new Date(),
+    date: new Date(value),
   });
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -29,16 +28,15 @@ const DatePickerStyled = () => {
   return (
     <View className={`space-y-2`}>
       <Text className="text-xl text-Text font-PoppinsLight">Date</Text>
-      <View 
-      className=" border-2 w-full h-16 px-4 bg-MainLight
+      <View
+        className="  w-full h-16 px-4 bg-MainLight
       rounded-3xl focus:border-secondary items-center flex-row"
       >
         <TextInput
-         className="flex-1 text-white font-PoppinsRegular text-base "
+          className="flex-1 text-white font-PoppinsRegular text-base "
           value={form.date.toLocaleDateString("en-GB")} // Format: DD.MM.YYYY
           editable={false} // Prevent manual typing
           placeholder="Select a date"
-          
         />
         <TouchableOpacity onPress={() => setShowDatePicker(true)}>
           <MaterialIcons name="calendar-today" size={24} color="#7b7b8b" />
@@ -55,7 +53,5 @@ const DatePickerStyled = () => {
     </View>
   );
 };
-
-
 
 export default DatePickerStyled;
