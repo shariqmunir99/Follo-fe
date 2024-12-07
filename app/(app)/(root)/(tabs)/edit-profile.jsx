@@ -57,7 +57,6 @@ const EditProfile = () => {
       quality: 1,
     });
 
-    console.log("Result: ", result);
     if (!result.canceled) {
       setProfPic(result.assets[0]);
       setDp(result.assets[0].uri);

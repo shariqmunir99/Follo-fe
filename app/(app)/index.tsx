@@ -9,7 +9,7 @@ const App = () => {
     if (!authLoading) {
       if (authState?.authenticated) {
         if (authState.role === "Organizer") {
-          router.replace("/(root)/(tabs)/(organizer)/event-detail");
+          router.replace("/(root)/(tabs)/(organizer)/dashboard");
         } else if (authState.role === "User") {
           router.replace("/(root)/(tabs)/(user)/home");
         }

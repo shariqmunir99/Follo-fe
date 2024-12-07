@@ -2,20 +2,46 @@ import axios, { AxiosError } from "axios";
 import { API_URL } from "@/constants";
 
 export class EventService {
-  static async upload({ name, type, description, city, date, venue, country }) {
+  static async upload({
+    name,
+    type,
+    description,
+    date,
+    city,
+    country,
+    venue,
+    image: file,
+  }) {
     console.log("Sending request");
-    console.log(name, type, description, city, date, venue, country);
+    console.log(description);
 
-    const result = await axios.post(`${API_URL}/event/upload`, {
-      name,
-      type,
-      description,
-      city,
-      date,
-      venue,
-      country,
-    });
-    return result.data.result;
+    const formData = new FormData();
+    if (file) {
+      console.log(file);
+      formData.append("file", {
+        uri: file.uri,
+        name: file.fileName, // or dynamically use a picked file name
+        type: file.mimeType, // ensure it matches the selected file's type
+      });
+    }
+    formData.append("name", name);
+    formData.append("type", type);
+    formData.append("description", description);
+    formData.append("date", date);
+    formData.append("city", city);
+    formData.append("country", country);
+    formData.append("venue", venue);
+
+    console.log("FORMDATA: ", formData);
+    let result;
+    try {
+      result = await axios.post(`${API_URL}/event/upload`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+    } catch (e) {
+      console.log(e.message);
+    }
+    return "result.data.result";
   }
 
   static async getEvent(event_id) {
@@ -68,23 +94,41 @@ export class EventService {
     city,
     country,
     venue,
+    image: file,
   }) {
     try {
       console.log("Sending Request: editEvent");
-      const result = await axios.put(`${API_URL}/event/edit`, {
-        event_id: id,
-        name,
-        type,
-        description,
-        date,
-        city,
-        country,
-        venue,
+
+      const formData = new FormData();
+      if (file) {
+        formData.append("image", true);
+        formData.append("file", {
+          uri: file.uri,
+          name: file.fileName, // or dynamically use a picked file name
+          type: file.mimeType, // ensure it matches the selected file's type
+        });
+      }
+      formData.append("event_id", id);
+      formData.append("name", name);
+      formData.append("type", type);
+      formData.append("description", description);
+      formData.append("date", date);
+      formData.append("city", city);
+      formData.append("country", country);
+      formData.append("venue", venue);
+
+      // const token =
+      //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoYXJpcTgxMTMxNDFAZ21haWwuY29tIiwiaWQiOiJiODBmYTYzZi00ZDgyLTQ5ZjYtYTA5Zi1kZjI0YmY1MTdjY2MiLCJpYXQiOjE3MzM1MTQ0MDAsImV4cCI6MTczNDExOTIwMH0.WnPsWZlpgfyb7ipEFGmJGx8hjjUs2SuBxeAjhcLkUrU";
+
+      // const url = `${API_URL}/event/edit`;
+      const result = await axios.put(`${API_URL}/event/edit`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
+
       console.log("Request Successful: editEvent");
-      return result;
+      return "Successful";
     } catch (e) {
-      console.log(e.response);
+      console.log(e);
       return e;
     }
   }

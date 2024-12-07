@@ -4,6 +4,7 @@ import {
   View,
   ScrollView,
   Image,
+  Dimensions,
   TouchableOpacity,
   BackHandler,
 } from "react-native";
@@ -20,10 +21,10 @@ import DatePickerStyled from "@/components/DatePickerStyled";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { EventService } from "@/services/event.service";
 
-const Spacer = ({ height }) => <View style={{ height }} />;
 const EditEvent = () => {
-  const { id, name, type, description, city, country, venue, date } =
+  const { id, name, type, description, city, country, venue, date, pic } =
     useLocalSearchParams();
+
   const [form, setForm] = useState({
     id: id,
     name: name,
@@ -35,7 +36,8 @@ const EditEvent = () => {
     date: new Date(date),
   });
 
-  const [dp, setDp] = useState(images.eventPic);
+  const [dp, setDp] = useState(pic);
+  const [image, setImage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -61,27 +63,32 @@ const EditEvent = () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [7, 4],
+      aspect: [1, 1],
       quality: 1,
     });
 
     if (!result.canceled) {
-      setDp({ uri: result.assets[0].uri });
+      setImage(result.assets[0]);
+      setDp(result.assets[0].uri);
     }
   };
 
   const submit = async () => {
-    editeventMutation.mutate(form);
+    const payload = {
+      ...form,
+      image: image,
+    };
+    editeventMutation.mutate(payload);
   };
   return (
     <SafeAreaView className=" bg-Main h-full">
       <ScrollView>
-        <View className="w-full h-[45%] items-center">
-          <View className="mt-5 relative">
+        <View className="w-full items-center">
+          <View className="mt-5  relative">
             <Image
-              source={dp}
+              source={{ uri: dp }}
               resizeMode="cover"
-              style={{ width: 250, height: 150 }}
+              className="w-96 h-64"
             />
             <TouchableOpacity
               style={{
@@ -98,8 +105,7 @@ const EditEvent = () => {
             </TouchableOpacity>
           </View>
 
-          <Spacer height={20} />
-          <View className="w-full justify-center mt-10">
+          <View className="w-full justify-center">
             <View className="px-8">
               <InputField
                 title="Name"
@@ -136,7 +142,6 @@ const EditEvent = () => {
                 handleChangeText={(e) => setForm({ ...form, venue: e })}
                 containerStyles={"mt-7"}
               />
-              <Spacer height={20} />
               <DatePickerStyled
                 value={form.date}
                 onChange={(selectedDate) =>
@@ -144,11 +149,10 @@ const EditEvent = () => {
                 }
               />
 
-              <Spacer height={20} />
               <CustomButton
                 title="Update"
                 containerStyles={
-                  " w-[38%]  min-h-[50px] mx-auto rounded-2xl bg-Vivid"
+                  " w-[38%]  min-h-[50px] my-7 mx-auto rounded-2xl bg-Vivid"
                 }
                 textStyles={"text-Main"}
                 handlePress={submit}

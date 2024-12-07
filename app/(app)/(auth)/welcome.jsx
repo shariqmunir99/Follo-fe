@@ -52,7 +52,7 @@ const Onboarding = () => {
         </View>
         <View
           className="flex-row absolute w-full h-full justify-center"
-          style={{ top: screenHeight * 0.82 }}
+          style={{ top: screenHeight * 0.78 }}
         >
           <Text className="text-Text text-sm font-PoppinsRegular">
             A one stop solution for all your{" "}

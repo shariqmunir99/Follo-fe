@@ -4,18 +4,13 @@ import { appropriateError } from "@/constants/functions";
 export class UserService {
   constructor() {}
 
-  //TODO Follow
-  static addFollow() {}
-  //TODO Remove Follow
-  //TODO Add InterestedBy
-  //TODO Remove InterestedBy
-  //TODO Get user profile -> organizer and user.
   static async getDashboard() {
     try {
       console.log("Sending Request: getDashboard");
-      const result = await axios.get(`${API_URL}/user/dashboard`);
+      console.log(axios.defaults.headers.common["Authorization"]);
+      const { data } = await axios.get(`${API_URL}/user/dashboard`);
       console.log("Request Successful: getDashboard");
-      return result.data;
+      return data;
     } catch (e) {
       console.log(e.message);
       return e;
@@ -54,7 +49,6 @@ export class UserService {
     }
     let result;
     try {
-      console.log("FormData:", formData);
       result = await axios.put(`${API_URL}/user/edit`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });

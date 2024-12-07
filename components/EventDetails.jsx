@@ -39,6 +39,7 @@ const EventDetails = ({
         city: event.city,
         country: event.country,
         venue: event.venue,
+        pic: event.pic,
       },
     });
   };

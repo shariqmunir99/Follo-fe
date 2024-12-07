@@ -5,7 +5,7 @@ import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import { format } from "date-fns";
 
-const EventCard = ({ event, user, containerStyles }) => {
+const EventCard = ({ event, containerStyles }) => {
   const handlePress = (event) => {
     router.push({
       pathname: "/event-detail",
@@ -25,7 +25,7 @@ const EventCard = ({ event, user, containerStyles }) => {
             uri: event.imageUrl,
           }}
           className="w-[145px] h-[145px] rounded-md"
-          resizeMode="contain"
+          resizeMode="cover"
         />
       </View>
       <View className="flex-col py-1">

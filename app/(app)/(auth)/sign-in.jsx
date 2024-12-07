@@ -1,10 +1,11 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Alert } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import InputField from "@/components/InputField";
 import CustomButton from "@/components/CustomButton";
 import { Link, router } from "expo-router";
 import { useAuth } from "@/context/AuthContext";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const SignIn = () => {
   const [form, setForm] = useState({
@@ -12,19 +13,39 @@ const SignIn = () => {
     password: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const { onLogin } = useAuth();
-  const submit = async () => {
-    //TODO: Add Input Validation for email and password.
-    console.log("Login");
-    const result = await onLogin(form.email, form.password);
-    if (result && result.error) {
-      console.log(result.msg);
-    } else {
-      if (result.data.result.roleName === "Organizer")
+  const loginMutation = useMutation({
+    mutationFn: onLogin,
+    onSuccess: (data) => {
+      if (data.result.roleName === "Organizer")
         router.replace("(organizer)/dashboard");
       else router.replace("(user)/home");
-    }
+    },
+    onError: (error) => {
+      console.log(error.response.data);
+    },
+  });
+  const submit = async () => {
+    //TODO: Add Input Validation for email and password.
+    setIsSubmitting(true);
+    loginMutation.mutate(form);
+    // const result = await onLogin(form.email, form.password);
+    // if (result && result.error) {
+    //   console.log(result.msg);
+    // } else {
+    //   if (result.data.result.roleName === "Organizer")
+    //     router.replace("(organizer)/dashboard");
+    //   else router.replace("(user)/home");
+    // }
   };
+
+  if (loginMutation.isError)
+    return (
+      <SafeAreaView>
+        <Text>{loginMutation.error.message}</Text>
+      </SafeAreaView>
+    );
   return (
     <SafeAreaView className="bg-Main h-full">
       <ScrollView>

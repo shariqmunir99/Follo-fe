@@ -16,7 +16,7 @@ import { format } from "date-fns";
 
 const eventdetail = () => {
   // const { id } = useLocalSearchParams();
-  const id = "e8f12c4d-afde-4237-b6e2-668de04b7db7";
+  const id = "03888521-cb7c-4de8-99d5-318df61812e5";
   const [item, setItem] = useState(null);
 
   const { data, isLoading, isError, error, isSuccess } = useQuery({

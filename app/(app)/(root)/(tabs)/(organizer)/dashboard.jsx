@@ -1,104 +1,50 @@
 import {
+  RefreshControl,
   SafeAreaView,
   ScrollView,
-  StyleSheet,
   Text,
   View,
-  BackHandler,
-  RefreshControl,
-  TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import InfoCard from "@/components/InfoCard";
 import EventCard from "@/components/EventCard";
 import DashboardRefreshing from "@/components/DashboardRefreshing";
 import { icons, images } from "@/constants";
-import { router, Stack } from "expo-router";
-import { useRefresh } from "@/constants/functions";
 import { useQuery } from "@tanstack/react-query";
 import { UserService } from "../../../../../services/user.service";
 
 const dashboard = () => {
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, refetch, isError, error } = useQuery({
     queryKey: ["dashboard"],
     queryFn: UserService.getDashboard,
   });
 
-  const dp = images.johnwickdp;
-  const username = "john_wick";
-  const role = "organizer";
-
-  // const [refreshing, onRefresh] = useRefresh(2000);
-
-  const getEventData = (interactions, followers) => {
-    const events = [
-      {
-        id: 1,
-        date: "Nov 15, 2024",
-        description: "Join us for an amazing night of music and entertainment.",
-        location: "Central Park, New York",
-        type: "Music Concert",
-        favorites: 120,
-        interests: 230,
-        pic: images.eventPic,
-      },
-      {
-        id: 2,
-        date: "Nov 20, 2024",
-        description: "Explore beautiful artworks from renowned artists.",
-        location: "Art Gallery, San Francisco",
-        type: "Art Exhibition",
-        favorites: 85,
-        interests: 150,
-        pic: images.eventPic,
-      },
-      {
-        id: 3,
-        date: "Dec 1, 2024",
-        description: "A gathering of tech enthusiasts and innovators.",
-        location: "Tech Hall, Silicon Valley",
-        type: "Tech Conference",
-        favorites: 300,
-        interests: 450,
-        pic: images.eventPic,
-      },
-      {
-        id: 4,
-        date: "Dec 10, 2024",
-        description: "Enjoy delicious food from around the world.",
-        location: "Food Street, Los Angeles",
-        type: "Food Festival",
-        favorites: 200,
-        interests: 320,
-        pic: images.eventPic,
-      },
-    ];
-
-    return { interactions, followers, events };
+  const [refreshing, setRefreshing] = React.useState(false);
+  const onRefresh = async () => {
+    setRefreshing(true); // Start the refreshing animation
+    try {
+      await refetch(); // Refetch the data from the backend
+    } finally {
+      setRefreshing(false); // Stop the refreshing animation
+    }
   };
-
-  // if (dashboardQuery.isLoading) {
-  //   return <DashboardRefreshing />;
-  // }
-  const params = ["11.3k", "2.1k"];
-
-  // useEffect(() => {
-  //   if (data) {
-  //     setFollowers(data.followers);
-  //     setInteractions(data.interactions);
-  //     setEvents(data.events);
-  //     setIsLoading(false); ////shariq bhai this state ensure k first time jb is page pr ayin
-  //     ////to tb tk kuch show na ho jb tk data fetch nai kr letay
-  //   }
-  // }, [data]);
 
   return (
     <SafeAreaView className=" bg-Main h-full">
-      <Stack.Screen />
       {isLoading ? (
         <DashboardRefreshing />
       ) : (
-        <ScrollView className="mx-3">
+        <ScrollView
+          className="mx-3"
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              progressBackgroundColor="#100425"
+              colors={["#FAFF00"]}
+            />
+          }
+        >
           <View className="mt-10">
             <View>
               <Text className="text-Vivid font-PoppinsExtraBold text-xl">
@@ -127,11 +73,7 @@ const dashboard = () => {
             <View className="pb-10 mt-2">
               {data.Events.map((event, index) => (
                 <View key={event.id}>
-                  <EventCard
-                    event={event}
-                    user={{ dp, username, role }}
-                    containerStyles="mt-2"
-                  />
+                  <EventCard event={event} containerStyles="mt-2" />
                 </View>
               ))}
             </View>

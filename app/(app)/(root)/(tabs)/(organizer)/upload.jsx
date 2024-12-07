@@ -24,29 +24,31 @@ import { EventService } from "../../../../../services/event.service";
 const Spacer = ({ height }) => <View style={{ height }} />;
 const Upload = () => {
   const [form, setForm] = useState({
-    name: "",
-    type: "",
-    description: "",
-    city: "",
+    name: "asd",
+    type: "asd",
+    description: "asd",
+    city: "asd",
     country: "Pakistan",
-    venue: "",
+    venue: "asd",
     date: new Date().toISOString(),
   });
   const [dp, setDp] = useState(images.eventPic);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [image, setImage] = useState(null);
 
   const postMutation = useMutation({
     mutationFn: EventService.upload,
 
     onSuccess: () => {
       console.log("Uploaded Event");
-      router.replace("/myevents");
+      router.replace("/");
     },
   });
 
   if (postMutation.isError) {
+    console.log(postMutation.error);
     return (
       <SafeAreaView>
         <Text>{postMutation.error.message}</Text>
@@ -82,18 +84,24 @@ const Upload = () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [7, 4],
+      aspect: [16, 12],
+
       quality: 1,
     });
 
     if (!result.canceled) {
+      setImage(result.assets[0]);
       setDp({ uri: result.assets[0].uri });
     }
   };
 
   const submit = async () => {
     // Submit the form data
-    postMutation.mutate(form);
+    const payload = {
+      ...form,
+      image: image,
+    };
+    postMutation.mutate(payload);
   };
 
   return (
@@ -110,11 +118,7 @@ const Upload = () => {
       >
         <View className="w-full items-center">
           <View className="mt-5  ">
-            <Image
-              source={dp}
-              resizeMode="cover"
-              style={{ width: 250, height: 150 }}
-            />
+            <Image source={dp} resizeMode="cover" className="w-96 h-64" />
             <TouchableOpacity
               style={{
                 position: "absolute",

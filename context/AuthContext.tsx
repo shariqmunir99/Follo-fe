@@ -18,7 +18,7 @@ interface AuthProps {
     baseUrl: string,
     isOrganizer: boolean
   ) => Promise<any>;
-  onLogin?: (email: string, password: string) => Promise<any>;
+  onLogin?: ({ email, password }: any) => Promise<any>;
   onLogout?: () => Promise<any>;
   onForgetPassword?: (email: string, baseUrl: string) => Promise<any>;
   onResetPassword?: (reset_token: string, new_password: string) => Promise<any>;
@@ -141,39 +141,36 @@ export const AuthProvider = ({ children }: any) => {
     }
   };
 
-  const login = async (email: string, password: string) => {
+  const login = async ({ email, password }: any) => {
+    console.log("email", email);
+    console.log("password", password);
+    const result = await axios.post(`${API_URL}/auth/login`, {
+      email,
+      password,
+    });
+
+    // console.log("Login Result: ", result);
+
+    setAuthState({
+      token: result.data.jwtToken,
+      authenticated: true,
+      role: result.data.result.roleName,
+      verified: result.data.result.isVerified,
+    });
+
+    axios.defaults.headers.common["Authorization"] =
+      `Bearer ${result.data.jwtToken}`;
     try {
-      const result = await axios.post(`${API_URL}/auth/login`, {
-        email,
-        password,
-      });
-
-      // console.log("Login Result: ", result);
-
-      setAuthState({
-        token: result.data.jwtToken,
-        authenticated: true,
-        role: result.data.result.roleName,
-        verified: result.data.result.isVerified,
-      });
-
-      axios.defaults.headers.common["Authorization"] =
-        `Bearer ${result.data.token}`;
-      try {
-        await SecureStore.setItemAsync(TOKEN_KEY, result.data.jwtToken);
-        await SecureStore.setItemAsync(ROLE_KEY, result.data.result.roleName);
-        if (result.data.result.isVerified)
-          await SecureStore.setItemAsync(VERIFIED_KEY, "1");
-        console.log("Verified: ", result.data.result.isVerified);
-      } catch (e: any) {
-        console.log(e.message);
-      }
-
-      return result; //Return it to whoever needs it. (idk who will need it but we never know.)
+      await SecureStore.setItemAsync(TOKEN_KEY, result.data.jwtToken);
+      await SecureStore.setItemAsync(ROLE_KEY, result.data.result.roleName);
+      if (result.data.result.isVerified)
+        await SecureStore.setItemAsync(VERIFIED_KEY, "1");
+      console.log("Verified: ", result.data.result.isVerified);
     } catch (e: any) {
       console.log(e.message);
-      return { error: true, msg: (e as any).response.data.msgs };
     }
+
+    return result.data; //Return it to check rolename afterwards.
   };
 
   const logout = async () => {
