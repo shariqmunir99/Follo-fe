@@ -169,9 +169,8 @@ const Upload = () => {
                 placeHolder="New York,USA"
                 value={form.venue}
                 handleChangeText={(e) => setForm({ ...form, venue: e })}
-                containerStyles={"mt-7"}
+                containerStyles={"mt-7 mb-7"}
               />
-              <Spacer height={20} />
               <DatePickerStyled
                 value={form.date}
                 onChange={(selectedDate) =>

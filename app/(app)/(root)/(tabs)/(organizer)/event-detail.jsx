@@ -16,13 +16,13 @@ import { format } from "date-fns";
 
 const eventdetail = () => {
   // const { id } = useLocalSearchParams();
-  const id = "03888521-cb7c-4de8-99d5-318df61812e5";
+  const id = "e8f12c4d-afde-4237-b6e2-668de04b7db7";
   const [item, setItem] = useState(null);
 
-  const { data, isLoading, isError, error, isSuccess } = useQuery({
+  const { data, isLoading, refetch, isError, error, isSuccess } = useQuery({
     queryKey: ["event", id],
-    queryFn: () => {
-      return EventService.getEvent(id);
+    queryFn: async () => {
+      return await EventService.getEvent(id);
     },
   });
 
@@ -68,8 +68,8 @@ const eventdetail = () => {
                 type: data.type,
                 city: data.city,
                 country: data.country,
-                favourites: data.interests,
-                interests: data.favourites,
+                favourites: data.favourites,
+                interests: data.interests,
                 createdAt: format(new Date(data.createdAt), "do MMM, yyyy"),
                 venue: data.venue,
                 pic: data.imageUrl,

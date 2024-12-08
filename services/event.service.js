@@ -75,6 +75,10 @@ export class EventService {
         }
       );
       console.log("Request Successful: getAnalytics");
+      console.log({
+        interestedBy: InterestedByResult.data,
+        favoritedBy: FavoritedByResult.data,
+      });
       return {
         interestedBy: InterestedByResult.data,
         favoritedBy: FavoritedByResult.data,
@@ -96,41 +100,32 @@ export class EventService {
     venue,
     image: file,
   }) {
-    try {
-      console.log("Sending Request: editEvent");
+    console.log("Sending Request: editEvent");
 
-      const formData = new FormData();
-      if (file) {
-        formData.append("image", true);
-        formData.append("file", {
-          uri: file.uri,
-          name: file.fileName, // or dynamically use a picked file name
-          type: file.mimeType, // ensure it matches the selected file's type
-        });
-      }
-      formData.append("event_id", id);
-      formData.append("name", name);
-      formData.append("type", type);
-      formData.append("description", description);
-      formData.append("date", date);
-      formData.append("city", city);
-      formData.append("country", country);
-      formData.append("venue", venue);
-
-      // const token =
-      //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoYXJpcTgxMTMxNDFAZ21haWwuY29tIiwiaWQiOiJiODBmYTYzZi00ZDgyLTQ5ZjYtYTA5Zi1kZjI0YmY1MTdjY2MiLCJpYXQiOjE3MzM1MTQ0MDAsImV4cCI6MTczNDExOTIwMH0.WnPsWZlpgfyb7ipEFGmJGx8hjjUs2SuBxeAjhcLkUrU";
-
-      // const url = `${API_URL}/event/edit`;
-      const result = await axios.put(`${API_URL}/event/edit`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+    const formData = new FormData();
+    if (file) {
+      formData.append("image", true);
+      formData.append("file", {
+        uri: file.uri,
+        name: file.fileName, // or dynamically use a picked file name
+        type: file.mimeType, // ensure it matches the selected file's type
       });
-
-      console.log("Request Successful: editEvent");
-      return "Successful";
-    } catch (e) {
-      console.log(e);
-      return e;
     }
+    formData.append("event_id", id);
+    formData.append("name", name);
+    formData.append("type", type);
+    formData.append("description", description);
+    formData.append("date", date);
+    formData.append("city", city);
+    formData.append("country", country);
+    formData.append("venue", venue);
+
+    const result = await axios.put(`${API_URL}/event/edit`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    console.log("Request Successful: editEvent");
+    return result;
   }
 
   static async deleteEvent(id) {
@@ -144,4 +139,8 @@ export class EventService {
       console.log(e);
     }
   }
+
+  // static async getInterestedBy({pageParam, event_id}){
+
+  // }
 }

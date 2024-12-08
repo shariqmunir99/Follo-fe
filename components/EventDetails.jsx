@@ -28,7 +28,7 @@ const EventDetails = ({
   const [role, setRole] = useState("user");
 
   const editHandlePress = () => {
-    router.push({
+    router.replace({
       pathname: "/edit-event",
       params: {
         id: event.id,
@@ -148,23 +148,20 @@ const EventDetails = ({
           )}
         </View>
         <View className="pt-2">
-          <Text className="text-Text opacity-90 text-lg text-center">
-            {event.name}
+          <Text className="text-Text opacity-90 text-lg ">
+            {event.name} {`(${event.type})`}
           </Text>
         </View>
         <View className="pb-1">
-          <Text className="text-Text opacity-90 text-base">
+          <Text className="text-slate-300 opacity-90 text-base">
             {event.description}
           </Text>
         </View>
-        <View className="flex-row justify-between">
-          <View>
-            <Text className="text-Text opacity-90 text-sm">
-              {event.venue}, {event.city} {event.country}
+        <View className="flex-col justify-between ">
+          <View className="flex-1">
+            <Text className="text-Text opacity-90  text-sm">
+              {event.venue}, {event.city}, {event.country}
             </Text>
-          </View>
-          <View>
-            <Text className="text-Text opacity-90">{event.type}</Text>
           </View>
         </View>
         <View className="pt-3 pb-2">
@@ -182,7 +179,7 @@ const EventDetails = ({
               <InteractionButton
                 user={user}
                 iconFor={"favorite"}
-                onPress={() => organizerPressedInterest(event.id)}
+                onPress={() => organizerPressedFavorite(event.id)}
                 value={event.favorites}
                 eventId={event.id}
                 alreadyPressed={interactionButtonPressed}
@@ -194,7 +191,7 @@ const EventDetails = ({
               <InteractionButton
                 user={user}
                 iconFor={"interest"}
-                onPress={() => organizerPressedFavorite(event.id)}
+                onPress={() => organizerPressedInterest(event.id)}
                 value={event.interests}
                 eventId={event.id}
                 alreadyPressed={interactionButtonPressed}
@@ -206,7 +203,7 @@ const EventDetails = ({
               <InteractionButton
                 user={user}
                 iconFor={"favorite"}
-                onPress={() => organizerPressedInterest(event.id)}
+                onPress={() => organizerPressedFavorite(event.id)}
                 value={event.favourites}
                 eventId={event.id}
               />
@@ -218,7 +215,7 @@ const EventDetails = ({
               <InteractionButton
                 user={user}
                 iconFor={"interest"}
-                onPress={() => organizerPressedFavorite(event.id)}
+                onPress={() => organizerPressedInterest(event.id)}
                 value={event.interests}
                 eventId={event.id}
               />

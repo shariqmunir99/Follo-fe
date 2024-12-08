@@ -11,7 +11,7 @@ const UserInfo = ({ user, containerStyles, showDetails }) => {
     >
       <View className="">
         <Image
-          source={user.dp}
+          source={{ uri: user.profilePic }}
           resizeMode="contain"
           className="w-12 h-12 rounded-full"
         />

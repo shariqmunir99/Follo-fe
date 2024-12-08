@@ -3,9 +3,9 @@ import images from "./images";
 
 export { icons, images };
 
-export const verifyBaseUrl = "http://192.168.1.177:8081/verify";
-export const resetBaseUrl = "http://192.168.1.177:8081/reset-password";
-export const API_URL = "http://192.168.1.177:3001/api";
+export const verifyBaseUrl = "http://192.168.1.176:8081/verify";
+export const resetBaseUrl = "http://192.168.1.176:8081/reset-password";
+export const API_URL = "http://192.168.1.176:3001/api";
 export const TOKEN_KEY = "JWT_TOKEN";
 export const ROLE_KEY = "ROLE";
 export const VERIFIED_KEY = "VERIFY";

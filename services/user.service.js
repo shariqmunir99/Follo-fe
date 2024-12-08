@@ -1,13 +1,13 @@
 import { API_URL, verifyBaseUrl } from "@/constants";
 import axios from "axios";
 import { appropriateError } from "@/constants/functions";
+import App from "@/app/(app)";
 export class UserService {
   constructor() {}
 
   static async getDashboard() {
     try {
       console.log("Sending Request: getDashboard");
-      console.log(axios.defaults.headers.common["Authorization"]);
       const { data } = await axios.get(`${API_URL}/user/dashboard`);
       console.log("Request Successful: getDashboard");
       return data;
@@ -15,6 +15,16 @@ export class UserService {
       console.log(e.message);
       return e;
     }
+  }
+
+  static async getMyEventsPaginated(pageParam) {
+    console.log("Sending Request: getMyEventsPaginated");
+    console.log(pageParam);
+    const result = await axios.get(
+      `${API_URL}/user/my-events?page=${pageParam}`
+    );
+    console.log("Request Successful: getMyEventsPaginated");
+    return result.data;
   }
 
   static async getProfile() {

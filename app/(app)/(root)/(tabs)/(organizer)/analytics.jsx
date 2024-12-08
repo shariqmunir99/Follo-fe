@@ -35,12 +35,19 @@ const analytics = () => {
     queryFn: () => EventService.getAnalytics(id, buttonPressed),
   });
 
-  const renderList = (list) =>
-    list.map((user) => (
-      <View key={user.userId}>
+  const renderList = (list) => {
+    if (list.length === 0)
+      return (
+        <Text className="text-slate-400 text-center h-full text-base">
+          Nothing to show here {":("}
+        </Text>
+      );
+    return list.map((user, index) => (
+      <View key={index}>
         <UserInfo user={user} containerStyles={"mx-[3%] w-[94%] mt-2"} />
       </View>
     ));
+  };
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -81,6 +88,7 @@ const analytics = () => {
         <UserRefreshing />
       ) : (
         <ScrollView
+          className=" h-full "
           refreshControl={
             <RefreshControl
               refreshing={refreshing}
@@ -91,8 +99,8 @@ const analytics = () => {
           }
         >
           {pressed === "left"
-            ? renderList(data.interestedBy || [])
-            : renderList(data.favoritedBy || [])}
+            ? renderList(data.favoritedBy || [])
+            : renderList(data.interestedBy || [])}
         </ScrollView>
       )}
     </SafeAreaView>
