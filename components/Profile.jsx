@@ -21,7 +21,10 @@ const Profile = ({
   isFollowed,
   events,
   handleLogout,
+  verified,
 }) => {
+  console.log("ISISIS: ", verified);
+
   return (
     <SafeAreaView className=" bg-Main h-full">
       <ScrollView className=" ">
@@ -29,7 +32,7 @@ const Profile = ({
           <View className="mt-12">
             <Image
               source={{ uri: user.profilePicUrl }}
-              resizeMode="contain"
+              resizeMode="cover"
               className="w-[150px] h-[150px] rounded-full"
             />
           </View>
@@ -53,7 +56,7 @@ const Profile = ({
             </View>
             <View className="flex-col pl-3 justify-between items-center">
               <Text className="font-bold text-Text">
-                {role === "Organizer" ? user.posts : user.favorited}
+                {role === "Organizer" ? user.posts : user.favorites}
               </Text>
               <Text className="text-Text text-xs opacity-50">
                 {role === "User" ? "Favorited" : "Posts"}
@@ -79,6 +82,7 @@ const Profile = ({
               textStyles="text-Main"
               handlePress={handlePress}
               isIcon={false}
+              isLoading={!verified}
             />
           )}
           <View

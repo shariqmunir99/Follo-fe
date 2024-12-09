@@ -15,8 +15,8 @@ import { EventService } from "../../../../../services/event.service";
 import { format } from "date-fns";
 
 const eventdetail = () => {
-  // const { id } = useLocalSearchParams();
-  const id = "e8f12c4d-afde-4237-b6e2-668de04b7db7";
+  const { id } = useLocalSearchParams();
+  // const id = "e8f12c4d-afde-4237-b6e2-668de04b7db7";
   const [item, setItem] = useState(null);
 
   const { data, isLoading, refetch, isError, error, isSuccess } = useQuery({

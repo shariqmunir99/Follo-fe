@@ -17,13 +17,38 @@ export class UserService {
     }
   }
 
+  static async getHomepage(pageParam) {
+    console.log("Sending Request: getHomepage");
+    const result = await axios.get(`${API_URL}/user/home?page=${pageParam}`);
+    console.log("Request Successful: getHomepage");
+    return result.data;
+  }
+
   static async getMyEventsPaginated(pageParam) {
     console.log("Sending Request: getMyEventsPaginated");
-    console.log(pageParam);
     const result = await axios.get(
       `${API_URL}/user/my-events?page=${pageParam}`
     );
     console.log("Request Successful: getMyEventsPaginated");
+    return result.data;
+  }
+
+  static async getInterestedEventsPaginated(pageParam) {
+    console.log("Sending Request: getInterestedEventsPaginated");
+    const result = await axios.get(
+      `${API_URL}/user/interested-events?page=${pageParam}`
+    );
+    console.log("Request Successful: getInterestedEventsPaginated");
+    console.log(result.data);
+    return result.data;
+  }
+
+  static async getFavoritedEventsPaginated(pageParam) {
+    console.log("Sending Request: getFavoritedEventsPaginated");
+    const result = await axios.get(
+      `${API_URL}/user/favorited-events?page=${pageParam}`
+    );
+    console.log("Request Successful: getFavoritedEventsPaginated");
     return result.data;
   }
 
@@ -75,6 +100,36 @@ export class UserService {
       baseUrl: verifyBaseUrl,
     });
     console.log("Request Successful: Verify");
+    return result.data;
+  }
+
+  static async addFollow(organizer_id) {
+    console.log("Sending Request: addFollow");
+    const result = await axios.post(`${API_URL}/user/follow`, {
+      organizer_id,
+    });
+
+    console.log("Request Successful: addFollow");
+    return result.data;
+  }
+
+  static async addInterest(event_id) {
+    console.log("Sending Request: addInterest");
+    const result = await axios.post(`${API_URL}/event/interested-by`, {
+      event_id,
+    });
+
+    console.log("Request Successful: addInterest");
+    return result.data;
+  }
+
+  static async addFavorite(event_id) {
+    console.log("Sending Request: addFavorite");
+    const result = await axios.post(`${API_URL}/event/favorited-by`, {
+      event_id,
+    });
+
+    console.log("Request Successful: addFavorite");
     return result.data;
   }
 }

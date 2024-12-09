@@ -10,10 +10,13 @@ import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import EventRefreshing from "@/components/EventRefreshing";
 import EventDetails from "@/components/EventDetails";
 import { format } from "date-fns";
+import { useAuth } from "@/context/AuthContext";
 
 const PaginatedList = ({ queryKey, queryFn }) => {
   const queryClient = useQueryClient();
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const { authState } = useAuth();
+  const role = authState.role;
 
   const {
     data,
@@ -64,6 +67,7 @@ const PaginatedList = ({ queryKey, queryFn }) => {
         user={{
           dp: event.profilePic,
           username: event.organizer,
+          organizer_id: event.organizer_id,
         }}
         event={{
           id: event.id,
@@ -78,9 +82,12 @@ const PaginatedList = ({ queryKey, queryFn }) => {
           createdAt: format(new Date(event.createdAt), "do MMM, yyyy"),
           venue: event.venue,
           pic: event.imageUrl,
+          isFollowing: event.isFollowing,
+          isFavorited: event.isFavorited,
+          isInterested: event.isInterested,
         }}
         containerStyles=""
-        button="delete"
+        button={role === "Organizer" ? "delete" : "follow"}
       />
     </View>
   );

@@ -10,6 +10,7 @@ import Profile from "@/components/Profile";
 const ProfileScreen = () => {
   const { onLogout, authState } = useAuth();
   const role = authState.role;
+  const verified = authState.verified;
 
   const {
     data: user,
@@ -71,6 +72,7 @@ const ProfileScreen = () => {
           <Profile
             user={user}
             role={role}
+            verified={verified}
             isPreview={false}
             handlePress={edit}
             isFollowed={true}

@@ -64,16 +64,6 @@ const analytics = () => {
     <SafeAreaView className="bg-Main w-full h-full">
       <View className="flex-row gap-2 justify-center items-center pb-4 pt-10 border-b-[1px] border-MainLight">
         <TouchableOpacity
-          className={`${pressed == "left" ? "bg-MainLight" : ""} rounded-3xl`}
-          onPress={async () => {
-            setPressed("left");
-          }}
-        >
-          <Text className="px-7 py-2 text-Text text-lg font-PoppinsRegular">
-            Favorited By
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
           className={`${pressed == "right" ? "bg-MainLight" : ""} rounded-3xl`}
           onPress={async () => {
             setPressed("right");
@@ -81,6 +71,16 @@ const analytics = () => {
         >
           <Text className="px-7 py-2 text-Text text-lg font-PoppinsRegular">
             Interested By
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          className={`${pressed == "left" ? "bg-MainLight" : ""} rounded-3xl`}
+          onPress={async () => {
+            setPressed("left");
+          }}
+        >
+          <Text className="px-7 py-2 text-Text text-lg font-PoppinsRegular">
+            Favorited By
           </Text>
         </TouchableOpacity>
       </View>

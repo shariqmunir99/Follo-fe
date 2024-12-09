@@ -32,7 +32,7 @@ const EventCard = ({ event, containerStyles }) => {
         <View className="flex-row items-baseline">
           <View>
             <Image
-              source={icons.filledheart}
+              source={icons.filledstar}
               className="w-4 h-4 "
               resizeMode="contain"
               style={{ tintColor: "#faff00" }}

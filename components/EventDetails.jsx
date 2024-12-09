@@ -1,11 +1,4 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Dimensions,
-} from "react-native";
+import { SafeAreaView, Text, View, Image, Dimensions } from "react-native";
 import React, { useEffect } from "react";
 import { icons, images } from "../constants";
 import InteractionButton from "./InteractionButton";
@@ -14,6 +7,9 @@ import { router } from "expo-router";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";
 import { format } from "date-fns";
+import { useMutation } from "@tanstack/react-query";
+import { UserService } from "../services/user.service";
+import { useAuth } from "@/context/AuthContext";
 
 const EventDetails = ({
   user,
@@ -23,10 +19,10 @@ const EventDetails = ({
   interactionButtonPressed,
   interactionType,
 }) => {
+  const { authState } = useAuth();
+  const role = authState.role;
   const screenHeight = Dimensions.get("window").height;
-  const [isFollowed, setIsFollowed] = useState(false);
-  const [role, setRole] = useState("user");
-
+  const [isFollowed, setIsFollowed] = useState(event.isFollowing);
   const editHandlePress = () => {
     router.replace({
       pathname: "/edit-event",
@@ -44,6 +40,21 @@ const EventDetails = ({
     });
   };
 
+  const followMutation = useMutation({
+    mutationFn: UserService.addFollow,
+    onSuccess: () => setIsFollowed(true),
+  });
+
+  const interestMutation = useMutation({
+    mutationFn: UserService.addInterest,
+    onSuccess: () => (event.isInterested = !event.isInterested),
+  });
+
+  const favoriteMutation = useMutation({
+    mutationFn: UserService.addFavorite,
+    onSuccess: () => (event.isFavorited = !event.isFavorited),
+  });
+
   const organizerPressedInterest = (eventId) => {
     router.push({
       pathname: "/analytics",
@@ -53,6 +64,7 @@ const EventDetails = ({
       },
     });
   };
+
   const organizerPressedFavorite = (eventId) => {
     router.push({
       pathname: "/analytics",
@@ -62,13 +74,48 @@ const EventDetails = ({
       },
     });
   };
+
   const handleFollowButtonPress = () => {
-    if (isFollowed) {
-      //remove this organizer from the folLowing list
+    followMutation.mutate(user.organizer_id);
+  };
+
+  if (interestMutation.isError) {
+    if (interestMutation.error.response.data.status === 409)
+      Alert.alert("You are already interested.");
+  }
+
+  if (followMutation.isError) {
+    if (followMutation.error.response.data.status === 409)
+      Alert.alert("You are already following this user.");
+  }
+
+  if (favoriteMutation.isError) {
+    if (favoriteMutation.error.response.data.status === 409)
+      Alert.alert("You have already favorited.");
+  }
+
+  const handleInterestToggle = () => {
+    if (role === "Organizer") {
+      organizerPressedInterest(event.id);
     } else {
-      //add this org in the following list
+      if (event.isInterested) {
+        //delete Mutation
+      } else {
+        interestMutation.mutate(event.id);
+      }
     }
-    setIsFollowed(true);
+  };
+
+  const handleFavoriteToggle = () => {
+    if (role === "Organizer") {
+      organizerPressedFavorite(event.id);
+    } else {
+      if (event.isFavorited) {
+        //delete Mutation
+      } else {
+        favoriteMutation.mutate(event.id);
+      }
+    }
   };
 
   return (
@@ -78,7 +125,7 @@ const EventDetails = ({
           <View className="flex-row items-center w-[50%] mt-3">
             <TouchableOpacity
               onPress={
-                role === "user"
+                role === "User"
                   ? () =>
                       router.push({
                         pathname: "/profile-preview",
@@ -96,7 +143,7 @@ const EventDetails = ({
             <View className="flex-col ml-2">
               <TouchableOpacity
                 onPress={
-                  role === "user"
+                  role === "User"
                     ? () =>
                         router.push({
                           pathname: "/profile-preview",
@@ -134,7 +181,7 @@ const EventDetails = ({
               />
             </View>
           )}
-          {button === "follow" && !isFollowed && (
+          {button === "follow" && !event.isFollowing && (
             <TouchableOpacity
               onPress={handleFollowButtonPress}
               className="bg-Vivid p-2 rounded-lg"
@@ -174,53 +221,23 @@ const EventDetails = ({
         <View
           className={`py-2 flex-row ${interactionButtonPressed === "yes" ? "justify-center" : "justify-between"} items-baseline`}
         >
-          {interactionButtonPressed === "yes" &&
-            interactionType === "favorite" && (
-              <InteractionButton
-                user={user}
-                iconFor={"favorite"}
-                onPress={() => organizerPressedFavorite(event.id)}
-                value={event.favorites}
-                eventId={event.id}
-                alreadyPressed={interactionButtonPressed}
-              />
-            )}
+          <InteractionButton
+            user={user}
+            iconFor={"interest"}
+            onPress={handleInterestToggle}
+            value={event.interests}
+            eventId={event.id}
+            alreadyPressed={event.isInterested}
+          />
 
-          {interactionButtonPressed === "yes" &&
-            interactionType === "interest" && (
-              <InteractionButton
-                user={user}
-                iconFor={"interest"}
-                onPress={() => organizerPressedInterest(event.id)}
-                value={event.interests}
-                eventId={event.id}
-                alreadyPressed={interactionButtonPressed}
-              />
-            )}
-
-          {interactionButtonPressed !== "yes" && (
-            <>
-              <InteractionButton
-                user={user}
-                iconFor={"favorite"}
-                onPress={() => organizerPressedFavorite(event.id)}
-                value={event.favourites}
-                eventId={event.id}
-              />
-              <View>
-                <Text className="text-Text opacity-90 text-base">
-                  {format(new Date(event.date), "do MMM, yyyy")}
-                </Text>
-              </View>
-              <InteractionButton
-                user={user}
-                iconFor={"interest"}
-                onPress={() => organizerPressedInterest(event.id)}
-                value={event.interests}
-                eventId={event.id}
-              />
-            </>
-          )}
+          <InteractionButton
+            user={user}
+            iconFor={"favorite"}
+            onPress={handleFavoriteToggle}
+            value={event.favourites}
+            eventId={event.id}
+            alreadyPressed={event.isFavorited}
+          />
         </View>
       </View>
     </SafeAreaView>

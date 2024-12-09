@@ -20,15 +20,15 @@ const InteractionButton = ({
   alreadyPressed,
 }) => {
   const { authState } = useAuth();
-  const [isPressed, setIsPressed] = useState(false);
+  const [isPressed, setIsPressed] = useState(alreadyPressed);
   const [role, setRole] = useState(authState.role);
   const userPressed = () => {
     setIsPressed(!isPressed);
     //update in database
   };
-  useEffect(() => {
-    if (alreadyPressed === "yes") setIsPressed(true);
-  }, [alreadyPressed]);
+  // useEffect(() => {
+  //   if (alreadyPressed === "yes") setIsPressed(true);
+  // }, [alreadyPressed]);
 
   const getIcon = () => {
     if (role === "Organizer") {
@@ -48,15 +48,7 @@ const InteractionButton = ({
   };
   const iconSize = iconFor === "favorite" ? 13 : 12;
   return (
-    <TouchableOpacity
-      onPress={() => {
-        if (role === "User") {
-          userPressed();
-        } else {
-          onPress(eventId);
-        }
-      }}
-    >
+    <TouchableOpacity onPress={onPress}>
       <View className="bg-MainLight  h-[35px] flex-row rounded-md items-center p-2 box-border">
         {!isPressed && (
           <View className=" my-auto px-1">

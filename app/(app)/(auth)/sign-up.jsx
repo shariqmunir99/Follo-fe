@@ -13,6 +13,7 @@ import { z } from "zod";
 const SignUp = () => {
   const [organizerCheck, setOrganizerCheck] = useState(false);
   const { onRegister } = useAuth();
+  const [submit, setSubmit] = useState(false);
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -27,6 +28,7 @@ const SignUp = () => {
       if (!isValidLocation(form.accountfrom)) {
         Alert.alert("Error", "Select valid location.");
       } else {
+        setSubmit(true);
         const result = await onRegister(
           form.email,
           form.password,
@@ -116,6 +118,7 @@ const SignUp = () => {
               }
               isIcon={false}
               iconOnly={false}
+              isLoading={submit}
             />
             <View className="mx-auto mb-6 flex-row">
               <Text className="text-lg text-Text">
