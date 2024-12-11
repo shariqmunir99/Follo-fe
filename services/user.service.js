@@ -123,6 +123,26 @@ export class UserService {
     return result.data;
   }
 
+  static async removeInterest(event_id) {
+    console.log("Sending Request: removeInterest");
+    const result = await axios.delete(`${API_URL}/event/interested-by`, {
+      params: { event_id },
+    });
+
+    console.log("Request Successful: removeInterest");
+    return result.data;
+  }
+
+  static async removeFavorite(event_id) {
+    console.log("Sending Request: removeFavorite");
+    const result = await axios.delete(`${API_URL}/event/favorited-by`, {
+      params: { event_id },
+    });
+
+    console.log("Request Successful: removeFavorite");
+    return result.data;
+  }
+
   static async addFavorite(event_id) {
     console.log("Sending Request: addFavorite");
     const result = await axios.post(`${API_URL}/event/favorited-by`, {
@@ -130,6 +150,26 @@ export class UserService {
     });
 
     console.log("Request Successful: addFavorite");
+    return result.data;
+  }
+
+  static async fetchOrganizerProfile(pageParam, organizer_id) {
+    console.log("Sending Request: fetchOrganizerProfile");
+    const result = await axios.get(`${API_URL}/user/organizer-profile`, {
+      params: { page: pageParam, organizer_id },
+    });
+
+    console.log("Request Successful: fetchOrganizerProfile");
+    return result.data;
+  }
+
+  static async fetchOrganizerStats(organizer_id) {
+    console.log("Sending Request: fetchOrganizerStats");
+    const result = await axios.get(`${API_URL}/user/organizer-stats`, {
+      params: { organizer_id },
+    });
+
+    console.log("Request Successful: fetchOrganizerStats");
     return result.data;
   }
 }

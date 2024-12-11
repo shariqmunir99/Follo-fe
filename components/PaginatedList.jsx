@@ -45,6 +45,7 @@ const PaginatedList = ({ queryKey, queryFn }) => {
   };
 
   if (isError) {
+    console.log(error.response.data);
     return (
       <SafeAreaView className="flex-1 justify-center items-center bg-Main">
         <Text className="text-red-500 text-lg">{error.message}</Text>

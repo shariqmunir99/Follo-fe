@@ -40,12 +40,12 @@ const SignIn = () => {
     // }
   };
 
-  if (loginMutation.isError)
-    return (
-      <SafeAreaView>
-        <Text>{loginMutation.error.message}</Text>
-      </SafeAreaView>
-    );
+  if (loginMutation.isError) setIsSubmitting(false);
+  // return (
+  //   <SafeAreaView>
+  //     <Text>{loginMutation.error.message}</Text>
+  //   </SafeAreaView>
+  // );
   return (
     <SafeAreaView className="bg-Main h-full">
       <ScrollView>

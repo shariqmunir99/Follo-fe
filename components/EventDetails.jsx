@@ -7,7 +7,7 @@ import { router } from "expo-router";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";
 import { format } from "date-fns";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { UserService } from "../services/user.service";
 import { useAuth } from "@/context/AuthContext";
 
@@ -21,6 +21,7 @@ const EventDetails = ({
 }) => {
   const { authState } = useAuth();
   const role = authState.role;
+  const verified = authState.verified;
   const screenHeight = Dimensions.get("window").height;
   const [isFollowed, setIsFollowed] = useState(event.isFollowing);
   const editHandlePress = () => {
@@ -40,19 +41,49 @@ const EventDetails = ({
     });
   };
 
+  const queryClient = useQueryClient();
   const followMutation = useMutation({
     mutationFn: UserService.addFollow,
     onSuccess: () => setIsFollowed(true),
   });
 
-  const interestMutation = useMutation({
-    mutationFn: UserService.addInterest,
-    onSuccess: () => (event.isInterested = !event.isInterested),
+  const deleteMutation = useMutation({
+    mutationFn: UserService.deleteMutation,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["event"]);
+    },
   });
 
-  const favoriteMutation = useMutation({
+  const addInterestMutation = useMutation({
+    mutationFn: UserService.addInterest,
+    onSuccess: () => {
+      event.isInterested = !event.isInterested;
+      queryClient.invalidateQueries(["event", "interested-events", "infinite"]);
+    },
+  });
+
+  const addFavoriteMutation = useMutation({
     mutationFn: UserService.addFavorite,
-    onSuccess: () => (event.isFavorited = !event.isFavorited),
+    onSuccess: () => {
+      event.isFavorited = !event.isFavorited;
+      queryClient.invalidateQueries(["event", "favorited-events", "infinite"]);
+    },
+  });
+
+  const removeFavoriteMutation = useMutation({
+    mutationFn: UserService.removeFavorite,
+    onSuccess: () => {
+      event.isFavorited = !event.isFavorited;
+      queryClient.invalidateQueries(["event", "favorited-events", "infinite"]);
+    },
+  });
+
+  const removeInterestMutation = useMutation({
+    mutationFn: UserService.removeInterest,
+    onSuccess: () => {
+      event.isFavorited = !event.isFavorited;
+      queryClient.invalidateQueries(["event", "favorited-events", "infinite"]);
+    },
   });
 
   const organizerPressedInterest = (eventId) => {
@@ -79,8 +110,8 @@ const EventDetails = ({
     followMutation.mutate(user.organizer_id);
   };
 
-  if (interestMutation.isError) {
-    if (interestMutation.error.response.data.status === 409)
+  if (addInterestMutation.isError) {
+    if (addInterestMutation.error.response.data.status === 409)
       Alert.alert("You are already interested.");
   }
 
@@ -89,8 +120,8 @@ const EventDetails = ({
       Alert.alert("You are already following this user.");
   }
 
-  if (favoriteMutation.isError) {
-    if (favoriteMutation.error.response.data.status === 409)
+  if (addFavoriteMutation.isError) {
+    if (addFavoriteMutation.error.response.data.status === 409)
       Alert.alert("You have already favorited.");
   }
 
@@ -99,9 +130,9 @@ const EventDetails = ({
       organizerPressedInterest(event.id);
     } else {
       if (event.isInterested) {
-        //delete Mutation
+        removeInterestMutation.mutate(event.id);
       } else {
-        interestMutation.mutate(event.id);
+        addInterestMutation.mutate(event.id);
       }
     }
   };
@@ -111,9 +142,9 @@ const EventDetails = ({
       organizerPressedFavorite(event.id);
     } else {
       if (event.isFavorited) {
-        //delete Mutation
+        removeFavoriteMutation.mutate(event.id);
       } else {
-        favoriteMutation.mutate(event.id);
+        addFavoriteMutation.mutate(event.id);
       }
     }
   };
@@ -129,7 +160,11 @@ const EventDetails = ({
                   ? () =>
                       router.push({
                         pathname: "/profile-preview",
-                        params: { dp: user.dp, username: user.username },
+                        params: {
+                          dp: user.dp,
+                          username: user.username,
+                          organizer_id: user.organizer_id,
+                        },
                       })
                   : null
               }
@@ -177,7 +212,7 @@ const EventDetails = ({
                 icon={icons.bin}
                 containerStyles={"bg-Vivid p-2 rounded-xl w-9 h-9 ml-2"}
                 iconStyles={"w-4 h-4"}
-                handlePress={() => console.log("Delete")}
+                handlePress={() => deleteMutation.mutate(event.id)}
               />
             </View>
           )}
@@ -185,6 +220,7 @@ const EventDetails = ({
             <TouchableOpacity
               onPress={handleFollowButtonPress}
               className="bg-Vivid p-2 rounded-lg"
+              disabled={verified}
             >
               <Image
                 source={icons.plus}

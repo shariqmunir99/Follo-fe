@@ -57,7 +57,7 @@ const TabsLayout = () => {
           name="discover"
           options={{
             title: "Discover",
-
+            tabBarButton: () => null,
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon

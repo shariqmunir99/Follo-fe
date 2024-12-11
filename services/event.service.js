@@ -140,7 +140,5 @@ export class EventService {
     }
   }
 
-  // static async getInterestedBy({pageParam, event_id}){
-
   // }
 }

@@ -12,6 +12,8 @@ import { icons, images } from "../constants";
 import InfoField from "./InfoField";
 import { router } from "expo-router";
 import EventDetails from "./EventDetails";
+import PaginatedList from "./PaginatedList";
+import { UserService } from "../services/user.service";
 
 const Profile = ({
   user,
@@ -122,19 +124,15 @@ const Profile = ({
               </>
             ) : (
               <>
-                {events && events.length > 0 ? (
-                  events.map((event, index) => (
-                    <EventDetails
-                      key={index}
-                      user={user}
-                      event={event} // Pass each event data to EventDetails component
-                    />
-                  ))
-                ) : (
-                  <Text className="text-Text text-center mt-4">
-                    No events available.
-                  </Text>
-                )}
+                <PaginatedList
+                  queryFn={({ pageParam = 1 }) =>
+                    UserService.fetchOrganizerProfile(
+                      pageParam,
+                      user.organizer_id
+                    )
+                  }
+                  queryKey={["profile", user.organizer_id, "events"]}
+                />
               </>
             )}
           </View>

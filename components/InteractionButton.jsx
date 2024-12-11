@@ -22,10 +22,16 @@ const InteractionButton = ({
   const { authState } = useAuth();
   const [isPressed, setIsPressed] = useState(alreadyPressed);
   const [role, setRole] = useState(authState.role);
+  const verified = authState.verified;
   const userPressed = () => {
     setIsPressed(!isPressed);
     //update in database
   };
+
+  // Sync isPressed state with alreadyPressed prop
+  useEffect(() => {
+    setIsPressed(alreadyPressed);
+  }, [alreadyPressed]);
   // useEffect(() => {
   //   if (alreadyPressed === "yes") setIsPressed(true);
   // }, [alreadyPressed]);
@@ -48,7 +54,7 @@ const InteractionButton = ({
   };
   const iconSize = iconFor === "favorite" ? 13 : 12;
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} disabled={!verified}>
       <View className="bg-MainLight  h-[35px] flex-row rounded-md items-center p-2 box-border">
         {!isPressed && (
           <View className=" my-auto px-1">

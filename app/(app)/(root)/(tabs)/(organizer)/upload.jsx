@@ -20,9 +20,12 @@ import { icons, images } from "@/constants";
 import DatePickerStyled from "@/components/DatePickerStyled";
 import { useMutation } from "@tanstack/react-query";
 import { EventService } from "../../../../../services/event.service";
+import { useAuth } from "@/context/AuthContext";
 
 const Spacer = ({ height }) => <View style={{ height }} />;
 const Upload = () => {
+  const { authState } = useAuth();
+  const verified = authState.verified;
   const [form, setForm] = useState({
     name: "asd",
     type: "asd",
@@ -187,7 +190,7 @@ const Upload = () => {
                 handlePress={submit}
                 isIcon={false}
                 iconOnly={false}
-                isLoading={postMutation.isPending}
+                isLoading={postMutation.isPending && verified}
               />
             </View>
           </View>
